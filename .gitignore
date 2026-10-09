@@ -1,0 +1,16 @@
+.DS_Store
+.vscode/
+.venv/
+.ipynb_checkpoints/
+__pycache__/
+*.aux
+*.log
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.toc
+*.out
+*.bbl
+*.bcf
+*.blg
+*.run.xml

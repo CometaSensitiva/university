@@ -1,0 +1,330 @@
+\documentclass[a4paper,10pt]{article}
+
+% --- Pacchetti minimi ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{adjustbox}
+\usepackage{geometry}
+\usepackage[table]{xcolor} 
+\definecolor{myblue}{HTML}{139FE9}
+\geometry{margin=1.5cm}
+\usepackage{footnote}
+% Pacchetti per Layout e Formattazione 
+\usepackage{fancyhdr} 
+\usepackage{float} 
+% Pacchetti Grafici e Diagrammi 
+\usepackage{graphicx} 
+\usepackage{tikz} 
+\usepackage{tikz-3dplot} 
+\usetikzlibrary{angles,quotes,arrows.meta, positioning} 
+\usepackage{pgfplots} 
+\pgfplotsset{compat=1.18} % Pacchetti Matematici 
+\usepackage{amsmath, amssymb, amsthm} 
+
+\usepackage{siunitx} 
+\usepackage{eurosym} 
+% --- Spaziatura tabella ---
+\setlength{\extrarowheight}{2pt}
+
+% --- Solo i comandi necessari (Note/Descrizioni) ---
+\newcommand{\roaDesc}{Misura la redditività complessiva dell’impresa rispetto al totale delle attività. Utile per confronti tra aziende con strutture finanziarie diverse, perché parte dall’EBIT (RO).}
+\newcommand{\rosDesc}{Evidenzia la capacità di trasformare i ricavi in reddito operativo. Indica quanta parte di ogni euro di vendite rimane dopo i costi caratteristici.}
+\newcommand{\roeDesc}{Indica il rendimento del capitale proprio investito dagli azionisti. È l’indice più osservato da chi conferisce capitale, ma risente della leva finanziaria.}
+\newcommand{\roiDesc}{Misura la redditività del capitale investito operativo (debiti finanziari + equity). Fondamentale per valutare se il rendimento operativo supera il costo medio del capitale.}
+\newcommand{\epsDesc}{Mostra quanta quota di utile netto spetta a ciascuna azione ordinaria. È l’indicatore chiave nei mercati azionari perché collega utile e valore per l’azionista.}
+
+\newcommand{\ilDesc}{Indica se l’azienda ha asset a breve sufficiente per coprire le passività a breve. Se < 1 → potenziale rischio di liquidità; se troppo alto → risorse “inutilizzate”.}
+\newcommand{\ilrDesc}{Versione più prudente: esclude le rimanenze che potrebbero non essere vendute velocemente. Serve come controllo della “liquidità più realistica”.}
+\newcommand{\tdDesc}{Indica la frazione degli asset finanziata da debiti. Valore alto = leva elevata, rischio maggiore. La seconda versione misura la composizione del capitale.}
+\newcommand{\iiDesc}{Misura quanto debito c’è rispetto al patrimonio netto: quanto l’azienda è “indirizzata” verso il finanziamento esterno.}
+\newcommand{\iciDesc}{Indica quante volte l’EBIT può “coprire” gli interessi: margine di sicurezza. Se basso (es. < 2), rischi sul servizio del debito.}
+\newcommand{\giDesc}{Misura l’ammontare delle passività globali rispetto al capitale proprio. Variante del debt/equity ma con tutte le passività.}
+\newcommand{\lfDesc}{Dà un’idea di quanto “asset” sono sostenuti da ogni unità di capitale netto. Si collega al concetto di leva finanziaria.}
+
+\newcommand{\rrDesc}{Quante “volte” svuoti e riempi il magazzino in un periodo. Più alto = scorte che girano; se troppo alto puoi rischiare stock-out.}
+\newcommand{\lrDesc}{“Giorni medi di giacenza rimanenze in magazzino”. Più basso = ciclo operativo più rapido. È l’inverso (in giorni) della rotazione.}
+\newcommand{\imccDesc}{Giorni medi di incasso dei crediti commerciali.}
+\newcommand{\gmdcDesc}{Giorni medi di pagamento ai fornitori.}
+\newcommand{\ccnDesc}{Liquidità netta a breve: Attività correnti meno Passività correnti.}
+\newcolumntype{Y}[1]{>{\centering\arraybackslash}m{#1}}
+
+\begin{document}
+\setlength{\extrarowheight}{5pt} 
+\begin{table}[H]
+    \adjustbox{max width=\textwidth,center}{ 
+        \begin{tabular}{|l|c|}
+            \hline 
+            \rowcolor{myblue} \color{white}\textbf{Stato Patrimoniale} & \color{white}\textbf{Risultati intermedi} \\
+            \hline
+                                                                          &                     \\
+            Immobilizzazioni Materiali                                  &                     \\
+            \hline
+                                                                          &                     \\
+            Immobilizzazioni Immateriali                                    &                     \\
+            \hline
+                                                                          &                     \\
+            Immobilizzazioni Finanziarie                                  &                     \\
+            \hline
+            \textbf{Totale Immobilizzazioni}                              &                     \\
+            \hline
+                                                                          &                     \\
+            Liquidità Immediate(e.g. cassa)                                           &                     \\
+            \hline
+                                                                          &                     \\
+            Liquidità Differite(e.g. crediti a breve termine)                                           &                     \\
+            \hline
+                                                                          &                     \\                                                                         
+            Rimanenze                                                     &                     \\
+            
+            \hline
+            \textbf{Capitale Circolante}                                  &                     \\
+            \hline
+            \hline
+            \textbf{Totale Attività}                                      &                     \\
+            \hline
+        \end{tabular}
+        \begin{tabular}{|l|c|}
+            \hline
+            \rowcolor{myblue} \color{white} \textbf{Stato Patrimoniale}  &\color{white}  Risultati intermedi \\
+            \hline
+                                                                                      &                     \\
+                                                                                      &                     \\
+                                                                                      &                     \\
+            Passività Consolidate, Medio/Lungo termine(e.g. mutui, fondo TFR)                                &                     \\
+            \hline
+                                                                                      &                     \\
+                                                                                      &                     \\
+                                                                                      &                     \\
+            Passività Correnti, Breve termine (e.g. debiti vs fornitori)                                        &                     \\
+            \hline
+            \textbf{Passività}                                                        &                     \\
+            \hline
+            \hline
+                                                                                      &                     \\
+                                                                                      &                     \\
+                                                                                      &                     \\
+            (e.g. capitale sociale, utile)                                            &                     \\
+            \hline
+            \textbf{Capitale Netto = \textcolor{red}{ Valore Contabile}}               &                     \\
+            \hline
+            \hline
+            \textbf{Totale Passività e Capitale Netto}                                &                     \\
+            \hline
+        \end{tabular}
+    }
+\end{table}
+
+\begin{table}[H]
+    \adjustbox{max width=\textwidth,center}{
+            \begin{tabular}{|c|l|V{0.22\textwidth}|c|}
+            \rowcolor{myblue}
+            \hline
+            \multicolumn{2}{|c|}{\color{white} \textbf{Conto Economico a costo del venduto}}&  \textbf{Note} &  \textbf{Sigla} \\
+            \hline
+            \textbf{A} & \textbf{Ricavi netti da vendite/servizi} & \tiny Valore dei beni/servizi consegnati nel periodo (netto di resi/sconti/imposte indirette). Base per analisi verticale.  & \\
+            \textbf{B} & \textbf{Costo del venduto} & \tiny Costi \emph{diretti} riconducibili ad A (materie, MOD, lavorazioni esterne, quota logistica “inclusa”). \textbf{Escluso:} GA/Commerciali/R\&S. & \\
+            \textbf{C = A - B} & \textbf{Margine lordo (Gross Profit)} & \tiny \textbf{RISULTATO INTERMEDIO}. Per pricing/mix/efficienza: se cala, verifica prezzo medio, sconti, scarti, produttività. & \textbf{GP} \\
+            \hline
+
+            & & \tiny Costi operativi \emph{ricorrenti} \textbf{esclusi D\&A}: Commerciali, Generali e Amm., logistica interna, R\&S, IT operativo. \textbf{Escluso:} finanza; accessoria; una tantum. & \\
+            \textbf{D} & \textbf{Altri costi caratteristici (cash)} & & \\
+            
+
+            & & \tiny \textbf{RISULTATO INTERMEDIO} (performance “cash” dell’operatività). Utile per confronti con politiche d’ammortamento diverse. & \\
+            \textbf{E = C - D} & \textbf{Margine Operativo Lordo (MOL)} & & \textbf{EBITDA (MOL)} \\
+            \hline
+
+            & & \tiny Quote non monetarie: ammortamenti materiali/immateriali; accantonamenti a fondi rischi. Non confondere con costi cash. & \\
+            \textbf{F} & \textbf{Ammortamenti e accantonamenti (D\&A)} & & \\
+            
+
+            & & \tiny \textbf{RISULTATO INTERMEDIO} del core business \emph{al netto} di D\&A, prima della gestione accessoria. & \\
+            \textbf{G = E - F} & \textbf{Risultato operativo caratteristico} & & \textbf{EBIT(RO)} \\
+            \hline
+
+            & & \tiny \textbf{Somma algebrica}: \textbf{+ proventi} (es. affitti attivi non core, servizi accessori, plus ordinarie), \textbf{$-$ oneri} (affitti passivi non core, penali/minus ordinarie). \textbf{Escluso:} finanza. & \\
+            \textbf{H} & \textbf{Altri proventi/oneri operativi} & & \\
+            
+
+            & & \tiny \textbf{RISULTATO INTERMEDIO}. Core \emph{+} accessoria operativa (algebrico). Annota: “core X; accessoria Y” per leggibilità. & \\
+            \textbf{I = G + H} & \textbf{Risultato operativo complessivo} & & \\
+            \hline
+
+            & & \tiny \textbf{Somma algebrica}: \textbf{+ proventi} (interessi attivi, rendite su tesoreria), \textbf{$-$ oneri} (interessi su debiti, commissioni/spese di funding). Tieni a lato il tasso effettivo: oneri fin. / debito medio. & \\
+            \textbf{J} & \textbf{Proventi/oneri finanziari} & & \\
+            
+
+            & & \tiny \textbf{RISULTATO INTERMEDIO}. Operatività complessiva \emph{dopo} la finanza, \emph{prima} di non ricorrenti e imposte. Ottimo per confronti “puliti”. & \\
+            \textbf{K = I + J} & \textbf{Risultato ordinario di competenza} & & \\
+            \hline
+
+            & & \tiny \textbf{Somma algebrica (facoltativa gestionale)}: \textbf{+ positivi} (es. indennizzi straordinari), \textbf{$-$ negativi} (es. incendio/furto, ristrutturazioni). Usa con giudizio e spiega sempre la causa. & \\
+            \textbf{L} & \textbf{Componenti non ricorrenti (se evidenziati)} & & \\
+            
+
+            & & \tiny \textbf{RISULTATO INTERMEDIO}. Evidenzia qui l’effetto netto dei non ricorrenti. & \\
+            \textbf{M = K + L} & \textbf{Risultato ante imposte} & & \textbf{EBT} \\
+            \hline
+
+            & & \tiny Imposte correnti + (eventuali) differite/anticipate. Specifica aliquote effettive e principali riconciliazioni. & \\
+            \textbf{N} & \textbf{Imposte sul reddito d’esercizio} & & \\
+            
+
+            & & \tiny \textbf{RISULTATO INTERMEDIO FINALE}. Utile/Perdita di periodo. Aggiungi, se serve, EPS/utile per quota e destinazione risultato. & \\
+            \textbf{O = M - N} & \textbf{Risultato netto} & & \textbf{NI} \\
+            \hline
+        \end{tabular}
+    }
+\end{table}
+
+\setlength{\extrarowheight}{15pt}
+\begin{table}[H]
+\centering
+\small
+\adjustbox{max width=\textwidth,center}{
+\begin{tabular}{|Y{0.14\textwidth}|V{0.14\textwidth}|V{0.14\textwidth}|Y{0.30\textwidth}|V{0.18\textwidth}|}
+\rowcolor{myblue}
+\multicolumn{5}{|c|}{\color{white} \textbf{Analisi Reddituale per Indici}}\\
+\hline
+\textbf{Indicatore} & \textbf{Italiano} & \textbf{Inglese} & \textbf{Formula Standard} & \textbf{Note} \\
+\hline
+ROA(\%) & Redditività degli attivi & \textit{Return on Assets} & $\dfrac{\text{EBIT}}{\text{Totale Attività}}$ & \tiny \roaDesc \\
+ROS(\%) & Redditività delle vendite & \textit{Return on Sales} & $\dfrac{\text{EBIT}}{\text{Ricavi}}$ & \tiny \rosDesc \\
+ROE(\%) & Redditività del patrimonio & \textit{Return on Equity} & $\dfrac{\text{NI}}{\text{Capitale netto}}$ & \tiny \roeDesc \\
+ROI(\%) & Redditività del capitale investito & \textit{Return on Investment} & $\dfrac{\text{EBIT}}{\text{Debiti finanziari}+\text{Capitale netto}}$ & \tiny \roiDesc \\
+EPS & Utile per Azione & \textit{Earnings Per Share} & $\dfrac{\text{NI}}{\text{N.\ di azioni in circolazione}}$ & \tiny \epsDesc \\
+\hline
+\end{tabular}}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\adjustbox{max width=\textwidth,center}{
+\begin{tabular}{|V{0.14\textwidth}|V{0.14\textwidth}|Y{0.30\textwidth}|V{0.18\textwidth}|}
+\hline
+\rowcolor{myblue} \multicolumn{4}{|c|}{\color{white} \textbf{Analisi Finanziaria per Indici}}\\
+\hline
+\textbf{Indicatore} & \textbf{Inglese} & \textbf{Formula Standard} & \textbf{Note} \\
+\hline
+Indice di liquidità & \textit{Current ratio} & $\dfrac{\text{Attività correnti}}{\text{Passività correnti}}$ & \tiny \ilDesc \\
+Indice di liquidità listretta & \textit{Acid test} & $\dfrac{\text{Attività correnti}-\text{Rimanenze}}{\text{Passività correnti}}$ & \tiny \ilrDesc \\
+Tasso di indebitamento & \textit{Debt ratio} & $\dfrac{\text{Passività}}{\text{Attività}}$ & \tiny \tdDesc \\
+Indice di indebitamento & \textit{Debt/Equity ratio} & $\dfrac{\text{Debiti finanziari}}{\text{Capitale netto}}$ & \tiny \iiDesc \\
+Copertura interessi & \textit{Interest coverage} & $\dfrac{\text{EBIT}}{\text{Interessi passivi}}$ & \tiny \iciDesc \\
+Grado di indebitamento & \textit{Indebtedness ratio} & $\dfrac{\text{Passività}}{\text{Capitale netto}}$ & \tiny \giDesc \\
+Leva Finanziaria & \textit{Equity multiplier} & $\dfrac{\text{Attività}}{\text{Capitale netto}}$ & \tiny \lfDesc \\
+\hline
+\end{tabular}}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\adjustbox{max width=\textwidth,center}{
+\begin{tabular}{|V{0.14\textwidth}|V{0.14\textwidth}|Y{0.30\textwidth}|V{0.18\textwidth}|}
+\hline
+\rowcolor{myblue} \multicolumn{4}{|c|}{\color{white} \textbf{Analisi Strutturale e Rotazioni}}\\
+\hline
+\textbf{Indicatore} & \textbf{Inglese} & \textbf{Formula Standard} & \textbf{Note} \\
+\hline
+Rotazione delle rimanenze & \textit{Inventory turnover} & $\dfrac{\text{Costo del venduto}}{\text{Rimanenze}}$ & \tiny \rrDesc \\
+Livello delle rimanenze (gg) & \textit{Days Inventory Outstanding (DIO)} & $\dfrac{\text{Rimanenze}}{\displaystyle \frac{\text{Costo del venduto}}{365}}$ & \tiny \lrDesc \\
+Incasso cedio crediti commerciali (gg) & \textit{Days Sales Outstanding (DSO)} & $\dfrac{\text{Crediti commerciali}}{\displaystyle \frac{\text{Ricavi}}{365}}$ & \tiny \imccDesc \\
+Giacenza media debiti commerciali (gg) & \textit{Days Payables Outstanding (DPO)} & $\dfrac{\text{Debiti verso fornitori}}{\displaystyle \frac{\text{Acquisti}}{365}}$ & \tiny \gmdcDesc \\
+Capitale circolante netto (CCN) & \textit{Net Working Capital (NWC)} & $\text{Attività correnti}-\text{Passività correnti}$ & \tiny \ccnDesc \\
+\hline
+\end{tabular}}
+\end{table}
+
+\begin{table}[H]
+    \adjustbox{max width=\textwidth,center}{
+        \begin{tabular}{|l|V{0.25\textwidth}|c|c|c|c|c|c|}
+            \rowcolor{myblue}
+            \multicolumn{8}{|c|}{\color{white}\textbf{Prospetto dei flussi di cassa differenziali (5 anni)}} \\
+            \hline
+            \textbf{Voce} & \textbf{Note} & \textbf{Anno 0} & \textbf{Anno 1} & \textbf{Anno 2} & \textbf{Anno 3} & \textbf{Anno 4} & \textbf{Anno 5} \\
+            \hline
+
+
+            \hline
+            \textbf{$+\Delta$ Ricavi} &
+            \tiny Incremento dei ricavi/risparmi rispetto allo scenario senza progetto (solo effetti differenziali). &  &  &  &  &  &  \\
+            \textbf{$-\Delta$ Costi operativi} &
+            \tiny Costi incrementali di competenza (materie, energia, manutenzioni, personale, servizi). &  &  &  &  &  &  \\
+            \textbf{$=\Delta$ Margine operativo (EBITDA)} & \tiny Risultato “cash-like” prima di D\&A: misura la performance operativa lorda del progetto. &  &  &  &  &  &  \\
+            \hline
+            \textbf{$-$ Ammortamenti} & \tiny Quota economica non monetaria del nuovo investimento (costo ripartito nel tempo). &  &  &  &  &  &  \\
+            \textbf{$=\Delta$ Risultato operativo (EBIT)} & \tiny Reddito operativo incrementale prima di oneri/proventi finanziari e imposte. &  &  &  &  &  &  \\
+            \hline
+            \textbf{$-$ Imposte sul reddito} &
+            \tiny Imposte calcolate sull’EBIT differenziale con l’aliquota effettiva prevista. &  &  &  &  &  &  \\
+            \textbf{$=\Delta$ Utile netto differenziale} &
+            \tiny Risultato economico netto del progetto: base di partenza per la conversione in cassa. &  &  &  &  &  &  \\
+            \hline
+            \rowcolor{myblue}
+            \multicolumn{8}{|l|}{\color{white}\textbf{A) Utile differenziale — conto economico incrementale}} \\
+            \hline
+
+            \textbf{$+$ Ammortamenti} &
+            \tiny Si riaggiungono perché non generano esborso monetario. &  &  &  &  &  &  \\
+            \textbf{$\pm$ Plus/minusvalenze da alienazione} & \tiny Voci contabili (prezzo di vendita $-$ valore contabile residuo): si stornano dal cash per evitare doppi conteggi. &  &  &  &  &  &  \\
+            \textbf{$=$ Rettifiche non monetarie} & \tiny Totale delle rettifiche non monetarie: \( (B) = + \text{Ammortamenti} \pm \text{Plus/minusvalenze} \). &  &  &  &  &  &  \\
+            \hline
+            \rowcolor{myblue}
+            \multicolumn{8}{|l|}{\color{white}\textbf{B) Rettifica componenti non monetarie}} \\
+
+            \hline
+            \textbf{$\pm\,\Delta$ CCN} & \tiny Dilazioni di pagamento a clienti/fornitori e variazioni di magazzino: variazione del capitale circolante netto (CCN). & \textbf{$-$} &  &  &  &  &  \\
+
+            \textbf{= Flusso di cassa operativo (FCO)} &
+            \tiny Risultato monetario della gestione caratteristica: \( \text{FCO} = (A) + (B) + (C) \). & &  &  &  &  &  \\
+            \hline
+            \rowcolor{myblue}
+            \multicolumn{8}{|l|}{\color{white}\textbf{C) Rettifica Capitale Circolante Netto (CCN)}} \\
+            \hline
+            \textbf{$-$ Investimenti in immobilizzazioni} &
+            \tiny Uscite per acquisto di impianti/macchinari/asset del progetto (tipicamente Anno 0). & \textbf{$-$} &  &  &  &  &  \\
+            \textbf{+ Disinvestimenti / Alienazioni} &
+            \tiny Incassi da vendita di asset (es. impianto vecchio) durante l’orizzonte di analisi. & \textbf{+} &  &  &  &  &  \\
+            \textbf{+ Recupero CCN / Valore residuo} &
+            \tiny Smobilizzo di magazzino/crediti e valore di realizzo residuo del bene a fine progetto. &  &  &  &  &  & \textbf{+} \\
+
+            \textbf{= Flusso di Cassa Netto (FCN)} &
+            \tiny Sequenza di flussi totali del progetto per VAN, TIR e PBP: \( \text{FCN} = \text{FCO} + D \). &
+             &  &  &  &  &  \\
+            \hline
+            \rowcolor{myblue}
+            \multicolumn{8}{|l|}{\color{white}\textbf{D) Flussi di cassa da investimenti e alienazioni}} \\
+            \hline
+        \end{tabular}
+    }
+    \caption{Prospetto dei flussi di cassa differenziali su 5 anni}
+\end{table}
+
+\section{Investimenti}
+
+\section{How to calcolare valore economico di un attività}
+\subsection{DDM}
+L'idea di base è che io calcolo il valore di un'attività partendo dal valore di una azione indicato come $P_0$ e poi moltiplico quel valore per il numero di azioni in circolazione.
+\begin{table}[H]
+\centering
+\small
+\adjustbox{max width=\textwidth,center}{
+\begin{tabular}{|V{0.14\textwidth}|V{0.14\textwidth}|Y{0.30\textwidth}|V{0.18\textwidth}|}
+\hline
+\rowcolor{myblue} \multicolumn{4}{|c|}{\color{white} \textbf{Dividend Discount Model (DDM)}}\\
+\hline
+\multicolumn{4}{|c|}{\tiny}\\
+\hline
+\textbf{Indicatore} & \textbf{Inglese} & \textbf{Formula Standard} & \textbf{Note} \\
+\hline
+Dividendo anno $t-$esimo& \textit{Dividend} & $\text{Div}_t$ & \tiny  \\
+Indice di liquidità listretta & \textit{Acid test} & $\dfrac{\text{Attività correnti}-\text{Rimanenze}}{\text{Passività correnti}}$ & \tiny \ilrDesc \\
+\hline
+\end{tabular}}
+\end{table}
+\end{document}

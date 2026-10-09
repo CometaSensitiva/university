@@ -1,0 +1,1594 @@
+\documentclass{article}
+% Pacchetti di Codifica e Lingua
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+
+% Pacchetti Grafici e Diagrammi
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{angles,quotes,arrows.meta, positioning, 3d, matrix}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% Pacchetti Matematici
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{cancel}
+
+% Pacchetti per Tabelle e Unità di Misura
+\usepackage{geometry}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{adjustbox}
+
+% Pacchetti per Layout e Formattazione
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{microtype}
+
+% Altri Pacchetti Utili
+\usepackage{mdframed}
+\usepackage{animate}
+\usepackage{ulem}
+\usepackage{eurosym}
+
+% Pacchetto enumitem
+\usepackage{enumitem}
+
+% Definizioni dei Colori
+\definecolor{lightblue}{HTML}{9cd8fc}
+\definecolor{myblue}{HTML}{139FE9}
+\definecolor{myblack}{HTML}{303030}
+\definecolor{mygray}{HTML}{787878}
+\definecolor{mywhite}{HTML}{c7c7c7}
+
+%\pagecolor{myblack}
+%\color{mywhite}
+% Definizione del comando \norm
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+%\font\nullfont=cmr10 
+
+% Ambienti Personalizzati
+\newmdtheoremenv[
+    backgroundcolor=orange!10,
+    linecolor=myblue,
+    linewidth=0pt,
+    leftmargin=0pt,
+    rightmargin=0pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+    innertopmargin=10pt,
+    innerbottommargin=10pt,
+    nobreak
+]{curiosity}{Curiosità}
+
+\newmdtheoremenv[
+    font=\normalfont\small,
+    linewidth=0pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+]{example}{Esempio}
+
+\newmdtheoremenv[
+  backgroundcolor=lightblue,
+  linecolor=myblue,
+  linewidth=1.5pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt,
+  nobreak
+]{theorem}{Teorema}
+
+\newmdtheoremenv[
+  backgroundcolor=gray!10,
+  linewidth=0pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt,
+  nobreak
+]{definition}{Definizione}
+
+\newmdtheoremenv[
+  backgroundcolor=gray!10,
+  linecolor=myblue,
+  linewidth=1.5pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt,
+  nobreak
+]{proposition}{Proposizione}
+
+% Configurazioni di fancyhdr
+\pagestyle{fancy}
+\fancyhf{} % Pulisce tutti i campi
+\fancyhead[LO]{\nouppercase{\rightmark}} % Titolo della sezione
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\geometry{a4paper, left=20mm, right=20mm, top=20mm, bottom=20mm}
+
+% Pacchetto Hyperref (inserito per ultimo)
+\usepackage{hyperref}
+% Additional Packages
+\usepackage{xparse,array}
+\begin{document}
+\title{Esercizi Fisica Generale T-A}
+\author{Michele Mazza}
+\date{A.A. 2023/2024}
+\maketitle
+\tableofcontents
+\newpage
+\section{Esercizi lezione}
+\subsection{Lezione del 12/10/2023}
+\paragraph*{Esercizio L1}
+\subparagraph*{Testo}
+Dati i vettori $\vec{a} = 3\hat{i} +4\hat{j}$ e $\vec{b} = 2\hat{k}$, calcolare
+\begin{enumerate}
+    \item[(a)] il prodotto vettoriale $\vec{a} \times \vec{b}$
+    \item[(b)] il vettore $\vec{c}$ perpendicolare ad $\vec{a}$ e $\vec{b}$ e tale che ha modulo $\norm{\vec{c}} = 5$ e per il quale $\vec{c} \cdot \hat{j} > 0$.
+\end{enumerate}
+\subparagraph*{Dati}
+\begin{itemize}
+    \item $\vec{a}                = 3\hat{i} +4\hat{j}$
+    \item $\vec{b}                = 2\hat{k}$
+    \item $\norm{\vec{c}}         = 5$
+    \item $\vec{c} \cdot \hat{j}  > 0$
+\end{itemize}
+\subparagraph*{Obiettivo}
+\begin{enumerate}
+    \item[(a)] $\vec{a} \times \vec{b} = ?$
+    \item[(b)] $\vec{c}                = ?$
+\end{enumerate}
+\subparagraph*{Svolgimento}
+Per completezza ricordo che $\vec{a} = (3, 4, 0)$ e $\vec{b} = (0, 0, 2)$.
+\begin{enumerate}
+    \item[(a)] Il prodotto vettoriale è dato da
+          \begin{align*}
+              \vec{a} \times \vec{b} = det \begin{vmatrix}
+                                               \hat{i} & \hat{j} & \hat{k} \\
+                                               3       & 4       & 0       \\
+                                               0       & 0       & 2
+                                           \end{vmatrix}
+          \end{align*}
+          Essendo una matrice $3 \times 3$ il determinante $det$ si può calcolare con la regola di \textit{Sarrus}
+          \begin{equation*}
+              \vec{a} \times \vec{b}  = \begin{tikzpicture}[>=stealth, baseline=-0.5ex]
+                  \matrix [
+                      matrix of math nodes,
+                      column sep=1em,
+                      row sep=1em
+                  ] (sarrus) {
+                      \hat{i} & \hat{j} & \hat{k} & \hat{i} & \hat{j} \\
+                      3       & 4       & 0       & 3       & 4       \\
+                      0       & 0       & 2       & 0       & 0       \\
+                  };
+                  \path ($(sarrus-1-1.north west)-(0.5em,0)$) edge ($(sarrus-3-1.south west)-(0.5em,0)$)
+                  ($(sarrus-1-3.north east)+(0.5em,0)$) edge ($(sarrus-3-3.south east)+(0.5em,0)$)
+                  (sarrus-1-1)                          edge[red]             (sarrus-2-2)
+                  (sarrus-2-2)                          edge[->, red]         (sarrus-3-3)
+                  (sarrus-1-2)                          edge[red]             (sarrus-2-3)
+                  (sarrus-2-3)                          edge[->, red]         (sarrus-3-4)
+                  (sarrus-1-3)                          edge[red]             (sarrus-2-4)
+                  (sarrus-2-4)                          edge[->, red]         (sarrus-3-5)
+                  (sarrus-3-1)                          edge[dashed, blue]    (sarrus-2-2)
+                  (sarrus-2-2)                          edge[->,dashed, blue] (sarrus-1-3)
+                  (sarrus-3-2)                          edge[dashed, blue]    (sarrus-2-3)
+                  (sarrus-2-3)                          edge[->,dashed, blue] (sarrus-1-4)
+                  (sarrus-3-3)                          edge[dashed, blue]    (sarrus-2-4)
+                  (sarrus-2-4)                          edge[->,dashed, blue] (sarrus-1-5);
+                  \foreach \c in {1,2,3} {\node[anchor=south] at (sarrus-1-\c.north) {$\textcolor{red}{+}$};};
+                  \foreach \c in {1,2,3} {\node[anchor=north] at (sarrus-3-\c.south) {$\textcolor{blue}{-}$};};
+              \end{tikzpicture} = (\hat{i} \cdot 4 \cdot 2) + (\hat{j} \cdot 0 \cdot 0) + (\hat{k} \cdot 3 \cdot 0) - (0 \cdot 4 \cdot \hat{k}) - (0 \cdot 0 \cdot \hat{i}) - (2 \cdot 3 \cdot \hat{j}) = 8\hat{i} - 6\hat{j}
+          \end{equation*}
+          \begin{equation*}
+              \vec{a} \times \vec{b} = (\hat{i} \cdot 4 \cdot 2) - (2 \cdot 3 \cdot \hat{j})
+          \end{equation*}
+          \begin{equation*}
+              \vec{a} \times \vec{b} = 8\hat{i} - 6\hat{k} =  (8, -6, 0)
+          \end{equation*}
+          \begin{equation*}
+              \norm{\vec{a} \times \vec{b}} =  \sqrt{8^2 + (-6)^2 + 0^2} = \sqrt{64 + 36} = \sqrt{100} = 10
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$\vec{a} \times \vec{b} =  (8, -6, 0)$}
+          \end{equation*}
+          \begin{figure}[H]
+              \centering
+              \tdplotsetmaincoords{70}{110}
+              \begin{tikzpicture}[tdplot_main_coords, scale=0.5]
+                  % valori massimi degli assi cartesiani
+                  \def\xMax{8}
+                  \def\yMax{8}
+                  \def\zMax{5}
+                  % a
+                  \def\ax{3}
+                  \def\ay{4}
+                  \def\az{0}
+                  % b
+                  \def\bx{0}
+                  \def\by{0}
+                  \def\bz{2}
+                  % c
+                  \def\cx{8}
+                  \def\cy{-6}
+                  \def\cz{0}
+                  \draw[-latex, thick] (-\xMax,0,0) -- (\xMax,0,0) node[anchor=north east]{\(x\)};
+                  \draw[-latex, thick] (0,-\yMax,0) -- (0,\yMax,0) node[anchor=west]{\(y\)};
+                  \draw[-latex, thick] (0,0,-\zMax/2) -- (0,0,\zMax) node[anchor=south]{\(z\)};
+                  \draw[fill=mygray, opacity=0.05] (-\xMax,-\yMax,0) -- (\xMax,-\yMax,0) -- (\xMax,\yMax,0) -- (-\xMax,\yMax,0) -- cycle;
+                  \draw[dashed, mygray, opacity=0.4] (\ax,\ay,\az) -- (\ax,\ay,0);
+                  \draw[dashed, mygray, opacity=0.4] (\ax,\ay,\az) -- (0,\ay,0);
+                  \draw[dashed, mygray, opacity=0.4] (\ax,\ay,\az) -- (\ax,0,0);
+                  \draw[dashed, mygray, opacity=0.4] (\bx,\by,\bz) -- (\bx,\by,0);
+                  \draw[dashed, mygray, opacity=0.4] (\bx,\by,\bz) -- (0,0,\bz);
+                  \draw[dashed, mygray, opacity=0.4] (\cx,\cy,\cz) -- (\cx,\cy,0);
+                  \draw[dashed, mygray, opacity=0.4] (\cx,\cy,\cz) -- (0,\cy,0);
+                  \draw[dashed, mygray, opacity=0.4] (\cx,\cy,\cz) -- (\cx,0,0);
+                  \draw[-stealth, ultra thick, blue] (0,0,0) -- (\ax,\ay,\az) node[anchor=south west]{\(\vec{a}\)};
+                  \draw[-stealth, ultra thick, red] (0,0,0) -- (\bx,\by,\bz) node[anchor=south east]{\(\vec{b}\)};
+                  \draw[-stealth, ultra thick, orange] (0,0,0) -- (\cx,\cy,\cz) node[anchor=south]{\(\vec{a} \times \vec{b}\)};
+              \end{tikzpicture}
+          \end{figure}
+    \item[(b)] Il vettore $\vec{c}$ è perpendicolare ad $\vec{a}$ e $\vec{b}$, che vuol dire? Ricordo che il \textbf{prodotto scalare} tra due vettori si può calcolare come
+          \begin{equation}
+              \vec{a} \cdot \vec{b} = a_x b_x + a_y b_y + a_z b_z
+          \end{equation}
+          \begin{equation}
+              \vec{a} \cdot \vec{b} = |a||b|cos(\theta)
+          \end{equation}
+          Ragionando sul significato geometrico del prodotto scalare, se due vettori sono perpendicolari tra loro, il coseno dell'angolo tra i due vettori è pari a 0, quindi il prodotto scalare tra i due vettori è pari a 0.
+          \begin{align*}
+              \vec{c} \perp \vec{a} \implies \vec{c} \cdot \vec{a} = 0 \\
+              \vec{c} \perp \vec{b}\implies \vec{c} \cdot \vec{b} = 0
+          \end{align*}
+          Ho dunque tre equazioni in tre incognite, che posso risolvere con un sistema lineare
+          \begin{align*}
+               & \begin{cases}
+                     \vec{c} \cdot \vec{a} = 0 \\
+                     \vec{c} \cdot \vec{b} = 0 \\
+                     \norm{\vec{c}} = 5
+                 \end{cases}
+              \implies
+              \begin{cases}
+                  c_x \cdot a_x + c_y \cdot a_y + c_z \cdot a_z = 0 \\
+                  c_x \cdot b_x + c_y \cdot b_y + c_z \cdot b_z = 0 \\
+                  \sqrt{c_x^2 + c_y^2 + c_z^2} = 5
+              \end{cases}
+              \implies
+              \begin{cases}
+                  c_x \cdot 3 + c_y \cdot 4 + c_z \cdot 0 = 0 \\
+                  c_x \cdot 0 + c_y \cdot 0 + c_z \cdot 2 = 0 \\
+                  \sqrt{c_x^2 + c_y^2 + c_z^2} = 5
+              \end{cases} \\
+               & \begin{cases}
+                     3c_x + 4c_y = 0 \\
+                     2c_z = 0        \\
+                     \sqrt{c_x^2 + c_y^2 + c_z^2} = 5
+                 \end{cases}
+              \implies
+              \begin{cases}
+                  3c_x + 4c_y = 0 \\
+                  c_z = 0         \\
+                  \sqrt{c_x^2 + c_y^2 + c_z^2} = 5
+              \end{cases}
+              \implies
+              \begin{cases}
+                  3c_x + 4c_y = 0 \\
+                  c_z = 0         \\
+                  \sqrt{c_x^2 + c_y^2} = 5
+              \end{cases}                     \\
+               & \begin{cases}
+                     3c_x + 4c_y = 0 \\
+                     c_z = 0         \\
+                     c_x^2 + c_y^2 = 25
+                 \end{cases}
+              \implies
+              \begin{cases}
+                  3c_x + 4c_y = 0 \\
+                  c_z = 0         \\
+                  c_x^2 + c_y^2 = 25
+              \end{cases}
+              \implies
+              \begin{cases}
+                  c_x = -\frac{4}{3}c_y \\
+                  c_z = 0               \\
+                  \left(-\frac{4}{3}c_y\right)^2 + c_y^2 = 25
+              \end{cases}  \\
+               & \begin{cases}
+                     c_x = -\frac{4}{3}c_y \\
+                     c_z = 0               \\
+                     \frac{16}{9}c_y^2 + c_y^2 = 25
+                 \end{cases}
+              \implies
+              \begin{cases}
+                  c_x = -\frac{4}{3}c_y \\
+                  c_z = 0               \\
+                  \frac{25}{9}c_y^2 = 25
+              \end{cases}
+              \implies
+              \begin{cases}
+                  c_x = -\frac{4}{3}c_y \\
+                  c_z = 0               \\
+                  c_y = \pm 3
+              \end{cases}
+          \end{align*}
+          Ho dunque due soluzioni per il vettore $\vec{c}$, che sono
+          \begin{equation*}
+              \vec{c} = \left(-\frac{4}{3} \cdot 3, 3, 0\right) = (-4, 3, 0)
+          \end{equation*}
+          \begin{equation*}
+              \vec{c} = \left(-\frac{4}{3} \cdot (-3), -3, 0\right) = \left(\frac{4}{3} \cdot 3, -3, 0\right) = \left(4, -3, 0\right)
+          \end{equation*}
+          Dato che il testo chiede che $\vec{c} \cdot \hat{j} > 0$, la soluzione corretta è
+          \begin{equation*}
+              \colorbox{myblue!70}{$\vec{c} = (4, -3, 0)$}
+          \end{equation*}
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \tdplotsetmaincoords{70}{110}
+    \begin{tikzpicture}[tdplot_main_coords, scale=0.5]
+        % valori massimi degli assi cartesiani
+        \def\xMax{8}
+        \def\yMax{8}
+        \def\zMax{5}
+        % a
+        \def\ax{3}
+        \def\ay{4}
+        \def\az{0}
+        % b
+        \def\bx{0}
+        \def\by{0}
+        \def\bz{2}
+        % c
+        \def\cx{-4}
+        \def\cy{3}
+        \def\cz{0}
+        \draw[-latex, thick] (-\xMax,0,0) -- (\xMax,0,0) node[anchor=north east]{\(x\)};
+        \draw[-latex, thick] (0,-\yMax,0) -- (0,\yMax,0) node[anchor=west]{\(y\)};
+        \draw[-latex, thick] (0,0,-\zMax/2) -- (0,0,\zMax) node[anchor=south]{\(z\)};
+        \draw[fill=mygray, opacity=0.1] (-\xMax,-\yMax,0) -- (\xMax,-\yMax,0) -- (\xMax,\yMax,0) -- (-\xMax,\yMax,0) -- cycle;
+        \draw[dashed, mygray, opacity=0.4] (\ax,\ay,\az) -- (\ax,\ay,0);
+        \draw[dashed, mygray, opacity=0.4] (\ax,\ay,\az) -- (0,\ay,0);
+        \draw[dashed, mygray, opacity=0.4] (\ax,\ay,\az) -- (\ax,0,0);
+        \draw[dashed, mygray, opacity=0.4] (\bx,\by,\bz) -- (\bx,\by,0);
+        \draw[dashed, mygray, opacity=0.4] (\bx,\by,\bz) -- (0,0,\bz);
+        \draw[dashed, mygray, opacity=0.4] (\cx,\cy,\cz) -- (\cx,\cy,0);
+        \draw[dashed, mygray, opacity=0.4] (\cx,\cy,\cz) -- (0,\cy,0);
+        \draw[dashed, mygray, opacity=0.4] (\cx,\cy,\cz) -- (\cx,0,0);
+        \draw[-stealth, ultra thick, blue] (0,0,0) -- (\ax,\ay,\az) node[anchor=south west]{\(\vec{a}\)};
+        \draw[-stealth, ultra thick, red] (0,0,0) -- (\bx,\by,\bz) node[anchor=south east]{\(\vec{b}\)};
+        \draw[-stealth, ultra thick, myblue] (0,0,0) -- (\cx,\cy,\cz) node[anchor=south]{\(\vec{c}\)};
+    \end{tikzpicture}
+\end{figure}
+
+\paragraph*{Esercizio L2}
+\subparagraph*{Testo}
+Il vettore $\vec{a}$ è applicato nel punto \( O(1, -3, 3) \) ed il suo secondo estremo è \( P(6, -10, 2) \).
+\begin{enumerate}
+    \item[(a)] Si scriva il vettore in forma cartesiana.
+    \item[(b)] Si calcolino il modulo ed i coseni direttori.
+    \item[(c)] Si calcoli la proiezione del vettore \( \vec{a} \) su un vettore \( \vec{b} \) di componenti \( 1 \) e \( 2 \) sugli assi \( x \) e \( y \), rispettivamente, e modulo pari a \( \sqrt{5} \).
+    \item[(d)] Si calcolino \( \vec{a} \times \vec{b} \) e \( ab \).
+\end{enumerate}
+\subparagraph*{Dati}
+\begin{itemize}
+    \item $\vec{a} = \vec{OP} = \vec{P} - \vec{O}$
+    \item $O(1, -3, 3)$
+    \item $P(6, -10, 2)$
+    \item $\vec{b} = (1, 2, 0)$
+    \item $\norm{\vec{b}} = \sqrt{5}$
+\end{itemize}
+\subparagraph*{Obiettivo}
+\begin{enumerate}
+    \item[(a)] $\vec{a} = ?$
+    \item[(b)] $\norm{\vec{a}} = ?$
+    \item[(c)] $\text{Proiezione} \vec{a} \text{ su } \vec{b} = ?$
+    \item[(d)] $\vec{a} \times \vec{b} = ?$
+    \item[(e)] $\vec{a} \cdot \vec{b} = ?$
+\end{enumerate}
+
+\subparagraph*{Svolgimento}
+\begin{enumerate}
+    \item[(a)] Il vettore $\vec{a}$ è applicato nel punto \( O(1, -3, 3) \) ed il suo secondo estremo è \( P(6, -10, 2) \), quindi
+          \begin{equation*}
+              \vec{a} = \vec{OP} = \vec{P} - \vec{O} = (6, -10, 2) - (1, -3, 3) = (5, -7, -1)
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$\vec{a} = (5, -7, -1)$}
+          \end{equation*}
+          Nota che a differenza delle coordinate di un punto, che localizzano una posizione specifica, le coordinate di un vettore descrivono una direzione e magnitudine, indipendentemente dalla posizione iniziale.
+          \begin{figure}[H]
+              \centering
+              \tdplotsetmaincoords{70}{110}
+              \begin{tikzpicture}[tdplot_main_coords, scale=0.5]
+                  % valori massimi degli assi cartesiani
+                  \def\xMax{10}
+                  \def\yMax{10}
+                  \def\zMax{5}
+                  % a
+                  \def\ax{5}
+                  \def\ay{-7}
+                  \def\az{-1}
+                  % b
+                  \def\bx{1}
+                  \def\by{-3}
+                  \def\bz{3}
+                  % c
+                  \def\cx{6}
+                  \def\cy{-10}
+                  \def\cz{2}
+                  \draw[-latex, thick] (-\xMax,0,0) -- (\xMax,0,0) node[anchor=north east]{\(x\)};
+                  \draw[-latex, thick] (0,-\yMax,0) -- (0,\yMax,0) node[anchor=west]{\(y\)};
+                  \draw[-latex, thick] (0,0,-\zMax) -- (0,0,\zMax) node[anchor=south]{\(z\)};
+                  \draw[fill=mygray, opacity=0.1] (-\xMax,-\yMax,0) -- (\xMax,-\yMax,0) -- (\xMax,\yMax,0) -- (-\xMax,\yMax,0) -- cycle;
+                  \draw[dashed, mygray, opacity=0.4] (\ax,\ay,\az) -- (\ax,\ay,0);
+                  \draw[dashed, mygray, opacity=0.4] (\ax,\ay,\az) -- (0,\ay,0);
+                  \draw[dashed, mygray, opacity=0.4] (\ax,\ay,\az) -- (\ax,0,0);
+                  \draw[dashed, mygray, opacity=0.4] (\bx,\by,\bz) -- (\bx,\by,0);
+                  \draw[dashed, mygray, opacity=0.4] (\bx,\by,\bz) -- (0,0,\bz);
+                  \draw[dashed, mygray, opacity=0.4] (\cx,\cy,\cz) -- (\cx,\cy,0);
+                  \draw[dashed, mygray, opacity=0.4] (\cx,\cy,\cz) -- (0,\cy,0);
+                  \draw[dashed, mygray, opacity=0.4] (\cx,\cy,\cz) -- (\cx,0,0);
+                  \draw[-stealth, ultra thick, red] (0,0,0) -- (\bx,\by,\bz) node[anchor=south west]{\(\vec{O}\)};
+                  \draw[-stealth, ultra thick, blue] (0,0,0) -- (\cx,\cy,\cz) node[anchor=south east]{\(\vec{P}\)};
+                  \draw[-stealth, ultra thick, myblue] (\bx,\by,\bz) -- (\cx,\cy,\cz) node[anchor=south west]{\(\vec{a}\)};
+                  \draw[-stealth, ultra thick, myblue] (0,0,0) -- (\ax,\ay,\az) node[anchor=south west]{\(\vec{a}\)};
+              \end{tikzpicture}
+          \end{figure}
+    \item[(b)] Il modulo di un vettore si calcola come
+          \begin{equation*}
+              \norm{\vec{a}} = \sqrt{a_x^2 + a_y^2 + a_z^2} = \sqrt{5^2 + (-7)^2 + (-1)^2} = \sqrt{25 + 49 + 1} = \sqrt{75} = \sqrt{25 \cdot 3} = 5\sqrt{3}
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$\norm{\vec{a}} = 5\sqrt{3}$}
+          \end{equation*}
+          I coseni direttori sono le proiezioni del vettore $\vec{a}$ sugli assi cartesiani
+          \begin{equation*}
+              cos(\alpha) = \frac{a_x}{\norm{\vec{a}}} = \frac{5}{5\sqrt{3}} = \frac{1}{\sqrt{3}} = \frac{\sqrt{3}}{3}
+          \end{equation*}
+          \begin{equation*}
+              cos(\beta) = \frac{a_y}{\norm{\vec{a}}} = \frac{-7}{5\sqrt{3}} = -\frac{7}{5\sqrt{3}} = -\frac{7\sqrt{3}}{15}
+          \end{equation*}
+          \begin{equation*}
+              cos(\gamma)
+              = \frac{a_z}{\norm{\vec{a}}}
+              = \frac{-1}{5\sqrt{3}}
+              = -\frac{1}{5\sqrt{3}}
+              = -\frac{\sqrt{3}}{15}
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$cos(\alpha) = \frac{\sqrt{3}}{3}$}
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$cos(\beta) = -\frac{7\sqrt{3}}{15}$}
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$cos(\gamma) = -\frac{\sqrt{3}}{15}$}
+          \end{equation*}
+    \item[(c)] La proiezione del vettore $\vec{a}$ sul vettore $\vec{b}$ è data da $\vec{a} \cdot \vec{b}$, quindi
+          \begin{equation*}
+              \vec{a} \cdot \vec{b} = a_x \cdot b_x + a_y \cdot b_y + a_z \cdot b_z = 5 \cdot 1 + (-7) \cdot 2 + (-1) \cdot 0 = 5 - 14 = -9
+          \end{equation*}
+          oppure si può calcolare come
+          \begin{equation*}
+              \vec{a} \cdot \vec{b} = \norm{\vec{a}} \cdot \norm{\vec{b}} \cdot cos(\theta) = 5\sqrt{3} \cdot \sqrt{5} \cdot cos(\theta) = 5\sqrt{15} \cdot cos(\theta)
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$\vec{a} \cdot \vec{b} = -9$}
+          \end{equation*}
+    \item[(d)] Il prodotto vettoriale $\vec{a} \times \vec{b}$ tra due vettori in $\mathbb{R}^3$ si può calcolare come il determinante della matrice $3 \times 3$ che ha come righe i vettori $\vec{i}$, $\vec{j}$ e $\vec{k}$ e come colonne le componenti dei due vettori
+          \begin{equation*}
+              \vec{a} \times \vec{b} = det \begin{vmatrix}
+                  \hat{i} & \hat{j} & \hat{k} \\
+                  5       & -7      & -1      \\
+                  1       & 2       & 0
+              \end{vmatrix}
+          \end{equation*}
+          \begin{equation*}
+              \vec{a} \times \vec{b} = \cancel{(\hat{i} \cdot (-7) \cdot 0)} + (\hat{j} \cdot (-1) \cdot 1) + (\hat{k} \cdot 5 \cdot 2) - (1 \cdot (-7) \cdot \hat{k}) - (2 \cdot (-1) \cdot \hat{i}) - \cancel{(0 \cdot 5 \cdot \hat{j})} =
+          \end{equation*}
+          \begin{equation*}
+              \vec{a} \times \vec{b} = 2\hat{i} - \hat{j} +17\hat{k} = (2, -1, 17)
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$\vec{a} \times \vec{b} = (2, -1, 17)$}
+          \end{equation*}
+    \item[(e)] Il prodotto scalare lo abbiamo già calcolato al punto (c), quindi
+          \begin{equation*}
+              \colorbox{myblue!70}{$\vec{a} \cdot \vec{b} = -9$}
+          \end{equation*}
+\end{enumerate}
+\paragraph*{Esercizio L3}
+\subparagraph*{Testo}
+Un punto materiale si muove lungo una traiettoria rettilinea con accelerazione costante \( a = \SI{2}{\meter\per\second\squared} \) partendo da fermo. Si calcolino:
+\begin{enumerate}
+    \item[(a)] La velocità dopo \SI{5}{\second} dalla partenza.
+    \item[(b)] La velocità media nell'intervallo di tempo tra \SI{0}{\second} e \SI{5}{\second}.
+\end{enumerate}
+\subparagraph*{Dati}
+\begin{itemize}
+    \item Moto rettilineo uniformemente accelerato
+    \item $a = \SI{2}{\meter\per\second\squared}$
+    \item $t = \SI{5}{\second}$
+    \item $v_0 = \SI{0}{\meter\per\second}$
+\end{itemize}
+\subparagraph*{Obiettivo}
+\begin{enumerate}
+    \item[(a)] $v(t = \SI{5}{\second}) = ?$
+    \item[(b)] $v_{med} = ?$
+\end{enumerate}
+\subparagraph*{Svolgimento}
+\begin{enumerate}
+    \item[(a)] La velocità dopo \SI{5}{\second} dalla partenza si calcola come
+          \begin{equation*}
+              \boxed{v(t) = v_0 + a \cdot t}
+          \end{equation*}
+          \begin{equation*}
+              v(t = \SI{5}{\second}) = \SI{0}{\meter\per\second} + \SI{2}{\meter\per\second\squared} \cdot \SI{5}{\second} = \SI{10}{\meter\per\second}
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{v(t = \SI{5}{\second}) = \SI{10}{\meter\per\second}}
+          \end{equation*}
+    \item[(b)] Consideriamo la formula della velocità media:
+          \begin{equation*}
+              \boxed{v_{\text{med}} = \frac{\Delta v}{\Delta t}}
+          \end{equation*}
+          \begin{align*}
+               & \Delta v = v(t = \SI{5}{\second}) - v(t = \SI{0}{\second}) = \SI{10}{\meter\per\second} - \SI{0}{\meter\per\second} = \SI{10}{\meter\per\second} \\
+               & \Delta t = t(\SI{5}{\second}) - t(\SI{0}{\second}) = \SI{5}{\second} - \SI{0}{\second} = \SI{5}{\second}                                         \\
+               & v_{\text{med}} = \frac{\SI{10}{\meter\per\second}}{\SI{5}{\second}} = \SI{2}{\meter\per\second}
+          \end{align*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$v_{\text{med}} = \SI{2}{\meter\per\second}$}
+          \end{equation*}
+\end{enumerate}
+
+\paragraph*{Esercizio L4}
+\subparagraph*{Testo}
+Per misurare la profondità di un pozzo si lascia cadere un sasso dalla sua sommità e si misura il tempo trascorso fino all'udirsi del tonfo. Se il tonfo si sente dopo \SI{8}{\second}, quanto è profondo il pozzo? Si ricorda che la velocità del suono in aria è \( v = \SI{340}{\meter\per\second} \).
+\subparagraph*{Dati}
+\begin{itemize}
+    \item Moto rettilineo uniformemente accelerato
+          \begin{itemize}
+              \item $v_0 = \SI{0}{\meter\per\second}$
+              \item $t_1 = ?$
+          \end{itemize}
+    \item Moto rettilineo uniforme(non considerò attrito dell'aria)
+          \begin{itemize}
+              \item $v = \SI{340}{\meter\per\second}$
+              \item $t_2 =?$
+          \end{itemize}
+    \item $t_{TOT} = t_1 + t_2 = \SI{8}{\second}$
+\end{itemize}
+
+\subparagraph*{Obiettivo}
+\begin{enumerate}
+    \item[(a)] $s(t_{TOT}) = s(t_1) + s(t_2)?$
+          \begin{enumerate}
+              \item[(a.1)] $s(t_1) = ?$
+              \item[(a.2)] $s(t_2) = ?$
+          \end{enumerate}
+\end{enumerate}
+
+
+\subparagraph*{Svolgimento}
+Per inquadrare il problema è utile disegnare un grafico che rappresenti la situazione, inquadriamo due sistemi di riferimento, uno per il moto rettilineo uniformemente accelerato e uno per il moto rettilineo uniforme, così da semplificare anche i calcoli.
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.3]
+        % Disegna il pozzo
+        \draw[thick] (-2,0) -- (0, 0);
+        \draw[thick] (0,0) -- (0, -10); % Lato sinistro del pozzo
+        \draw[thick] (2,0) -- (2, -10); % Lato destro del pozzo
+        \draw[thick] (0,-10) -- (2, -10); % Linea di base (profondità) del pozzo
+        \draw[thick] (2,0) -- (4, 0);
+        \draw[-latex, thick, myblue] (1, -1) -- (1, -3) node[anchor=east]{\(\vec{a}\)};
+        \filldraw [black] (1, -1) circle (5pt); % Sasso
+        \draw[latex-latex, dashed] (-3, 0) -- node[left] {h} (-3, -10);
+    \end{tikzpicture}
+    \caption{Caduta di un grave}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.3]
+        \draw[-latex, thick] (0,-10) -- (0,2) node[anchor=east]{\(s\)\,[m]};
+        \draw[-latex, thick] (0,0) -- (10,0) node[anchor=north]{\(t\)\,[s]};
+        \draw[latex-latex, dashed] (-3, 0) -- node[left] {\(-h\)} (-3, -10);
+        \filldraw [myblue] (0, 0) circle (4pt) node[left]{\(s_0\)};
+        \filldraw [myblue] (0, -10) circle (4pt) node[left]{\(s_1\)};
+        \draw[-latex, thick, myblue] (1, -1) -- (1, -3);
+        \node[anchor=south] at (4,3) {(a.1) Caduta di un grave};
+    \end{tikzpicture}
+    \begin{tikzpicture}[scale=0.3]
+        \draw[-latex, thick] (0,-1) -- (0,11) node[anchor=east]{\(s\)\,[m]};
+        \draw[-latex, thick] (0,0) -- (10,0) node[anchor=north]{\(t\)\,[s]};
+        \draw[latex-latex, dashed] (-3, 0) -- node[left] {\(h\)} (-3, 10);
+        \filldraw [myblue] (0, 0) circle (4pt) node[left]{\(s_1\)};
+        \filldraw [myblue] (0, 10) circle (4pt) node[left]{\(s_2\)};
+        \draw[-latex, thick, myblue] (1, 1) -- (1, 3);
+        \node[anchor=south] at (4,12) {(a.2) Propagazione suono};
+    \end{tikzpicture}
+    \caption{I due sistemi di riferimento}
+\end{figure}
+Per risolvere il problema ragioniamo sui due momenti del moto, il primo è la caduta del sasso, che è un moto rettilineo uniformemente accelerato, il secondo è la propagazione del suono, che è un moto rettilineo uniforme.
+\begin{enumerate}
+    \item Per trovare l'altezza del pozzo devo ragionare in questo modo
+          \begin{enumerate}
+              \item[(a.1)] La caduta del sasso è un moto rettilineo uniformemente accelerato, quindi posso usare la formula
+                    \begin{equation*}
+                        \boxed{s(t) = s_0 + v_0 \cdot t + \frac{1}{2} \cdot a \cdot t^2}
+                    \end{equation*}
+                    \begin{align*}
+                         & s(t_1) = - h                                                                     \\
+                         & s(t_1) = \cancel{s_0} + \cancel{v_0} \cdot t_1 + \frac{1}{2} \cdot a \cdot t_1^2 \\
+                         & -h = \frac{1}{2} \cdot a \cdot t_1^2                                             \\
+                         & \text{Coerentemente alla scelta del sistema di riferimento, } a = -g             \\
+                         & -h = -\frac{1}{2} g t_1^2                                                        \\
+                         & h = \frac{1}{2} g t_1^2
+                    \end{align*}
+              \item[(a.2)] La propagazione del suono è un moto rettilineo uniforme, quindi posso usare la formula
+                    \begin{equation*}
+                        \boxed{s(t) = s_0 + v \cdot t}
+                    \end{equation*}
+                    \begin{align*}
+                         & s(t_2) = h                          \\
+                         & s(t_2) = \cancel{s_0} + v \cdot t_2 \\
+                         & h = v \cdot t_2                     \\
+                    \end{align*}
+          \end{enumerate}
+          Ora metto a sistema con l'equazione del tempo totale
+          \begin{align*}
+               & \begin{cases}
+                     \text{Spazio percorso dal sasso} = \text{Spazio percorso dal suono} = h \\
+                     \text{Tempo percorrenza sasso} + \text{Tempo percorrenza suono} = \text{Tempo totale} = t_{TOT}
+                 \end{cases} \\
+               & \begin{cases}
+                     h = \frac{1}{2} g \cdot t_1^2 = v \cdot t_2 \\
+                     t_{TOT} = t_1 + t_2
+                 \end{cases}
+              \implies
+              \begin{cases}
+                  \frac{1}{2} g \cdot t_1^2 = v \cdot t_2 \\
+                  t_2 = t_{TOT} - t_1
+              \end{cases}
+              \implies
+              \begin{cases}
+                  \frac{1}{2} g \cdot t_1^2 = v \cdot (t_{TOT} - t_1) \\
+                  t_2 = t_{TOT} - t_1
+              \end{cases}                                               \\
+               & \begin{cases}
+                     \frac{1}{2} g \cdot t_1^2 - v \cdot (t_{TOT} - t_1) = 0 \\
+                     t_2 = t_{TOT} - t_1
+                 \end{cases}
+              \implies
+              \begin{cases}
+                  g \cdot t_1^2 - 2 \cdot v \cdot (t_{TOT} - t_1) = 0 \\
+                  t_2 = t_{TOT} - t_1
+              \end{cases}                                               \\
+               & \begin{cases}
+                     g \cdot t_1^2 - 2 \cdot v \cdot t_{TOT} + 2 \cdot v \cdot t_1 = 0 \\
+                     t_2 = t_{TOT} - t_1
+                 \end{cases}
+              \implies
+              \begin{cases}
+                  g \cdot t_1^2 + 2 \cdot v \cdot t_1 - 2 \cdot v \cdot t_{TOT} = 0 \\
+                  t_2 = t_{TOT} - t_1
+              \end{cases}                                 \\
+               & \begin{cases}
+                     \SI{9.81}t_1^2 + \SI{680}t_1 - \SI{5440} = 0 \\
+                     t_2 = \SI{8} - t_1
+                 \end{cases}                                                   \\
+               & \boxed{x_{1,2}=\frac{-b \pm \sqrt{b^2 - 4ac}}{2a}}                                             \\
+               & \begin{cases}
+                     t(1)_{1,2} = \displaystyle \frac{-680 \pm \sqrt{680^2 - 4 \cdot 9.81 \cdot (-5440)}}{2 \cdot 9.81} \\
+                     t_2 = \SI{8} - t_1
+                 \end{cases}
+              \implies
+              \begin{cases}
+                  t(1)_{1,2} = \cancel{\SI{-76,56}{\second}}  \lor \SI{7,24}{\second} \\
+                  t_2 = \SI{8} - t_1
+              \end{cases}                            \\
+               & \begin{cases}
+                     t_1 = \SI{7,24}{\second} \\
+                     t_2 = \SI{8} - \SI{7,24} = \SI{0,76}{\second}
+                 \end{cases}
+          \end{align*}
+          Ora che abbiamo trovato i tempi possiamo calcolare la profondità del pozzo con una delle due leggi orarie
+          \begin{align*}
+               & h = \frac{1}{2} (9.81) \cdot (7,24)^2 \simeq \SI{257}{\meter} \\
+               & h = 340 \cdot 0,76 \simeq \SI{257}{\meter}
+          \end{align*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$h = \SI{257}{\meter}$}
+          \end{equation*}
+\end{enumerate}
+
+\paragraph*{Esercizio L5}
+\subparagraph*{Testo}
+Un'auto passa da \SI{0}{\kilo\meter\per\hour} a \SI{100}{\kilo\meter\per\hour} in \SI{10}{\second} e, dopo la fase di accelerazione, l'auto prosegue il suo moto a velocità costante. Determinare:
+\begin{enumerate}
+    \item[(a)] la legge oraria e lo spazio percorso dalla partenza dopo \SI{10}{\second}.
+    \item[(b)] la distanza percorsa dalla partenza, la velocità istantanea e la velocità media dopo \SI{20}{\second} dalla partenza.
+\end{enumerate}
+
+\subparagraph*{Dati}
+\begin{itemize}
+    \item Moto rettilineo uniformemente accelerato
+          \begin{itemize}
+              \item $v_0 = \SI{0}{\kilo\meter\per\hour}$
+              \item $v_1 = \SI{100}{\kilo\meter\per\hour} = \SI{27,8}{\meter\per\second}$
+              \item $t_1 = \SI{10}{\second}$
+          \end{itemize}
+    \item Moto rettilineo uniforme
+          \begin{itemize}
+              \item $v_2 = \SI{100}{\kilo\meter\per\hour} = \SI{27,8}{\meter\per\second}$
+              \item $t_2 = \SI{20}{\second}$
+          \end{itemize}
+\end{itemize}
+\subparagraph*{Obiettivo}
+\begin{enumerate}
+    \item[(a)] $s(t) = ?$ e $s(t_1) = ?$
+    \item[(b)] $s(t_2) = ?$, $v(t_2) = ?$ e $v_{\text{med}} = ?$
+\end{enumerate}
+\subparagraph*{Svolgimento}
+\begin{enumerate}
+    \item[(a)] La legge oraria per il moto rettilineo uniformemente accelerato è
+          \begin{equation*}
+              \boxed{a = \frac{\Delta v}{\Delta t} = \frac{v_2-v_1}{t_2-t_1}}
+          \end{equation*}
+          \begin{equation*}
+              a = \frac{v_2-v_1}{t_2-t_1} = \frac{\SI{27,8}{\meter\per\second} - \SI{0}{\meter\per\second}}{\SI{20}{\second} - \SI{10}{\second}} = \frac{\SI{27,8}{\meter\per\second}}{\SI{10}{\second}} = \SI{2,78}{\meter\per\second\squared}
+          \end{equation*}
+          \begin{equation*}
+              \boxed{s(t) = s_0 + v_0 \cdot t + \frac{1}{2} \cdot a \cdot t^2}
+          \end{equation*}
+          \begin{equation*}
+              s(t) = \cancel{s_0} + \cancel{v_0} \cdot t + \frac{1}{2} \cdot a \cdot t^2 = \frac{1}{2} \cdot a \cdot t^2
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$s(t) = 1,39 \cdot t^2$}
+          \end{equation*}
+          \begin{equation*}
+              s(t_1) = \SI{1,39}{\meter\per\second\squared} \cdot \SI{100}{\second\squared} = \SI{139}{\meter}
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$s(t_1) = \SI{139}{\meter}$}
+          \end{equation*}
+    \item[(b)] La legge oraria per il moto rettilineo uniforme è
+          \begin{equation*}
+              \boxed{s(t) = s_0 + v_0 \cdot t}
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$s(t)=\SI{139}{\meter} + \SI{27,8}{\meter\per\second} \cdot t$}
+          \end{equation*}
+          \begin{equation*}
+              s(t_2) = s_1 + v_1 \cdot \Delta t_2 = s_1 + v_1 \cdot (t_2-t_1)
+          \end{equation*}
+          \begin{equation*}
+              s(t_2) = \SI{139}{\meter} + \SI{27,8}{\meter\per\second} \cdot (\SI{20}{\second} - \SI{10}{\second}) = \SI{139}{\meter} + \SI{278}{\meter} = \SI{417}{\meter}
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$s(t_2) = \SI{417}{\meter}$}
+          \end{equation*}
+          La velocità istantanea è la derivata della legge oraria, quindi
+          \begin{equation*}
+              \boxed{v(t) = \frac{ds}{dt}}
+          \end{equation*}
+          \begin{equation*}
+              v(t) = \frac{ds}{dt} = \frac{d}{dt} \left( \SI{139}{\meter} + \SI{27,8}{\meter\per\second} \cdot t \right) = \SI{27,8}{\meter\per\second}
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$v(t_2) = \SI{27,8}{\meter\per\second}$}
+          \end{equation*}
+          La velocità media è la velocità istantanea in un intervallo di tempo, quindi
+          \begin{equation*}
+              \boxed{v_{\text{med}} = \frac{\Delta s}{\Delta t}}
+          \end{equation*}
+          \begin{equation*}
+              v_{\text{med}} = \frac{\Delta s}{\Delta t} = \frac{s(t_2) - s(t_1)}{t_2 - t_1} = \frac{\SI{417}{\meter} - \SI{139}{\meter}}{\SI{20}{\second} - \SI{10}{\second}} = \frac{\SI{278}{\meter}}{\SI{10}{\second}} = \SI{27,8}{\meter\per\second}
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$v_{\text{med}} = \SI{27,8}{\meter\per\second}$}
+          \end{equation*}
+\end{enumerate}
+\paragraph*{Esercizio L6}
+\subparagraph*{Testo}
+Una ruota di raggio \( R = \SI{0.3}{\meter} \) è fissata ad un muro tramite un perno collocato in corrispondenza del suo centro \( O \). La ruota viene messa in moto di rotazione oraria attorno al suo asse all'istante \( t_0 = \SI{0}{\second} \) con un'accelerazione angolare costante \( \alpha = \SI{0.12}{\radian\per\second\squared} \).
+Si calcolino la velocità angolare raggiunta al tempo \( t_1 = \SI{18}{\second} \) ed il numero di giri \( N_1 \) compiuti.
+\subparagraph*{Dati}
+\begin{itemize}
+    \item Moto circolare uniformemente accelerato
+          \begin{itemize}
+              \item $R = \SI{0.3}{\meter}$
+              \item $\alpha = \SI{0.12}{\radian\per\second\squared}$
+              \item $t_1 = \SI{18}{\second}$
+              \item $\omega_0 = \SI{0}{\radian\per\second}$
+          \end{itemize}
+\end{itemize}
+\subparagraph*{Obiettivo}
+\begin{enumerate}
+    \item[(a)] $\omega(t_1) = ?$
+    \item[(b)] $N_1 = ?$
+\end{enumerate}
+\subparagraph*{Svolgimento}
+Per completezza riporto anche una rappresentazione grafica della situazione
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale = 2]
+        \pgfmathsetmacro{\rTheta}{-32}
+        \small
+        \pgfmathsetmacro{\cosTheta}{cos(\rTheta)}
+        \pgfmathsetmacro{\sinTheta}{sin(\rTheta)}
+        \draw[->, thick] (0,-1.5) -- (0,1.5) node[left] {$y$};
+        \draw[->, thick] (-1.5,0) -- (1.5,0) node[below] {$x$};
+        \draw[myblue] (0,0) -- ({cos(\rTheta)}, {sin(\rTheta)});
+        \draw[thick](0,0) circle (1);
+        \draw[fill=myblue, opacity=0.4] (0.3,0) arc (0:-360:0.3);
+        \node[above right] at (0.3,0) {$N=?$};
+        \draw[-latex, myblue] (0.4,0) arc (0:\rTheta:0.4) node [anchor=south west]{$\theta$};
+        \filldraw[black] ({cos(\rTheta)}, {sin(\rTheta)}) circle (1pt) node[anchor=north west] {$P(t_1)$};
+        \filldraw[black] (1,0) circle (1pt) node[anchor=north west] {$P(t_0)$};
+    \end{tikzpicture}
+\end{figure}
+\begin{enumerate}
+    \item[(a)] La velocità angolare si calcola come
+          \begin{equation*}
+              \boxed{\omega(t) = \omega_0 + \alpha \cdot t}
+          \end{equation*}
+          \begin{equation*}
+              \omega(t_1) = \omega_0 + \alpha \cdot t_1 = \SI{0}{\radian\per\second} + \SI{0.12}{\radian\per\second\squared} \cdot \SI{18}{\second} = \SI{2.16}{\radian\per\second}
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$\omega(t_1) = \SI{2.16}{\radian\per\second}$}
+          \end{equation*}
+    \item[(b)] Il numero di giri si calcola come
+          \begin{equation*}
+              \boxed{\theta(t) = \theta_0 + \omega_0 \cdot t + \frac{1}{2} \cdot \alpha \cdot t^2}
+          \end{equation*}
+          \begin{equation*}
+              \theta(t) = \cancel{\theta_0} + \cancel{\omega_0} \cdot t + \frac{1}{2} \cdot \alpha \cdot t^2 = \frac{1}{2} \cdot \alpha \cdot t^2
+          \end{equation*}
+          \begin{equation*}
+              \theta(t_1) = \frac{1}{2} \cdot \SI{0.12}{\radian\per\second\squared} \cdot (\SI{18}{\second})^2 = \SI{19.44}{\radian}
+          \end{equation*}
+          \begin{equation*}
+              \boxed{N(t) = \frac{\theta(t)}{2 \pi}}
+          \end{equation*}
+          \begin{equation*}
+              N(t_1) = \frac{\theta(t_1)}{2 \pi} = \frac{\SI{19.44}{\radian}}{2 \pi} = \SI{3.09}{\text{giri}}
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$N(t_1) = \SI{3.09}{\text{giri}}$}
+          \end{equation*}
+\end{enumerate}
+\paragraph*{Esercizio L7}
+\subparagraph*{Testo}
+Una ruota di raggio \( R = \SI{0.3}{\meter} \), vincolata nel suo centro \( O \) e appoggiata a terra, viene messa in moto all'istante \( t_0 = \SI{0}{\second} \) con un'accelerazione angolare costante \( \alpha = \SI{0.12}{\radian\per\second\squared} \). Dopo \( t_1 = \SI{18}{\second} \), un punto materiale che al tempo \( t_0 \) si trovava sulla verticale in alto si stacca dalla ruota nel punto \( D \). Calcolare:
+\begin{enumerate}[label=\alph*)]
+    \item il numero di giri \( N_1 \) compiuti dalla ruota prima del distacco del punto materiale;
+    \item l'accelerazione del punto materiale al momento del distacco;
+    \item il tempo impiegato dal punto materiale a raggiungere terra;
+    \item il valore dell'ascissa a cui tocca terra.
+\end{enumerate}
+\subparagraph*{Dati}
+\begin{itemize}
+    \item Moto circolare uniformemente accelerato
+          \begin{itemize}
+              \item $R = \SI{0.3}{\meter}$
+              \item $\alpha = \SI{0.12}{\radian\per\second\squared}$
+              \item $t_1 = \SI{18}{\second}$
+              \item $\omega_0 = \SI{0}{\radian\per\second}$
+          \end{itemize}
+    \item Moto parabolico uniformemente accelerato
+          \begin{itemize}
+              \item $a = \SI{9.81}{\meter\per\second\squared}$
+              \item $t_2 = ?$
+              \item $x(t_2) = ?$
+          \end{itemize}
+\end{itemize}
+\subparagraph*{Obiettivo}
+\begin{enumerate}[label=\alph*)]
+    \item $N_1 = ?$
+    \item $a(t_1) = ?$
+    \item $t_2 = ?$
+    \item $x(t_2) = ?$
+\end{enumerate}
+\subparagraph*{Svolgimento}
+Per completezza riporto anche una rappresentazione grafica della situazione
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale = 2]
+        \pgfmathsetmacro{\rTheta}{+32}
+        \small
+        \pgfmathsetmacro{\cosTheta}{cos(\rTheta)}
+        \pgfmathsetmacro{\sinTheta}{sin(\rTheta)}
+        \draw[->, thick] (0,-1.5) -- (0,1.5) node[left] {$y$};
+        \draw[->, thick] (-1.5,0) -- (1.5,0) node[below] {$x$};
+        \draw[myblue] (0,0) -- ({sin(\rTheta)}, {cos(\rTheta)});
+        \draw[thick](0,0) circle (1);
+        \draw[fill=myblue, opacity=0.4] (0.3,0) arc (0:-360:0.3);
+        \draw[-latex, myblue] (0,0.4) arc (90:90-\rTheta:0.4) node [anchor=south west]{$\theta$};
+        \filldraw[black] ({sin(\rTheta)}, {cos(\rTheta)}) circle (1pt) node[anchor=south west] {$P(t_1)$};
+        \filldraw[black] (0,1) circle (1pt) node[anchor=south west] {$P(t_0)$};
+    \end{tikzpicture}
+    \begin{tikzpicture}[scale = 2]
+        \pgfmathsetmacro{\rTheta}{+32}
+        \small
+        \pgfmathsetmacro{\cosTheta}{cos(\rTheta)}
+        \pgfmathsetmacro{\sinTheta}{sin(\rTheta)}
+        \draw[->, thick] (0.52,-1.5) -- (0.52,1.5) node[left] {$y$};
+        \draw[->, thick] (-1.5+0.52,0) -- (1.5+0.52,0) node[below] {$x$};
+        \draw[myblue] (0,0) -- ({sin(\rTheta)}, {cos(\rTheta)});
+        \draw[thick](0,0) circle (1);
+        \draw[fill=myblue, opacity=0.4] (0.3,0) arc (0:-360:0.3);
+        \draw[-latex, myblue] (0,0.4) arc (90:90-\rTheta:0.4) node [anchor=south west]{$\theta$};
+        \filldraw[black] ({sin(\rTheta)}, {cos(\rTheta)}) circle (1pt) node[anchor=south west] {$P(t_1)$};
+        \filldraw[black] (0,1) circle (1pt) node[anchor=south west] {$P(t_0)$};
+        \draw[dashed] (0.52,0.83) to[out=-25,in=130] (1.5,0);
+        \filldraw[black] (1.5,0) circle (1pt) node[anchor=north] {$x(t_2)$};
+    \end{tikzpicture}
+\end{figure}
+\begin{enumerate}[label=\alph*)]
+    \item Dal problema precedente abbiamo ottenuto il numero di giri compiuti dalla ruota prima del distacco del punto materiale, la velocità angolare e la posizione del punto materiale al tempo $t_1$, quindi
+          \begin{equation*}
+              N(t_1) = \SI{3.09}{\text{giri}}
+          \end{equation*}
+          \begin{equation*}
+              \omega(t_1) = \SI{2.16}{\radian\per\second}
+          \end{equation*}
+          \begin{equation*}
+              \theta(t_1) = \SI{19.44}{\radian}
+          \end{equation*}
+          Dopo 3 giri avremo
+          \begin{equation*}
+              \theta(t_1) = \SI{19.44}{\radian} - 3 \cdot 2 \pi \equiv \SI{0.59}{\radian}
+          \end{equation*}
+          \begin{equation*}
+              \boxed{\displaystyle \frac{\theta \SI{}{\radian}}{2\pi} = \frac{\theta \SI{}{\degree}}{360}}
+          \end{equation*}
+          \begin{equation*}
+              \theta(t_1) \equiv \SI{0.59}{\radian} = \SI{33.8}{\degree}
+          \end{equation*}
+    \item Dalle relazioni cinematiche del moto circolare uniformemente accelerato ricaviamo
+          \begin{equation*}
+              \boxed{a_t = \alpha \cdot R}
+          \end{equation*}
+          \begin{equation*}
+              \boxed{a_c = \omega^2 \cdot R = v \cdot \omega }
+          \end{equation*}
+          \begin{equation*}
+              \boxed{a = \sqrt{a_t^2 + a_c^2}}
+          \end{equation*}
+          \begin{equation*}
+              a_t = \alpha \cdot R = \SI{0.12}{\radian\per\second\squared} \cdot \SI{0.3}{\meter} = \SI{0.036}{\meter\per\second\squared}
+          \end{equation*}
+          \begin{equation*}
+              a_c = \omega(t_1)^2 \cdot R = (\SI{2.16}{\radian\per\second})^2 \cdot \SI{0.3}{\meter} = \SI{1.40}{\meter\per\second\squared}
+          \end{equation*}
+          \begin{equation*}
+              a = \sqrt{a_t^2 + a_c^2} = \sqrt{(\SI{0.036}{\meter\per\second\squared})^2 + (\SI{1.40}{\meter\per\second\squared})^2} = \SI{1.40}{\meter\per\second\squared}
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$a(t_1) = \SI{1.40}{\meter\per\second\squared}$}
+          \end{equation*}
+    \item E utile una rappresentazione della fase del moto parabolico
+          \begin{figure}[H]
+              \centering
+              \begin{tikzpicture}[scale = 2]
+                  \pgfmathsetmacro{\rTheta}{+32}
+                  \small
+                  \pgfmathsetmacro{\cosTheta}{cos(\rTheta)}
+                  \pgfmathsetmacro{\sinTheta}{sin(\rTheta)}
+                  \draw[->, thick] (0,-1.5) -- (0,1.5) node[left] {$y$};
+                  \draw[->, thick] (-1.5,0) -- (1.5,0) node[below] {$x$};
+                  \draw[black] (0,0) -- ({sin(\rTheta)}, {cos(\rTheta)});
+                  \draw[thick](0,0) circle (1);
+                  \draw[-latex, myblue, scale=0.8] ({sin(\rTheta)},{cos(\rTheta)}) arc (270-\rTheta:180+\rTheta:0.4) node [midway, below left, scale=0.7]{$\frac{\pi}{2}-\theta$};
+                  \draw[-latex, myblue, scale=0.8] (0,0.4) arc (90:90-\rTheta:0.4) node [midway, below, scale=0.7]{$\theta$};
+                  \filldraw[black] ({sin(\rTheta)}, {cos(\rTheta)}) circle (1pt) node[anchor=south west] {$P(t_1)$};
+                  \filldraw[black] (0,1) circle (1pt) node[anchor=south west] {$P(t_0)$};
+                  \draw[dashed] (0, {cos(\rTheta)}) -- ({sin(\rTheta)}, {cos(\rTheta)});
+                  \draw[dashed] ({sin(\rTheta)}, 0) -- ({sin(\rTheta)}, {cos(\rTheta)});
+                  \draw[-latex, thick, red] ({sin(\rTheta)}, {cos(\rTheta)}) -- ({sin(\rTheta)}, {cos(\rTheta)-0.54}) node [anchor=north east]{$v_{1y}$};
+                  \draw[-latex, thick, red] ({sin(\rTheta)}, {cos(\rTheta)}) -- ({sin(\rTheta)+0.36}, {cos(\rTheta)}) node [anchor=north west]{$v_{1x}$};
+                  \draw[-latex, thick, red] ({sin(\rTheta)}, {cos(\rTheta)}) -- ({sin(\rTheta)+0.36}, {cos(\rTheta)-0.54}) node [anchor=north west]{$v_{1}$};
+              \end{tikzpicture}
+              \begin{tikzpicture}[scale = 2]
+                  \pgfmathsetmacro{\rTheta}{+32}
+                  \small
+                  \pgfmathsetmacro{\cosTheta}{cos(\rTheta)}
+                  \pgfmathsetmacro{\sinTheta}{sin(\rTheta)}
+                  \draw[->, thick] (0.52,-1.5) -- (0.52,1.5) node[left] {$y$};
+                  \draw[->, thick] (-1.5+0.52,-1) -- (1.5+0.52,-1) node[below] {$x$};
+                  \draw[black] (0,0) -- ({sin(\rTheta)}, {cos(\rTheta)});
+                  \draw[thick](0,0) circle (1);
+                  \draw[-latex, myblue] (0,0.4) arc (90:90-\rTheta:0.4) node [anchor=north east]{$\theta$};
+                  \filldraw[black] ({sin(\rTheta)}, {cos(\rTheta)}) circle (1pt) node[anchor=south west] {$P(t_1)$};
+                  \filldraw[black] (0,1) circle (1pt) node[anchor=south west] {$P(t_0)$};
+                  \draw[dashed] (0.52,0.83) to[out=-25,in=90] (1.5,-1);
+                  \filldraw[black] (1.5,-1) circle (1pt) node[anchor=north] {$x(t_2)$};
+                  \draw[<->, thick, myblue] (0.52,0.83) -- (0.52,0) node [midway, right]{$R \cos(\theta)$};
+                  \draw[<->, thick, myblue] (0.52,0) -- (0.52,-1) node [midway, right]{$R$};
+              \end{tikzpicture}
+          \end{figure}
+          Si tratta di un moto parabolico uniformemente accelerato, prima di tutto mi trovo il vettore velocità tangente al punto di distacco
+          \begin{equation*}
+              \boxed{v(t) = \omega(t) \cdot R}
+          \end{equation*}
+          \begin{equation*}
+              v(t_1) = \omega(t_1) \cdot R = \SI{2.16}{\radian\per\second} \cdot \SI{0.3}{\meter} = \SI{0.648}{\meter\per\second}
+          \end{equation*}
+          \begin{equation*}
+              \vec{v} = \begin{cases}
+                  \norm{\vec{v_x}} = v \cdot \sin \theta \\
+                  \norm{\vec{v_y}} = v \cdot \cos \theta
+              \end{cases}
+          \end{equation*}
+          \begin{equation*}
+              \vec{v} = \begin{cases}
+                  \norm{\vec{v_x}} = \SI{0.648}{\meter\per\second} \cdot \sin \SI{33.8}{\degree} = \SI{0.36}{\meter\per\second} \\
+                  \norm{\vec{v_y}} = \SI{0.648}{\meter\per\second} \cdot \cos \SI{33.8}{\degree} = \SI{0.54}{\meter\per\second}
+              \end{cases}
+          \end{equation*}
+          Ora analizziamo il moto parabolico
+          \begin{equation*}
+              \begin{cases}
+                  \text{lungo x} = \text{moto rettilineo uniforme} \\
+                  \text{lungo y} = \text{moto rettilineo uniformemente accelerato}
+              \end{cases}
+          \end{equation*}
+          \begin{equation*}
+              \begin{cases}
+                  x(t_2) = x_1 + v_{1x} t_2 \\
+                  y(t_2) = y_1 + v_{1y} t_2 + \frac{1}{2}  a  t_{2}^2
+              \end{cases}
+          \end{equation*}
+          Poiche il punto di distacco si trova sulla circonferenza di raggio $R$ allora $x_1 = 0$ e $y_1 = R + R \cos \theta = \SI{0,55}{\meter} $
+          \begin{equation*}
+              \begin{cases}
+                  x(t_2) = v_{1x} t_2 \\
+                  y(t_2) = R + R \cos \theta + v_{1y} t_2 + \frac{1}{2}  a  t_{2}^2
+              \end{cases}
+          \end{equation*}
+          \begin{equation*}
+              \begin{cases}
+                  x(t_2) = \SI{0.36}{\meter\per\second} \cdot t_2 \\
+                  y(t_2) = \SI{0.55}{\meter} + \SI{0.54}{\meter\per\second} \cdot t_2 + \frac{1}{2} \cdot \SI{9.81}{\meter\per\second\squared} \cdot t_{2}^2
+              \end{cases}
+          \end{equation*}
+          Al tempo $t_2$ il punto tocca terra, quindi $y(t_2) = 0$, inoltre l'accelerazione è diretta verso il basso, quindi $a = -g = -\SI{9.81}{\meter\per\second\squared}$
+          \begin{equation*}
+              \begin{cases}
+                  x(t_2) = \SI{0.36}{\meter\per\second} \cdot t_2 \\
+                  y(t_2) = \SI{0.55}{\meter} + \SI{0.54}{\meter\per\second} \cdot t_2 - \frac{1}{2} \cdot \SI{9.81}{\meter\per\second\squared} \cdot t_{2}^2
+              \end{cases}
+          \end{equation*}
+          \begin{equation*}
+              \begin{cases}
+                  x(t_2) = \SI{0.36}{\meter\per\second} \cdot t_2 \\
+                  0 = \SI{0.55}{\meter} + \SI{0.54}{\meter\per\second} \cdot t_2 - \frac{1}{2} \cdot \SI{9.81}{\meter\per\second\squared} \cdot t_{2}^2
+              \end{cases}
+          \end{equation*}
+          \begin{equation*}
+              \begin{cases}
+                  x(t_2) = \SI{0.36}{\meter\per\second} \cdot t_2 \\
+                  0 = \SI{0.55}{\meter} + \SI{0.54}{\meter\per\second} \cdot t_2 - \frac{1}{2} \cdot \SI{9.81}{\meter\per\second\squared} \cdot t_{2}^2
+              \end{cases}
+          \end{equation*}
+          \begin{equation*}
+              t_2 = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+          \end{equation*}
+          \begin{equation*}
+              t_2 = \frac{-\SI{0.54}{\meter\per\second} \pm \sqrt{(\SI{0.54}{\meter\per\second})^2 - 4 \cdot \left( -\frac{1}{2} \cdot \SI{9.81}{\meter\per\second\squared} \right) \cdot \SI{0.55}{\meter}}}{2 \cdot \left( -\frac{1}{2} \cdot \SI{9.81}{\meter\per\second\squared} \right)}
+          \end{equation*}
+          \begin{equation*}
+              t_2 = \frac{-\SI{0.54}{\meter\per\second} \pm \sqrt{(\SI{0.54}{\meter\per\second})^2 + \SI{9.81}{\meter\per\second\squared} \cdot \SI{0.55}{\meter}}}{\SI{9.81}{\meter\per\second\squared}}
+          \end{equation*}
+          \begin{equation*}
+              t_2 = \frac{-\SI{0.54}{\meter\per\second} \pm \sqrt{\SI{5.39}{\meter\per\second\squared}}}{\SI{9.81}{\meter\per\second\squared}}
+          \end{equation*}
+          \begin{equation*}
+              t_2 = \frac{-\SI{0.54}{\meter\per\second} \pm \SI{2.32}{\meter\per\second}}{\SI{9.81}{\meter\per\second\squared}}
+          \end{equation*}
+          \begin{equation*}
+              t_2 = \frac{\SI{-0.54}{\meter\per\second} + \SI{2.32}{\meter\per\second}}{\SI{9.81}{\meter\per\second\squared}} = \SI{0.28}{\second}
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$t_2 = \SI{0.28}{\second}$}
+          \end{equation*}
+    \item Per trovare l'ascissa a cui tocca terra il punto materiale basta sostituire $t_2$ nella legge oraria del moto rettilineo uniforme
+          \begin{equation*}
+              \begin{cases}
+                  x(t_2) = \SI{0.36}{\meter\per\second} \cdot \SI{0.28}{\second} = \\
+                  t_2 = \SI{0.28}{\second}
+              \end{cases}
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$x(t_2) = \SI{0.10}{\meter}$}
+          \end{equation*}
+          La prof poi usa come sistema di riferimento quello del moto circolare, quindi $x = R \sin \theta + x(t_2) = \SI{0.3}{\meter} \cdot \sin \SI{33.8}{\degree} + \SI{0.10}{\meter} = \SI{0.27}{\meter}$ a lei viene $x = \SI{0.33}{\meter}$ credo sia per arrotondamenti.
+\end{enumerate}
+\paragraph*{Esercizio C1}
+\subparagraph*{Testo}
+Un punto materiale si muove secondo la legge oraria \( s(t) = 3 - 6t + 2t^2 \).
+Si determinino:
+\begin{enumerate}[label=\alph*)]
+    \item La posizione a \( t_1 = 4\, \si{\second} \) e \( t_2 = 10\, \si{\second} \)
+    \item La velocità agli istanti \( t_1 \) e \( t_2 \) e la velocità media tra \( t_1 \) e \( t_2 \)
+    \item L’accelerazione media tra \( t_1 \) e \( t_2 \)
+\end{enumerate}
+\subparagraph*{Dati}
+\begin{itemize}
+    \item Moto rettilineo uniformemente accelerato
+          \begin{itemize}
+              \item $s(t) = 3 - 6t + 2t^2$
+              \item $t_1 = 4\, \si{\second}$
+              \item $t_2 = 10\, \si{\second}$
+          \end{itemize}
+\end{itemize}
+\subparagraph*{Obiettivo}
+\begin{enumerate}[label=\alph*)]
+    \item \begin{enumerate}[label=\arabic*)]
+              \item $s(t_1) = ?$
+              \item $s(t_2) = ?$
+          \end{enumerate}
+    \item \begin{enumerate}[label=\arabic*)]
+              \item $v(t_1) = ?$
+              \item $v(t_2) = ?$
+              \item $v_{\text{med}} = \overline{v} \text{ tra } t_1 \text{ e } t_2 = ?$
+          \end{enumerate}
+    \item $a_{\text{med}} = \overline{a} \text{ tra } t_1 \text{ e } t_2 = ?$
+\end{enumerate}
+
+\subparagraph*{Svolgimento}
+\begin{enumerate}[label=\alph*)]
+    \item La posizione si calcola come
+          \begin{equation*}
+              \boxed{s(t) = s_0 + v_0 \cdot t + \frac{1}{2} \cdot a \cdot t^2}
+          \end{equation*}
+          \begin{equation*}
+              s(t) = s_0 + v_0 \cdot t + \frac{1}{2} \cdot a \cdot t^2
+          \end{equation*}
+          \begin{equation*}
+              s(t) = 3 - 6t + 2t^2
+          \end{equation*}
+          \begin{enumerate}[label=\arabic*)]
+              \item \begin{equation*}
+                        s(t_1) = 3 - 6t + 2t^2 = 3 - 6 \cdot \SI{4}{\second} + 2 \cdot (\SI{4}{\second})^2 = \SI{11}{\meter}
+                    \end{equation*}
+                    \begin{equation*}
+                        \colorbox{myblue!70}{$s(t_1) = \SI{11}{\meter}$}
+                    \end{equation*}
+              \item \begin{equation*}
+                        s(t_2) = 3 - 6t + 2t^2 = 3 - 6 \cdot \SI{10}{\second} + 2 \cdot (\SI{10}{\second})^2 = \SI{143}{\meter}
+                    \end{equation*}
+                    \begin{equation*}
+                        \colorbox{myblue!70}{$s(t_2) = \SI{143}{\meter}$}
+                    \end{equation*}
+          \end{enumerate}
+    \item
+          La velocità si calcola come
+          \begin{equation*}
+              \boxed{v(t) = \frac{ds}{dt}}
+          \end{equation*}
+          \begin{equation*}
+              v(t) = \frac{ds}{dt} = \frac{d}{dt} (3 - 6t + 2t^2) = -6 + 4t
+          \end{equation*}
+          La velocità media si calcola come
+          \begin{equation*}
+              \boxed{v_{\text{med}} = \overline{v} = \frac{\Delta s}{\Delta t}}
+          \end{equation*}
+          \begin{enumerate}[label=\arabic*)]
+              \item
+                    \begin{equation*}
+                        v(t_1) = -6 + 4t = -6 + 4 \cdot \SI{4}{\second} = \SI{10}{\meter\per\second}
+                    \end{equation*}
+                    \begin{equation*}
+                        \colorbox{myblue!70}{$v(t_1) = \SI{10}{\meter\per\second}$}
+                    \end{equation*}
+              \item
+                    \begin{equation*}
+                        v(t_2) = -6 + 4t = -6 + 4 \cdot \SI{10}{\second} = \SI{34}{\meter\per\second}
+                    \end{equation*}
+                    \begin{equation*}
+                        \colorbox{myblue!70}{$v(t_2) = \SI{34}{\meter\per\second}$}
+                    \end{equation*}
+              \item
+                    \begin{equation*}
+                        v_{\text{med}} = \overline{v} = \frac{s(t_2) - s(t_1)}{t_2 -t_1} = \frac{\SI{143}{\meter} - \SI{11}{\meter}}{\SI{10}{\second} - \SI{4}{\second}} = \frac{\SI{132}{\meter}}{\SI{6}{\second}} = \SI{22}{\meter\per\second}
+                    \end{equation*}
+                    \begin{equation*}
+                        \colorbox{myblue!70}{$v_{\text{med}} = \overline{v} = \SI{22}{\meter\per\second}$}
+                    \end{equation*}
+          \end{enumerate}
+    \item L'accelerazione media si calcola come
+          \begin{equation*}
+              \boxed{a_{\text{med}} = \overline{a} = \frac{\Delta v}{\Delta t}}
+          \end{equation*}
+          \begin{equation*}
+              a_{\text{med}} = \overline{a} = \frac{v(t_2) - v(t_1)}{t_2 -t_1} = \frac{\SI{34}{\meter\per\second} - \SI{10}{\meter\per\second}}{\SI{10}{\second} - \SI{4}{\second}} = \frac{\SI{24}{\meter\per\second}}{\SI{6}{\second}} = \SI{4}{\meter\per\second\squared}
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$a_{\text{med}} = \overline{a} = \SI{4}{\meter\per\second\squared}$}
+          \end{equation*}
+\end{enumerate}
+\paragraph*{Esercizio C2}
+\subparagraph*{Testo}
+Un treno percorre i \SI{110}{\kilo\meter} che separano Bologna e Rimini ad una velocità costante di \SI{80}{\kilo\meter\per\hour}. Se transita da Bologna alle ore 17:00, a che ora arriverà a Rimini?
+A che ora il treno incontrerà un secondo treno, che trovandosi alle ore 17:00 a Rimini, viaggia verso Bologna a velocità doppia del primo?
+\subparagraph*{Dati}
+\begin{itemize}
+    \item Distanza tra Bologna e Rimini: \( s = \SI{110}{\kilo\meter} \)
+    \item Velocità del primo treno (Bologna-Rimini): \( v_1 = \SI{80}{\kilo\meter\per\hour} \)
+    \item Velocità del secondo treno (Rimini-Bologna): \( v_2 = 2 \times v_1 = - \SI{160}{\kilo\meter\per\hour} \)
+    \item Ora di partenza da Bologna e Rimini: \( t_0 = \) ore 17:00
+\end{itemize}
+
+\subparagraph*{Obiettivi}
+\begin{enumerate}[label=\alph*)]
+    \item Determinare l'orario di arrivo \( t_1 \) del primo treno a Rimini.
+    \item Calcolare l'istante \( t_2 \) in cui i due treni si incontrano.
+\end{enumerate}
+
+\subparagraph*{Svolgimento}
+\begin{enumerate}[label=\alph*)]
+    \item Per determinare l'orario di arrivo \( t_1 \) del primo treno a Rimini, è necessario calcolare il tempo \( \Delta t \) impiegato dal treno per percorrere la distanza \( s \) che separa le due città.
+          \begin{equation*}
+              \boxed{\Delta t = \frac{\Delta s}{v}}
+          \end{equation*}
+          \begin{equation*}
+              \Delta t = \frac{\Delta s}{v} = \frac{\SI{110}{\kilo\meter}}{\SI{80}{\kilo\meter\per\hour}} = \SI{1.375}{\hour} = \SI{1}{\hour} \SI{22.5}{\minute} = \SI{82.5}{\minute}
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$\Delta t = \SI{1}{\hour} \SI{22.5}{\minute}$}
+          \end{equation*}
+          Per determinare l'orario di arrivo \( t_1 \) del primo treno a Rimini, è necessario sommare il tempo \( \Delta t \) impiegato dal treno per percorrere la distanza \( s \) che separa le due città all'ora di partenza \( t_0 \).
+          \begin{equation*}
+              \boxed{t_1 = t_0 + \Delta t}
+          \end{equation*}
+          \begin{equation*}
+              t_1 = t_0 + \Delta t = \SI{17.0}{\hour} + \SI{1}{\hour} \SI{22.5}{\minute} = \SI{18}{\hour} \SI{22.5}{\minute}
+          \end{equation*}
+    \item Per determinare l'istante \( t_2 \) in cui i due treni si incontrano, è necessario mettere a sistema le equazioni orarie dei due treni.
+          \begin{equation*}
+              \begin{cases}
+                  s_1(t) = s_0 + v_1 \cdot t \\
+                  s_2(t) = s_0 + v_2 \cdot t
+              \end{cases}
+          \end{equation*}
+          \begin{equation*}
+              \begin{cases}
+                  s_1(t) = \SI{80}{\kilo\meter} \cdot t \\
+                  s_2(t) = \SI{110}{\kilo\meter} - \SI{160}{\kilo\meter} \cdot t
+              \end{cases}
+          \end{equation*}
+          Ponendo \( s_1(t) = s_2(t) \) si ottiene
+          \begin{equation*}
+              \SI{80}{\kilo\meter} \cdot t = \SI{110}{\kilo\meter} - \SI{160}{\kilo\meter} \cdot t
+          \end{equation*}
+          \begin{equation*}
+              \SI{240}{\kilo\meter} \cdot t = \SI{110}{\kilo\meter}
+          \end{equation*}
+          \begin{equation*}
+              t = \frac{\SI{110}{\kilo\meter}}{\SI{240}{\kilo\meter}} = \SI{0.458}{\hour} = \SI{27.5}{\minute}
+          \end{equation*}
+          \begin{equation*}
+              \colorbox{myblue!70}{$t = \SI{27.5}{\minute}$}
+          \end{equation*}
+          \begin{figure}[H]
+              \centering
+              \begin{tikzpicture}[scale = 1,
+                      declare function={
+                              f(\x) = 80*\x + 1;
+                              g(\x) = 110 -160*\x;
+                          }]
+                  \begin{axis}
+                      [
+                          xlabel={t [h]},
+                          ylabel={Distanza da Bologna [km]},
+                          xmin=-1, xmax=1.5,
+                          ymin=-10, ymax=120,
+                          grid=both,
+                          axis lines=middle,
+                          axis line style=->,
+                          grid style={line width=.1pt, draw=gray!10},
+                          major grid style={line width=.2pt,draw=gray!50},
+                          minor tick num=3,
+                          enlargelimits={abs=0.5},
+                          xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+                          ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+                          samples=100,
+                          unbounded coords=jump,
+                          legend pos=south east
+                      ]
+                      \addplot[domain=0:1.5, ultra thick, smooth, color=myblue]{f(x)};
+                      \addplot[domain=0:1.5, ultra thick, smooth, color=red]{g(x)};
+                      \filldraw[black] (axis cs:0.458,{f(0.458)}) circle (2pt) node[right] {Punto di Incontro};
+                      \addlegendentry{$s_1(t)$}
+                      \addlegendentry{$s_2(t)$}
+                  \end{axis}
+              \end{tikzpicture}
+              \caption{Diagramma Spazio-Tempo per l'Incontro dei Due Treni}
+          \end{figure}
+\end{enumerate}
+
+\paragraph*{Esercizio C3 – Risoluzione in termini letterali}
+\subparagraph*{Testo}
+Due punti materiali A e B si muovono di moto uniforme lungo la stessa traiettoria, partendo da due
+posizioni distinte all’istante iniziale, con leggi orarie \( s_A(t) \) e \( s_B(t) \). Discutere sotto quali condizioni i punti
+materiali si incontrano lungo la loro traiettoria. Suggerimento: sfruttare l’approccio grafico.
+\subparagraph*{Dati}
+\begin{itemize}
+    \item Moto uniforme
+          \begin{itemize}
+              \item $s_A(t) = s_{A0} + v_A \cdot t$
+              \item $s_B(t) = s_{B0} + v_B \cdot t$
+          \end{itemize}
+\end{itemize}
+\subparagraph*{Obiettivo}
+\begin{enumerate}[label=\alph*)]
+    \item Determinare le condizioni affinché i punti materiali si incontrino lungo la loro traiettoria.
+\end{enumerate}
+
+\subparagraph*{Svolgimento}
+\begin{enumerate}[label=\alph*)]
+    \item I punti materiali si incontrano lungo la loro traiettoria quando le due equazioni orarie si intersecano.
+          In termini di leggi orarie basta porre $s_A(t) = s_B(t)$ e risolvere l'equazione rispetto a $t$.
+\end{enumerate}
+
+\paragraph*{Esercizio C4 - \textcolor{red}{\textbf{Importante}}}
+\subparagraph*{Testo}
+Un punto materiale si muove lungo una circonferenza di raggio \( R = \SI{40}{\centi\meter} \) posta su un piano orizzontale. All'istante \( t_0 = \SI{0}{\second} \), il punto possiede la velocità \( v_0 = \SI{2}{\meter\per\second} \). Si osserva che dopo aver compiuto un giro la velocità vale \( v_1 = \SI{0.3}{\meter\per\second} \). Nell'ipotesi in cui la diminuzione della velocità sia dovuta ad una decelerazione tangenziale costante, calcolare:
+\begin{enumerate}[label=\alph*)]
+    \item l'accelerazione tangenziale,
+    \item il tempo necessario al punto per compiere un giro,
+    \item l'accelerazione centripeta dopo mezzo giro.
+\end{enumerate}
+\subparagraph*{Dati}
+\begin{itemize}
+    \item Moto circolare uniformemente accelerato
+          \begin{itemize}
+              \item $R = \SI{40}{\centi\meter}$
+              \item $t_0 = \SI{0}{\second}$
+              \item $v_0 = \SI{2}{\meter\per\second}$
+              \item $v_1 = \SI{0.3}{\meter\per\second}$ dopo un giro $N_1$
+          \end{itemize}
+\end{itemize}
+\subparagraph*{Obiettivo}
+\begin{enumerate}[label=\alph*)]
+    \item $a_t = ?$
+    \item $t_1 = ?$
+    \item $a_c(t_2) \text{ dopo mezzo giro } = ?$
+\end{enumerate}
+
+\subparagraph*{Svolgimento}
+Per prima cosa disegniamo il problema
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale = 2]
+        \pgfmathsetmacro{\rTheta}{360}
+        \small
+        \pgfmathsetmacro{\cosTheta}{cos(\rTheta)}
+        \pgfmathsetmacro{\sinTheta}{sin(\rTheta)}
+        \draw[->, thick] (0,-1.5) -- (0,1.5) node[left] {$y$};
+        \draw[->, thick] (-1.5,0) -- (1.5,0) node[below] {$x$};
+        \draw[thick](0,0) circle (1);
+        \node at (0.2,0.2) {$\theta_0$};
+        \filldraw[black] (1,0) circle (1pt) node[anchor=south west] {$P(t_0)$};
+        \draw[-latex, ultra thick, myblue] (1, 0) -- (1, 1) node [anchor=north west]{$v_{0t}$};
+        \draw[-latex, ultra thick, red] (1, 0) -- (1, -0.4) node [anchor=north west]{$a_{t}$};
+    \end{tikzpicture}
+    \begin{tikzpicture}[scale = 2]
+        \pgfmathsetmacro{\rTheta}{360}
+        \small
+        \pgfmathsetmacro{\cosTheta}{cos(\rTheta)}
+        \pgfmathsetmacro{\sinTheta}{sin(\rTheta)}
+        \draw[->, thick] (0,-1.5) -- (0,1.5) node[left] {$y$};
+        \draw[->, thick] (-1.5,0) -- (1.5,0) node[below] {$x$};
+        \draw[thick](0,0) circle (1);
+        \draw[fill=myblue, opacity=0.2] (0.4,0) arc (0:\rTheta:0.4);
+        \draw[-latex, thick, myblue] (0.4,0) arc (0:\rTheta:0.4);
+        \node at (0.2,-0.2) {$\theta_1$};
+        \filldraw[black] (1,0) circle (1pt) node[anchor=south west] {$P(t_1)$};
+        \draw[-latex, ultra thick, myblue] (1, 0) -- (1, 0.5) node [anchor=north west]{$v_{0t}$};
+        \draw[-latex, ultra thick, red] (1, 0) -- (1, -0.4) node [anchor=north west]{$a_{t}$};
+    \end{tikzpicture}
+    \caption{Schematizzazione del moto circolare uniformemente decelerato}
+\end{figure}
+Ci sono possibili approcci alla risoluzione del punto a) del problema entrambi da sapere, uno è nettamente più intuitivo dell'altro sinceramente
+\begin{enumerate}[label=\arabic*]
+    \item Interpretazione del moto circolare uniformemente accelerato come un semplice moto rettilineo uniformemente accelerato
+          \begin{enumerate}[label=\alph*)]
+              \item \textbf{Calcolo dell'accelerazione tangenziale:} \\
+                    Per determinare l'accelerazione tangenziale, consideriamo le seguenti relazioni cinematiche per descrivere il moto circolare uniformemente accelerato:
+                    \begin{equation*}
+                        \begin{cases}
+                            \text{velocità angolare: } \omega(t) = \omega_0 + \alpha t \\
+                            \text{angolo spazzato: } \theta(t) = \theta_0 + \omega_0 t + \frac{1}{2} \alpha t^2
+                        \end{cases}
+                    \end{equation*}
+                    \begin{equation*}
+                        \begin{cases}
+                            \omega(t) = \omega_0 + \alpha t \\
+                            \theta(t) = \theta_0 + \omega_0 t + \frac{1}{2} \alpha t^2
+                        \end{cases}
+                    \end{equation*}
+                    Ricordiamo
+                    \begin{equation*}
+                        \boxed{v = \omega \cdot R} \implies \boxed{\omega = \frac{v}{R}}
+                    \end{equation*}
+                    \begin{equation*}
+                        \omega_0 = \frac{v_0}{R} = \frac{\SI{2}{\meter\per\second}}{\SI{0.4}{\meter}} = \SI{5}{\radian\per\second}
+                    \end{equation*}
+                    \begin{equation*}
+                        \omega_1 = \frac{v_1}{R} = \frac{\SI{0.3}{\meter\per\second}}{\SI{0.4}{\meter}} = \SI{0.75}{\radian\per\second}
+                    \end{equation*}
+                    \begin{equation*}
+                        \boxed{a_t = \alpha \cdot R} \implies \boxed{\alpha = \frac{a_t}{R}}
+                    \end{equation*}
+                    Consideriamo \( \alpha \) in funzione dell'angolo \( \theta \), anziché del tempo, e procediamo con la manipolazione dell'equazione differenziale:
+                    \begin{equation*}
+                        \alpha = \frac{d\omega}{dt}
+                    \end{equation*}
+                    Posso moltiplicare e dividere per \( \frac{d\theta}{d\theta} \) in quanto è uguale a 1
+                    \begin{equation*}
+                        \alpha = \frac{d\omega}{dt} \cdot \frac{d\theta}{d\theta}  \implies \alpha = \frac{d\omega}{d\theta} \cdot \frac{d\theta}{dt}
+                    \end{equation*}
+                    Nota che
+                    \begin{equation*}
+                        \frac{d\theta}{dt} = \omega
+                    \end{equation*}
+                    Quindi riprendendo l'equazione precedente
+                    \begin{equation*}
+                        \alpha = \frac{d\omega}{d\theta} \cdot \underline{\frac{d\theta}{dt}} \implies \alpha = \frac{d\omega}{d\theta} \cdot \underline{\omega}
+                    \end{equation*}
+                    \begin{equation*}
+                        \alpha = \frac{d\omega}{d\theta} \cdot \omega
+                    \end{equation*}
+                    La tratto come un'equazione differenziale
+                    \begin{equation*}
+                        \alpha \cdot d\theta = \omega \cdot d\omega
+                    \end{equation*}
+
+                    Integriamo questa equazione differenziale tra gli estremi di \( \omega_0 \) e \( \omega_1 \) e di \( \theta_0 \) e \( \theta_1 \) (con \( \theta_0 = 0 \) rad e \( \theta_1 = 2\pi \) rad)
+                    \begin{equation*}
+                        \int_{\omega_0}^{\omega_1} \alpha \cdot d\theta = \int_{\omega_0}^{\omega_1} \omega \cdot d\omega
+                    \end{equation*}
+                    \begin{equation*}
+                        \alpha \cdot \int_{0}^{2\pi} d\theta = \int_{\omega_0}^{\omega_1} \omega \cdot d\omega
+                    \end{equation*}
+                    \begin{equation*}
+                        \alpha \cdot \bigg| \theta \bigg|_{0}^{2\pi} = \frac{1}{2} \bigg| \omega^2 \bigg|_{\omega_0}^{\omega_1}
+                    \end{equation*}
+                    \begin{equation*}
+                        \alpha \cdot (2\pi - 0) = \frac{1}{2} \left(\omega_1^2 - \omega_0^2 \right)
+                    \end{equation*}
+                    \begin{equation*}
+                        \alpha \cdot 2\pi = \frac{1}{2} \omega_1^2 - \frac{1}{2} \omega_0^2
+                    \end{equation*}
+                    \begin{equation*}
+                        \alpha \cdot 2\pi = \frac{0.75^2}{2} - \frac{5^2}{2}
+                    \end{equation*}
+                    \begin{equation*}
+                        \alpha = -\frac{24.0625}{4\pi} \approx \SI{-1.92}{\radian\per\second\squared}
+                    \end{equation*}
+                    We made it boys, adesso possiamo calcolare l'accelerazione tangenziale easy
+                    \begin{equation*}
+                        a_t = \alpha \cdot R = -\frac{24.0625}{4\pi} \cdot \SI{0.4}{\meter} \approx \SI{-0.78}{\meter\per\second\squared}
+                    \end{equation*}
+                    \begin{equation*}
+                        \colorbox{myblue!70}{$a_t = \SI{-0.78}{\meter\per\second\squared}$}
+                    \end{equation*}
+              \item \textbf{Calcolo del tempo per un giro completo:} \\
+                    Per determinare il tempo \(t_1\) necessario al punto per compiere un giro, consideriamo le seguenti relazioni cinematiche per descrivere il moto circolare uniformemente accelerato, è uguale quale delle due si usa, io uso la più semplice:
+                    \begin{equation*}
+                        \omega(t_1) = \omega_0 + \alpha t_1
+                    \end{equation*}
+                    \begin{equation*}
+                        t_1 = \frac{\omega(t_1) - \omega_0}{\alpha}
+                    \end{equation*}
+                    \begin{equation*}
+                        t_1 = \frac{\omega_1- \omega_0}{\alpha} = \frac{\SI{0.75}{\radian\per\second} - \SI{5}{\radian\per\second}}{\SI{-1.92}{\radian\per\second\squared}} = \SI{2.19}{\second}
+                    \end{equation*}
+                    \begin{equation*}
+                        \colorbox{myblue!70}{$t_1 = \SI{2.19}{\second}$}
+                    \end{equation*}
+              \item \textbf{Calcolo dell'accelerazione centripeta dopo mezzo giro:}
+                    \begin{equation}
+                        \boxed{a_c = \frac{v^2}{R}} \implies \boxed{a_c = \omega^2 \cdot R}
+                    \end{equation}
+                    Non ho il tempo per fare mezzo giro ma ho le leggi orarie quindi, mezzo giro è \( \theta = \pi \) rad
+                    \begin{equation*}
+                        \begin{cases}
+                            \omega(t) = \omega_0 + \alpha t \\
+                            \theta(t) = \theta_0 + \omega_0 t + \frac{1}{2} \alpha t^2
+                        \end{cases}
+                    \end{equation*}
+                    \begin{equation*}
+                        \pi = \theta_0 + \omega_0 t + \frac{1}{2} \alpha t_2^2
+                    \end{equation*}
+                    Sostituisco i valori
+                    \begin{equation*}
+                        \pi = 0 + 5 \cdot t_2 + \frac{1}{2} \cdot \left(-\frac{24.0625}{4\pi}\right) \cdot t_2^2
+                    \end{equation*}
+                    Ottengo
+                    \begin{equation*}
+                        t_2^2 - \frac{10}{\pi} \cdot t_2 - \frac{2}{\pi} = 0
+                    \end{equation*}
+                    Risolvo l'equazione di secondo grado
+                    \begin{equation*}
+                        t2_{1,2} = \frac{\frac{10}{\pi} \pm \sqrt{\left(\frac{10}{\pi}\right)^2 + 4 \cdot \frac{2}{\pi}}}{2} = \frac{\frac{10}{\pi} \pm \sqrt{\frac{100}{\pi^2} + \frac{8}{\pi}}}{2} = \frac{\frac{10}{\pi} \pm \sqrt{\frac{100 + 8\pi}{\pi^2}}}{2} = \frac{\frac{10}{\pi} \pm \frac{\sqrt{100 + 8\pi}}{\pi}}{2} = \frac{10 \pm \sqrt{100 + 8\pi}}{2\pi}
+                    \end{equation*}
+                    Ottengo due valori positivi
+                    \begin{align*}
+                         & t2_1 = \frac{10 + \sqrt{100 + 8\pi}}{2\pi} \approx \SI{4.42}{\second}
+                         & t2_2 = \frac{10 - \sqrt{100 + 8\pi}}{2\pi} \approx \SI{0.73}{\second}
+                    \end{align*}
+                    \(t2_1\) Non è accetabile in quanto avrei che \(t_1 = 2.19\) il tempo per fare un giro completo è minore del tempo per fare mezzo giro
+                    \begin{equation*}
+                        \omega(t_2)= \omega_0 + \alpha t_2 = 5 + (-1.92) \cdot 0.73 = \SI{3.58}{\radian\per\second}
+                    \end{equation*}
+                    \begin{equation*}
+                        a_c(t_2) = \omega^2(t_2) \cdot R = \SI{3.58}{\radian\per\second} \cdot \SI{0.4}{\meter} = \SI{5.14}{\meter\per\second\squared}
+                    \end{equation*}
+                    \begin{equation*}
+                        \colorbox{myblue!70}{$a_c(t_2) = \SI{5.14}{\meter\per\second\squared}$}
+                    \end{equation*}
+          \end{enumerate}
+    \item Interpretazione delle leggi del moto circolare uniformemente accelerato in funzione dell'angolo spazzato e non del tempo
+
+          \begin{enumerate}[label=\alph*)]
+              \item \textbf{Calcolo dell'accelerazione tangenziale:} \\
+                    \begin{equation*}
+                        \begin{cases}
+                            \text{spazio percorso : } s(t) = s_0 + v_0 t + \frac{1}{2} a_t t^2 \\
+                            \text{velocità tangenziale : } v(t) = v_0 + a_t \cdot t
+                        \end{cases}
+                    \end{equation*}
+                    L'unica cosa che mi devo ricordare è
+                    \begin{equation*}
+                        \boxed{a_t = \frac{\Delta v}{\Delta t}} \implies \boxed{a_t = \frac{v_1 - v_0}{t_1 - t_0}}
+                    \end{equation*}
+                    Nel nostro caso
+                    \begin{equation*}
+                        a_t = \frac{v_1 - v_0}{t_1} = \frac{\SI{0.3}{\meter\per\second} - \SI{2}{\meter\per\second}}{t_1} = \frac{\SI{-1.7}{\meter\per\second}}{t_1}
+                    \end{equation*}
+                    Risolvo semplicemente il sistema e trovo \(a_t\) e \(t_1\)
+                    \begin{equation*}
+                        \begin{cases}
+                            2\pi R=  v_0 \cdot t_1 + \frac{1}{2} \cdot a_t \cdot t_1^2 \\
+                            v_1 = v_0 + a_t \cdot t_1
+                        \end{cases}
+                    \end{equation*}
+                    manipolazioni algebriche
+                    \begin{equation*}
+                        \begin{cases}
+                            t_1 = \frac{4\pi R}{v_1+v_0} \\
+                            a_t = \frac{v_1 - v_0}{t_1}
+                        \end{cases}
+                    \end{equation*}
+                    Sostituisco i valori
+                    \begin{equation*}
+                        \begin{cases}
+                            t_1 = \frac{4\pi \cdot \SI{0.4}{\meter}}{\SI{0.3}{\meter\per\second} + \SI{2}{\meter\per\second}} \approx \SI{2.19}{\second} \\
+                            a_t = \frac{\SI{0.3}{\meter\per\second} - \SI{2}{\meter\per\second}}{\SI{2.19}{\second}} \approx \SI{-0.78}{\meter\per\second\squared}
+                        \end{cases}
+                    \end{equation*}
+                    \begin{equation*}
+                        \colorbox{myblue!70}{$a_t = \SI{-0.78}{\meter\per\second\squared}$}
+                    \end{equation*}
+              \item lo abbiamo trovato \(t_1 = T = \SI{2.19}{\second}\)
+              \item il resto è uguale ma continui a usare i le leggi del moto rettilineo uniformemente accelerato se ti vuoi risparmiare dei calcoli
+          \end{enumerate}
+\end{enumerate}
+
+\end{document}

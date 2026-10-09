@@ -1,0 +1,861 @@
+\documentclass{book}
+
+\title{Analisi Matematica T-A}
+\author{Michele Mazza}
+\date{November 2023}
+
+
+% Pacchetti di Codifica e Lingua
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+
+% Pacchetti Grafici e Diagrammi
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{angles,quotes,arrows.meta, positioning}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% Pacchetti Matematici
+\usepackage{amsmath, amssymb, amsthm}
+
+% Pacchetti per Tabelle e Unità di Misura
+\usepackage{geometry}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{colortbl}
+
+% Pacchetti per Layout e Formattazione
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{microtype}
+
+% Altri Pacchetti Utili
+\usepackage{mdframed}
+\usepackage{animate}
+
+% Pacchetto enumitem
+\usepackage{enumitem}
+
+% Definizioni dei Colori
+\definecolor{lightblue}{HTML}{9cd8fc}
+\definecolor{myblue}{HTML}{139FE9}
+
+% Definizione del comando \norm
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+%\font\nullfont=cmr10 
+
+% Ambienti Personalizzati
+\newmdtheoremenv[
+    backgroundcolor=orange!10,
+    linecolor=myblue,
+    linewidth=0pt,
+    leftmargin=0pt,
+    rightmargin=0pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+    innertopmargin=10pt,
+    innerbottommargin=10pt,
+    nobreak
+]{curiosity}{Curiosità}
+
+\newmdtheoremenv[
+    font=\normalfont\small,
+    linewidth=0pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+]{example}{Esempio}
+
+\newmdtheoremenv[
+  backgroundcolor=lightblue,
+  linecolor=myblue,
+  linewidth=1.5pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt,
+  nobreak
+]{theorem}{Teorema}
+
+\newmdtheoremenv[
+  backgroundcolor=gray!10,
+  linewidth=0pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt,
+  nobreak
+]{definition}{Definizione}
+
+\newmdtheoremenv[
+  backgroundcolor=gray!10,
+  linecolor=myblue,
+  linewidth=1.5pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt,
+  nobreak
+]{proposition}{Proposizione}
+
+% Configurazioni di fancyhdr
+\pagestyle{fancy}
+\fancyhf{} % Pulisce tutti i campi
+\fancyhead[LE,RO]{\thepage} % Numero di pagina
+\fancyhead[RE]{\nouppercase{\leftmark}} % Titolo del capitolo
+\fancyhead[LO]{\nouppercase{\rightmark}} % Titolo della sezione
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\geometry{a4paper, left=20mm, right=20mm, top=20mm, bottom=20mm}
+
+% Pacchetto Hyperref (inserito per ultimo)
+\usepackage{hyperref}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+\tableofcontents
+\mainmatter
+
+\chapter{Vettori e numeri complessi}
+
+\section{Coordinate polari}
+Un punto \(P\) di coordinate \((x , y)\) nel piano cartesiano può essere individuato anche mediante le sue \textbf{coordinate polari} \(r, \theta\).
+\begin{definition}[Coordinate polari]
+    \((r, \theta)\) sono così definiti,
+    \begin{itemize}
+        \item \textbf{\(r\)} è la distanza del punto \(P\) dall'origine \(O\).
+        \item \textbf{\( \theta \)} è l'angolo in radianti, misurato rispetto al semiasse positivo delle ascisse, che la linea congiungente l'origine \( O \) e il punto \( P \) forma con questo semiasse. L'angolo \( \theta \) è definito modulo \( 2\pi \).\footnote{La notazione "modulo \( 2\pi \)" indica che gli angoli sono misurati in un intervallo da 0 a \( 2\pi \) radianti. Se un angolo supera \( 2\pi \) radianti, viene ridotto sottraendo multipli di \( 2\pi \) fino a rientrare in questo intervallo. Questo è analogo a considerare gli angoli in un cerchio, dove \( 2\pi \) radianti corrispondono a un giro completo di 360 gradi.}
+    \end{itemize}
+    \textbf{Osservazione :}
+    Questo sistema è particolarmente utile per descrivere posizioni e movimenti in scenari circolari o rotazionali.
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-2.5,0) -- (2.5,0);
+        \draw[->] (0,-2.5) -- (0,2.5) node[above] {$y$};
+        \draw[->, fill=lightblue] (1.5,0) arc (0:45:1.5) -- (0,0) -- cycle;
+        \draw[dashed, myblue] (45:2.9) -- (45:2.9 |- 0,0);
+        \draw[dashed, myblue] (45:2.9) -- (45:2.9 -| 0,0);
+        \draw[-, thick] (0,0) -- (2,2) node[above right]{$P = ( x , y )$};
+        \fill [myblue](2,2) circle (2pt);
+        \node at (0,2)[left]{$y$};
+        \node at (2,0)[below]{$x$};
+        \node at (1.2, 1.2) [above] {$r$};
+        \node at(1.4, 0.6)[above right]{$\theta$};
+    \end{tikzpicture}
+    \caption{Coordinate cartesiane e polari nel piano}
+\end{figure}
+\(\theta\) viene solitamente scelto nell'intervallo \((-\pi,\pi]\).
+\subsection{Passaggio da coordinate polari \texorpdfstring{\((r, \theta)\)}{(r, theta)} a cartesiane \texorpdfstring{\((x, y)\)}{(x, y)}}
+\begin{theorem}
+    Dato \(P = (r, \theta)\)
+    \[x = r \cos{\theta}\]
+    \[y = r \sin{\theta}\]
+\end{theorem}
+\subsection{Passaggio da coordinate cartesiane \texorpdfstring{\((x, y)\)}{(x, y)} a coordinate polari \texorpdfstring{\((r, \theta)\)}{(r, theta)}}
+\begin{theorem}
+    Dato \(P = (x, y)\) , scelto \(\theta\) nell'intervallo \((-\pi,\pi]\),
+    \footnote[1]{Rircordiamo che \(\tan{\theta}=\displaystyle\frac{\sin{\theta}}{\cos{\theta}} = \displaystyle\frac{y}{x} \Rightarrow \theta = \arctan{\displaystyle\frac{y}{x}}\)}
+    \begin{align*}
+        r = \sqrt{x^2 + y^2}\ ,\  & \ \theta\ =\ \begin{cases}
+                                                     \displaystyle \arctan{\frac{y}{x}}       & \text{, se } x > 0            \\[10pt]
+                                                     \displaystyle \arctan{\frac{y}{x} + \pi} & \text{, se } x < 0 , y \geq 0 \\[10pt]
+                                                     \displaystyle \arctan{\frac{y}{x} - \pi} & \text{, se } x < 0 , y < 0    \\[10pt]
+                                                     \displaystyle \frac{\pi}{2}              & \text{, se } x = 0 , y > 0    \\[10pt]
+                                                     -\displaystyle \frac{\pi}{2}             & \text{, se } x = 0 , y < 0    \\
+                                                 \end{cases}
+    \end{align*}
+\end{theorem}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale = 0.5]
+        \small
+        \draw[->] (-2.5,0) -- (2.5,0);
+        \draw[->] (0,-2.5) -- (0,2.5);
+        \draw[-latex, fill=lightblue, opacity=0.5pt] (0,-1.5) arc (-90:90:1.5) -- (0,0) -- cycle;
+        \node at (0,-2.5)[below]{$\displaystyle\arctan{\frac{y}{x}} \text{, se } x > 0  $};
+    \end{tikzpicture}
+    \begin{tikzpicture}[scale = 0.5]
+        \small
+        \draw[->] (-2.5,0) -- (2.5,0);
+        \draw[->] (0,-2.5) -- (0,2.5);
+        \draw[-latex, fill=lightblue, opacity=0.5pt] (0,1.5) arc (90:180:1.5) -- (0,0) -- cycle;
+        \node at (0,-2.5)[below]{$\displaystyle\arctan{\frac{y}{x} + \pi} \text{, se } x < 0 , y \geq 0  $};
+    \end{tikzpicture}
+    \begin{tikzpicture}[scale = 0.5]
+        \small
+        \draw[->] (-2.5,0) -- (2.5,0);
+        \draw[->] (0,-2.5) -- (0,2.5);
+        \draw[-latex, fill=lightblue, opacity=0.5pt] (-1.5,0) arc (180:270:1.5) -- (0,0) -- cycle;
+        \node at (0,-2.5)[below]{$\displaystyle\arctan{\frac{y}{x} - \pi} \text{, se } x < 0 , y < 0  $};
+    \end{tikzpicture}
+    \caption{Passaggio da coordinate cartesiane a polari}
+\end{figure}
+\section{Coordinate cilindriche e sferiche}
+\subsection{Coordinate cilindriche}
+\begin{figure}[H]
+    \def\rotx{70}
+    \def\rotz{110}
+    \centering
+    \tdplotsetmaincoords{\rotx}{\rotz}
+    \begin{tikzpicture}[tdplot_main_coords][scale = 0.5]
+        \tikzset{every node/.style={font=\small}}
+        \draw[dashed,-latex] (0,0,0) -- (6,0,0) node[anchor=north east]{$x$};
+        \draw[dashed,-latex] (0,0,0) -- (0,6,0) node[anchor=north west]{$y$};
+        \draw[dashed,-latex] (0,0,0) -- (0,0,6) node[anchor=south]{$z$};
+        \draw [thick](0,0,0) circle (3);
+        \draw [thick](0,0,4) circle (3);
+        \filldraw[fill=gray, nearly transparent] (-4,-4,4) -- (4,-4,4) --  (4,5,4) -- (-4,5,4) -- (-4,-4,4);
+        \filldraw[fill=gray, nearly transparent] (0,0,4) -- (5.2,6,4) --  (5.2,6,0) -- (0,0,0) -- (0,0,4);
+        \draw [thick, myblue] (0,0,0) -- (2,2.25,4);
+        \node at (2,2.25,4.5)[color=myblue,above] {$P = ( r, \varphi, z )$};
+        \filldraw [color=myblue](2,2.25,4) circle (0.075cm);
+
+        % manual edges
+        \draw [dotted](1.9,-2.34,0) -- (1.9,-2.34,4) node[midway, left]{};
+        \draw [dotted](-1.9,2.35,0) -- (-1.9,2.35,4);
+        % automatic edges !
+        \pgfcoordinate{edge1_top}{ \pgfpointcylindrical{\rotz}{3}{4} };
+        \pgfcoordinate{edge1_bottom}{ \pgfpointcylindrical{\rotz}{3}{0} };
+        \draw[thick] (edge1_top) -- (edge1_bottom);
+        \pgfcoordinate{edge2_top}{ \pgfpointcylindrical{\rotz+180}{3}{4} };
+        \pgfcoordinate{edge2_bottom}{ \pgfpointcylindrical{\rotz+180}{3}{0} };
+        \draw[thick] (edge2_top) -- (edge2_bottom);
+    \end{tikzpicture}
+    \caption{Coordinate cilindriche}
+\end{figure}
+\begin{theorem}
+    Dato \(P = (r, \varphi, z)\)
+    \[x = r \cos{\varphi}\]
+    \[y = r \sin{\varphi}\]
+    \[z = z\]
+\end{theorem}
+\subsection{Coordinate sferiche}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \tikzstyle{every node}=[font=\small]
+        % Definisci il raggio
+        \def\r{3}
+        % Vettore Bloch
+        \draw[thick, myblue] (0, 0) node[circle, fill, inner sep=1] (orig) {} -- (\r/3, \r/2) node[circle, fill, inner sep=1,] (a) {};
+        \node at (\r/3, \r/2)[myblue,above right] {$P = ( r, \varphi, \theta )$};
+        \node at (\r/4, \r/3) [color = myblue, above left] {$r$};
+        \draw[dashed] (orig) -- (\r/3, -\r/5) node (phi) {} -- (a);
+        % Sfera con ombreggiatura
+        \shade[ball color = gray, opacity = 0.2] (orig) circle (\r);
+        \draw[dashed] (orig) ellipse (\r{} and \r/3);
+        % Assi
+        \draw[->] (orig) -- ++(-\r/5, -\r/3) node[below] (x) {$x$};
+        \draw[->] (orig) -- ++(\r, 0) node[right] (y) {$y$};
+        \draw[->] (orig) -- ++(0, \r) node[above] (z) {$z$};
+        % Angoli
+        \pic [draw=myblue, text=myblue, ->, "$\theta$"] {angle = x--orig--phi};
+        \pic [draw=myblue, text=myblue, <-, "$\varphi$", angle eccentricity=1.4] {angle = a--orig--z};
+    \end{tikzpicture}
+    \caption{Coordinate sferiche nella sfera di Bloch}
+\end{figure}
+\begin{theorem}
+    Dato \(P = (r, \varphi, \theta)\)
+    \[x = r \sin{\varphi} \cos{\theta}\]
+    \[y = r \sin{\varphi} \sin{\theta}\]
+    \[z = r \cos{\varphi}\]
+\end{theorem}
+\section{Vettori nel piano e nello spazio}
+\begin{definition}[Vettore]
+    Un \textbf{vettore} \(\vec{v}=( v_1, v_2, ..., v_n)\) è un segmento orientato, cioè un segmento che ha un \textbf{modulo} (lunghezza) e una \textbf{direzione} (retta su cui giace) e un \textbf{verso} (orientamento).
+    \begin{itemize}
+        \item \textbf{Modulo:} è la lunghezza del vettore.
+        \item \textbf{Direzione:} è la retta su cui giace il vettore.
+        \item \textbf{Verso:} è il senso di percorrenza della retta su cui giace.
+    \end{itemize}
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-2.5,0) -- (2.5,0);
+        \draw[->] (0,-2.5) -- (0,2.5);
+        \draw[-latex, ultra thick, myblue] (0,0) -- (2,2);
+        \node at (2,2)[above right]{$P = ( v_1 , v_2 )$};
+        \node at (1,1)[above left]{$\vec{v}$};
+        \node at (0,0)[below left]{$O$};
+        \node at (0,2)[left]{$y$};
+        \node at (2,0)[below]{$x$};
+    \end{tikzpicture}
+    \begin{tikzpicture}[scale=1]
+        \draw[->] (0,0,0) -- (3,0,0);
+        \draw[->] (0,0,0) -- (0,3,0);
+        \draw[->] (0,0,0) -- (0,0,3);
+        \draw[-latex, ultra thick, myblue] (0,0,0) -- (2,2,1);
+        \node at (0,0,0) [left] {$O$};
+        \node at (0,3,0) [left] {$y$};
+        \node at (3,0,0) [below] {$x$};
+        \node at (0,0,3) [above left] {$z$};
+        \node at (2,2,1) [above right] {$P = (w_1, w_2, w_3)$};
+        \node at (1,1,0.5) [below] {$\vec{w}$};
+    \end{tikzpicture}
+    \caption{Vettori nel piano e nello spazio}
+    \label{fig:vettori}
+\end{figure}
+\subsection{Proprietà dei vettori}
+\begin{definition}[Norma euclidea]
+    La \textbf{norma} di un vettore \(\vec{v}=(v_1, v_2, \ldots, v_n)\) è il numero reale non negativo \(\norm{\vec{v}}\) definito come
+    \[
+        \norm{\vec{v}} = \sqrt{\sum_{i=1}^{n} v_i^2} = \sqrt{v_1^2 + v_2^2 + \ldots + v_n^2}
+    \]
+
+    \noindent Osservazioni e Proprietà:
+    \begin{itemize}
+        \item La norma euclidea misura la "lunghezza" o la "distanza" di un vettore dall'origine nello spazio n-dimensionale.
+        \item Soddisfa la disuguaglianza triangolare: \(\norm{\vec{v} + \vec{w}} \leq \norm{\vec{v}} + \norm{\vec{w}}\) per ogni coppia di vettori \(\vec{v}\) e \(\vec{w}\).
+        \item \(\norm{\vec{v}} = 0\) se e solo se \(\vec{v}\) è il vettore nullo.
+        \item È una funzione omogenea: \(\norm{k\vec{v}} = |k| \norm{\vec{v}}\) per ogni scalare \(k\).
+        \item La norma euclidea deriva direttamente dal prodotto scalare: \(\norm{\vec{v}} = \sqrt{\vec{v} \cdot \vec{v}}\).
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[Versore]
+    Un \textbf{versore} è un vettore di norma 1.
+
+    \noindent Osservazioni e Proprietà:
+    \begin{itemize}
+        \item Un versore è un vettore unitario, cioè ha lunghezza (o norma) pari a 1.
+        \item È spesso utilizzato per indicare una direzione nello spazio, poiché la sua lunghezza unitaria rende facile considerare solo la direzione senza influenze della magnitudine.
+        \item Ogni vettore non nullo può essere trasformato in un versore dividendo il vettore per la sua norma: se \(\vec{v}\) è un vettore, allora \(\frac{\vec{v}}{\norm{\vec{v}}}\) è un versore.
+        \item I versori sono particolarmente utili nella definizione di sistemi di coordinate e nella descrizione di basi ortonormali.
+    \end{itemize}
+\end{definition}
+
+\subsection{Operazioni tra vettori}
+\subsubsection{Somma tra vettori}
+\begin{theorem}[Somma tra vettori]
+    Dati due vettori \(\vec{v}=(v_1, v_2, \ldots, v_n)\) e \(\vec{w}=(w_1, w_2, \ldots, w_n)\), la loro \textbf{somma} è il vettore
+    \[
+        \vec{v}+\vec{w}=(v_1+w_1, v_2+w_2, \ldots, v_n+w_n)
+    \]
+
+    \noindent Osservazioni e Proprietà:
+    \begin{itemize}
+        \item La somma di vettori segue la regola del parallelogramma: la somma di due vettori può essere rappresentata geometricamente come il completamento di un parallelogramma i cui lati sono i due vettori.
+        \item La somma è commutativa, ovvero \(\vec{v} + \vec{w} = \vec{w} + \vec{v}\).
+        \item La somma è anche associativa, cioè \((\vec{v} + \vec{w}) + \vec{u} = \vec{v} + (\vec{w} + \vec{u})\).
+        \item Aggiungendo lo zero vettoriale, \(\vec{0}\), a qualsiasi vettore \(\vec{v}\), il risultato sarà \(\vec{v}\) stesso: \(\vec{v} + \vec{0} = \vec{v}\).
+    \end{itemize}
+\end{theorem}
+
+\begin{figure}[H]
+    \centering
+    \begin{animateinline}[controls,loop]{60}
+        \multiframe{10}{rW=-1.0+0.3}{%
+            \begin{tikzpicture}
+                \draw[->] (-2.5,0) -- (2.5,0);
+                \draw[->] (0,-2.5) -- (0,2.5);
+                \draw[dashed] (-2.5,-2.5) -- (2.5,2.5);
+                \draw[dashed] (-2.5,1) -- (3,1);
+                \draw[dashed] (-2.5+\rW,-2.5) -- (2.5+\rW,2.5);
+                \draw[-latex, ultra thick, myblue] (0,0) -- (1,1); % Vettore v
+                \draw[-latex, ultra thick, myblue] (0,0) -- (\rW,0); % Vettore w con componente orizzontale variabile
+                \draw[-latex, ultra thick, myblue] (0,0) -- ({1+\rW},1); % Vettore v+w
+                \node at (0,0)[below left]{$O$};
+                \node at (0.5,0.5)[above left]{$\vec{v}$};
+                \node at (\rW/2,0)[below]{$\vec{w}$};
+                \node at ({(1+\rW)/2},0.5)[right]{$\vec{v}+\vec{w}$};
+                \node at (2.5,-2.5,0)[below]{$\vec{v}=(1,1)$ $\vec{w}=(\rW,0)$};
+            \end{tikzpicture}%
+        }
+    \end{animateinline}
+    \begin{tikzpicture}
+        font=\small
+        \draw[->] (-2.5,0) -- (2.5,0);
+        \draw[->] (0,-2.5) -- (0,2.5);
+        \draw[dashed] (-2.5,-2.5) -- (2.5,2.5);
+        \draw[dashed] (-2.5,1) -- (3,1);
+        \draw[dashed] (-0.5,-2.5) -- (4.5,2.5);
+        \draw[-latex, ultra thick, myblue] (0,0) -- (1,1);
+        \draw[-latex, ultra thick, myblue] (0,0) -- (2,0);
+        \draw[-latex, ultra thick, myblue] (0,0) -- (3,1);
+        \node at (0,0)[below left]{$O$};
+        \node at (0.5,0.5)[above left]{$\vec{v}$};
+        \node at (1,0)[below]{$\vec{w}$};
+        \node at (3,1)[right]{$\vec{v}+\vec{w}$};
+    \end{tikzpicture}
+    \caption{Somma tra vettori}
+    \label{fig:somma}
+\end{figure}
+
+\subsubsection{Prodotto per uno scalare}
+\begin{theorem}[Prodotto per uno scalare]
+    Dato un vettore \(\vec{v}=(v_1, v_2, \ldots, v_n)\) e uno scalare \(\lambda\), il loro \textbf{prodotto} è il vettore
+    \[
+        \lambda\vec{v}=(\lambda v_1, \lambda v_2, \ldots, \lambda v_n)
+    \]
+
+    \noindent Osservazioni e Proprietà:
+    \begin{itemize}
+        \item Il prodotto di un vettore per uno scalare cambia la lunghezza del vettore senza alterare la sua direzione, a meno che lo scalare non sia negativo, nel qual caso il vettore viene anche invertito.
+        \item Questa operazione è nota come \textit{moltiplicazione scalare} e è una delle operazioni fondamentali nell'algebra lineare.
+        \item La moltiplicazione scalare è distributiva rispetto alla somma di vettori: \(\lambda(\vec{v} + \vec{w}) = \lambda\vec{v} + \lambda\vec{w}\).
+        \item È anche distributiva rispetto alla somma di scalari: \((\lambda + \mu)\vec{v} = \lambda\vec{v} + \mu\vec{v}\) per ogni scalare \(\mu\).
+        \item Moltiplicare un vettore per 1 lascia il vettore invariato, mentre moltiplicarlo per 0 dà il vettore nullo: \(1\vec{v} = \vec{v}\) e \(0\vec{v} = \vec{0}\).
+    \end{itemize}
+\end{theorem}
+\begin{figure}[H]
+    \centering
+    \begin{animateinline}[controls,loop]{60}
+        \multiframe{10}{rLambda=-1+0.4}{%
+            \begin{tikzpicture}
+                \draw[->] (-2.5,0) -- (2.5,0);
+                \draw[->] (0,-2.5) -- (0,2.5);
+                \draw[dashed] (-2.5,-2.5) -- (2.5,2.5);
+                \draw[-latex, ultra thick, myblue] (0,0) -- (0.5,0.5); % Vettore v
+                \draw[-latex, ultra thick, myblue] (0,0) -- (\rLambda*0.5,\rLambda*0.5); % Vettore lambda*v
+                \node at (0,0)[below left]{$O$};
+                \node at (0.5,0.5)[above left]{$\vec{v}$};
+                \node at (\rLambda*0.5,\rLambda*0.5)[below right]{$\rLambda\vec{v}$};
+            \end{tikzpicture}%
+        }
+    \end{animateinline}
+    \begin{tikzpicture}
+        font=\small
+        \draw[->] (-2.5,0) -- (2.5,0);
+        \draw[->] (0,-2.5) -- (0,2.5);
+        \draw[dashed] (-2.5,-2.5) -- (2.5,2.5);
+        \draw[-latex, ultra thick, myblue] (0,0) -- (1.5,1.5);
+        \draw[-latex, ultra thick, myblue] (0,0) -- (0.5,0.5);
+        \node at (0,0)[below left]{$O$};
+        \node at (0.5,0.5)[above left]{$\vec{v}$};
+        \node at (1.5,1.5)[below right]{$3\vec{v}$};
+    \end{tikzpicture}
+    \caption{Prodotto per uno scalare}
+    \label{fig:scalare}
+\end{figure}
+\subsubsection{Prodotto scalare}
+\noindent\begin{minipage}{\textwidth}
+    \begin{theorem}[Prodotto scalare]
+        Dati due vettori \(\mathbf{v}\) e \(\mathbf{w}\), il loro \textbf{prodotto scalare} è lo scalare (dunque un numero non un vettore) definito come:
+        \[
+            \mathbf{v} \cdot \mathbf{w} = \sum_{i=1}^{n} v_i w_i = v_1w_1 + v_2w_2 + \cdots + v_nw_n
+        \]
+        In termini geometrici, può essere espresso anche come:
+        \[
+            \mathbf{v} \cdot \mathbf{w} = \|\mathbf{v}\| \|\mathbf{w}\| \cos(\theta)
+        \]
+        dove \(\theta\) è l'angolo tra i vettori.
+        \noindent Osservazioni e Proprietà:
+        \begin{itemize}
+            \item Il prodotto scalare è commutativo: \(\mathbf{v} \cdot \mathbf{w} = \mathbf{w} \cdot \mathbf{v}\).
+            \item Il prodotto scalare è distributivo rispetto alla somma vettoriale: \(\mathbf{v} \cdot (\mathbf{w} + \mathbf{u}) = \mathbf{v} \cdot \mathbf{w} + \mathbf{v} \cdot \mathbf{u}\).
+            \item Il prodotto scalare di un vettore con se stesso è uguale alla norma al quadrato di quel vettore: \(\mathbf{v} \cdot \mathbf{v} = \|\mathbf{v}\|^2\).
+            \item Se il prodotto scalare di due vettori è zero, allora i vettori sono perpendicolari (ortogonali) tra loro.
+            \item Il prodotto scalare misura l'allineamento tra due vettori e può essere usato per calcolare la proiezione di un vettore su un altro. In fisica, è spesso utilizzato per calcolare il lavoro svolto da una forza lungo un percorso.
+        \end{itemize}
+    \end{theorem}
+\end{minipage}
+\begin{figure}[H]
+    \centering
+    \begin{animateinline}[controls,loop]{20}
+        \multiframe{10}{rwx=-1+0.3}{%
+            \begin{tikzpicture}
+                font=\small
+                \def\rBound{3}
+                \def\vX{2}
+                \def\vY{2}
+                \def\wY{0.5}
+                \def\projWvX{\vX * (\vX*\rwx + \vY*\wY) / (\vX*\vX + \vY*\vY)}
+                \def\projWvY{\vY * (\vX*\rwx + \vY*\wY) / (\vX*\vX + \vY*\vY)}
+                \draw[->] (-\rBound+2,0) -- (\rBound+3.5,0);
+                \draw[->] (0,-\rBound) -- (0,\rBound);
+                \draw[dashed] (-\rBound+2,-\rBound+2) -- (\rBound,\rBound);
+                \draw[-latex, ultra thick, myblue] (0,0) -- (\vX,\vY);
+                \draw[-latex, ultra thick, myblue] (0,0) -- (\rwx,\wY);
+                \node at ({\vX/2},{\vY/2})[above left]{$\vec{v}$};
+                \node at ({\rwx/2},{\wY/2})[below right]{$\vec{w}$};
+                \draw[dashed] (\rwx,\wY) -- ({\projWvX},{\projWvY});
+                \draw[-latex, ultra thick] (0,0) -- ({\projWvX},{\projWvY});
+                \node at ({\projWvX/2},{\projWvY/2})[above left]{$\vec{w_x}$};
+                \fill[myblue] ({(\vX*\rwx)+(\vY*\wY)},0) circle (2pt);
+                \node at ({(\vX*\rwx)+(\vY*\wY)},0)[below]{$\vec{v} \cdot \vec{w}$};
+            \end{tikzpicture}
+        }
+    \end{animateinline}
+    \begin{tikzpicture}
+        font=\small
+        \def\rBound{3}
+        \def\vX{2}
+        \def\vY{2}
+        \def\rwx{2.5}
+        \def\wY{0.5}
+        \def\projWvX{\vX * (\vX*\rwx + \vY*\wY) / (\vX*\vX + \vY*\vY)}
+        \def\projWvY{\vY * (\vX*\rwx + \vY*\wY) / (\vX*\vX + \vY*\vY)}
+        \draw[->] (-\rBound+2,0) -- (\rBound+3.5,0);
+        \draw[->] (0,-\rBound) -- (0,\rBound);
+        \draw[dashed] (-\rBound+2,-\rBound+2) -- (\rBound,\rBound);
+        \draw[-latex, ultra thick, myblue] (0,0) -- (\vX,\vY);
+        \draw[-latex, ultra thick, myblue] (0,0) -- (\rwx,\wY);
+        \node at ({\vX/2},{\vY/2})[above left]{$\vec{v}$};
+        \node at ({\rwx/2},{\wY/2})[below right]{$\vec{w}$};
+        \draw[dashed] (\rwx,\wY) -- ({\projWvX},{\projWvY});
+        \draw[-latex, ultra thick] (0,0) -- ({\projWvX},{\projWvY});
+        \node at ({\projWvX/2},{\projWvY/2})[above left]{$\vec{w_x}$};
+        \fill[myblue] ({(\vX*\rwx)+(\vY*\wY)},0) circle (2pt);
+        \node at ({(\vX*\rwx)+(\vY*\wY)},0)[below]{$\vec{v} \cdot \vec{w}$};
+    \end{tikzpicture}
+    \caption{Prodotto scalare}
+\end{figure}
+\subsubsection{Prodotto vettoriale}
+\noindent\begin{minipage}{\textwidth}
+    \begin{theorem}[Prodotto vettoriale]
+        Dati due vettori \(\mathbf{u}\) e \(\mathbf{v}\) in \(\mathbb{R}^3\), il loro \textbf{prodotto vettoriale} è un vettore \(\mathbf{w}\), definito come:
+        \[
+            \mathbf{w} = \mathbf{u} \times \mathbf{v} = \det
+            \begin{vmatrix}
+                \mathbf{i} & \mathbf{j} & \mathbf{k} \\
+                u_1        & u_2        & u_3        \\
+                v_1        & v_2        & v_3        \\
+            \end{vmatrix}
+        \]
+        dove \(\mathbf{i}\), \(\mathbf{j}\), e \(\mathbf{k}\) sono i vettori unitari lungo gli assi x, y, e z, rispettivamente. Il prodotto vettoriale può essere calcolato come il determinante di questa matrice \(3 \times 3\).
+
+        In termini geometrici, il prodotto vettoriale \(\mathbf{u} \times \mathbf{v}\) ha le seguenti caratteristiche:
+        \begin{itemize}
+            \item È perpendicolare sia a \(\mathbf{u}\) che a \(\mathbf{v}\).
+            \item La sua norma è data da \(\|\mathbf{u} \times \mathbf{v}\| = \|\mathbf{u}\| \|\mathbf{v}\| \sin(\theta)\), dove \(\theta\) è l'angolo tra \(\mathbf{u}\) e \(\mathbf{v}\).
+            \item Segue la regola della mano destra per determinare la sua direzione.
+        \end{itemize}
+        \noindent Osservazioni e Proprietà:
+        \begin{itemize}
+            \item Il prodotto vettoriale è anticommutativo: \(\mathbf{u} \times \mathbf{v} = -(\mathbf{v} \times \mathbf{u})\).
+            \item È distributivo rispetto alla somma vettoriale: \(\mathbf{u} \times (\mathbf{v} + \mathbf{w}) = \mathbf{u} \times \mathbf{v} + \mathbf{u} \times \mathbf{w}\) per ogni \(\mathbf{w} \in \mathbb{R}^3\).
+            \item Se \(\mathbf{u}\) e \(\mathbf{v}\) sono paralleli (o uno dei due è il vettore nullo), il loro prodotto vettoriale è il vettore nullo.
+            \item Il prodotto vettoriale può essere usato per calcolare l'area di un parallelogramma formato dai vettori \(\mathbf{u}\) e \(\mathbf{v}\).
+        \end{itemize}
+    \end{theorem}
+\end{minipage}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[font=\small]
+        \def\rBound{3}
+        \def\uX{2}
+        \def\uY{1}
+        \def\vX{1}
+        \def\vY{2}
+        \def\wZ{2}
+        \draw[->] (-\rBound,0,0) -- (\rBound,0,0); % Asse X
+        \draw[->] (0,-\rBound,0) -- (0,\rBound,0); % Asse Y
+        \draw[->] (0,0,-\rBound) -- (0,0,\rBound); % Asse Z
+        \draw[-{Latex[length=3mm,width=2mm]}, ultra thick, myblue] (0,0,0) -- (\uX,\uY,0); % vettore u
+        \draw[-{Latex[length=3mm,width=2mm]}, ultra thick, myblue] (0,0,0) -- (\vX,\vY,0); % vettore v
+        \draw[-{Latex[length=3mm,width=2mm]}, ultra thick, myblue] (0,0,0) -- (0,0,\wZ); % vettore u x v
+        \node at (\uX,\uY,0) [right] {$\mathbf{u}$};
+        \node at (\vX,\vY,0) [above] {$\mathbf{v}$};
+        \node at (0,0,\wZ) [left] {$\mathbf{u} \times \mathbf{v}$};
+    \end{tikzpicture}
+    \caption{Prodotto vettoriale}
+\end{figure}
+
+\section{Numeri complessi}
+L'invenzione dei numeri reali nasce dalla necessità di risolvere le equazioni di secondo grado con discriminante negativo, ovvero
+\[ax^2 + bx + c = 0 \text{ con } \Delta < 0\]
+come ad esempio
+\[x^2 + 1 = 0\]
+\noindent\begin{minipage}{\textwidth}
+    \begin{definition}[Numero complesso]
+        Un \textbf{numero complesso} \( z \) è una coppia ordinata di numeri reali \( (x, y) \), dove
+        \begin{enumerate}
+            \item \( x \) è la \textbf{parte reale}, \( \Re(z) = x \)
+            \item \( y \) è la \textbf{parte immaginaria}, \( \Im(z) = y \).
+        \end{enumerate}
+        \noindent Osservazioni e Proprietà:
+        \begin{itemize}
+            \item  L'insieme dei numeri complessi, indicato con \( \mathbb{C} \), è rappresentabile come \( \mathbb{R}^2 \).\footnote{Questa corrispondenza tra \( \mathbb{C} \) e \( \mathbb{R}^2 \) si basa sulla rappresentazione geometrica e algebrica dei numeri complessi. Ogni numero complesso può essere espresso come \( z = x + yi \), dove \( x \) e \( y \) sono numeri reali e \( i \) è l'unità immaginaria. Geometricamente, questo si traduce nel piano complesso, dove ogni punto \( (x, y) \) rappresenta un numero complesso unico, con \( x \) e \( y \) che corrispondono rispettivamente alle parti reale e immaginaria di \( z \). Pertanto, \( \mathbb{C} \) funziona come uno spazio bidimensionale analogo a \( \mathbb{R}^2 \).}
+            \item   I numeri della forma \( (x, 0) \) appartengono all'insieme dei numeri reali \( \mathbb{R} \subseteq \mathbb{C} \), mentre quelli della forma \( (0, y) \) sono \textbf{immaginari puri}.
+            \item Due numeri complessi \( z_1 = (x_1, y_1) \) e \( z_2 = (x_2, y_2) \) sono uguali se e solo se \( x_1 = x_2 \) e \( y_1 = y_2 \).
+        \end{itemize}
+    \end{definition}
+\end{minipage}
+\begin{definition}[Unità immaginaria]
+    \textbf{L'unità immaginaria} \(i\) è il numero complesso, \((0, 1)\), esso gode della proprietà
+    \[ i^2 = (0,1)\cdot(0,1) = (-1,0) = -1, \]
+    \[ \pm i = \sqrt{-1} \]
+\end{definition}
+
+
+
+\subsection{Notazione in coppie ordinate}
+La notazione in coppie ordinate è utile principalmente per enfatizzare l'aspetti geometrico dei numeri complessi. In questa notazione, un numero complesso \( z \) è rappresentato come una coppia ordinata di numeri reali \( (x, y) \), dove \( x \) è la parte reale e \( y \) è la parte immaginaria. In questa notazione, la somma e il prodotto di due numeri complessi \( z_1 = (x_1, y_1) \) e \( z_2 = (x_2, y_2) \) sono definiti come
+\begin{theorem}[Somma tra numeri complessi]
+    Dati due numeri complessi \( z_1 = (x_1, y_1) \) e \( z_2 = (x_2, y_2) \), la loro \textbf{somma} è il numero complesso
+    \[ z_1 + z_2 = (x_1 + x_2, y_1 + y_2). \]
+\end{theorem}
+\begin{theorem}[Prodotto tra numeri complessi]
+    Dati due numeri complessi \( z_1 = (x_1, y_1) \) e \( z_2 = (x_2, y_2) \), il loro \textbf{prodotto} è il numero complesso
+    \[ z_1 \cdot z_2 = (x_1 x_2 - y_1 y_2, x_1 y_2 + x_2 y_1). \]
+\end{theorem}
+
+\subsection{Notazione algebrica o cartesiana}
+La notazione algebrica è la forma più utilizzata per rappresentare i numeri complessi. In questa notazione, un numero complesso \( z \) è rappresentato come una somma di due numeri reali, uno dei quali è moltiplicato per l'unità immaginaria \( i \). In questa notazione, la somma e il prodotto di due numeri complessi \( z_1 = x_1 + i y_1 \) e \( z_2 = x_2 + i y_2 \) sono definiti come.
+
+\noindent\begin{minipage}{\textwidth}
+    \begin{definition}[Forma cartesiana o algebrica]
+        Un numero complesso \( z \) può essere scritto nella \textbf{forma cartesiana} o \textbf{algebrica} come
+        \[ z = (x, y) = x + iy, \footnote{Tale equzione si ricava da \[(x,y) = (x, 0) + (0, 1) (y, 0) = (x, 0) + ( 0 \cdot y - 1 \cdot 0,\ 0 \cdot 0 + y \cdot 1) = (x, 0) + (0, y) = (x, y) \Rightarrow x +iy\]} \]
+        dove \( x \) è la parte reale e \( y \) è la parte immaginaria.
+    \end{definition}
+\end{minipage}
+
+\begin{theorem}[Somma tra numeri complessi]
+    Dati due numeri complessi \( z_1 = x_1 + i y_1 \) e \( z_2 = x_2 + i y_2 \), la loro \textbf{somma} è il numero complesso
+    \[ z_1 + z_2 = (x_1 + x_2) + i (y_1 + y_2). \]
+\end{theorem}
+\begin{theorem}
+    Dati due numeri complessi \( z_1 = x_1 + i y_1 \) e \( z_2 = x_2 + i y_2 \), il loro \textbf{prodotto} è il numero complesso
+    \[ z_1 \cdot z_2 = (x_1 x_2 - y_1 y_2) + i (x_1 y_2 + x_2 y_1). \]
+\end{theorem}
+\subsection{Proprietà dei numeri complessi}
+\begin{theorem}[Proprietà dei numeri complessi]
+    Dati tre numeri complessi \( z_1 = x_1 + i y_1 \), \( z_2 = x_2 + i y_2 \) e \( z_3 = x_3 + i y_3 \), valgono le seguenti proprietà:
+    \begin{itemize}
+        \item Somma: \( z_1 + z_2 = z_2 + z_1 \)
+        \item Prodotto: \( z_1 \cdot z_2 = z_2 \cdot z_1 \)
+        \item Associatività della somma: \( (z_1 + z_2) + z_3 = z_1 + (z_2 + z_3) \)
+        \item Associatività del prodotto: \( (z_1 \cdot z_2) \cdot z_3 = z_1 \cdot (z_2 \cdot z_3) \)
+        \item Distributività del prodotto rispetto alla somma: \( z_1 \cdot (z_2 + z_3) = z_1 \cdot z_2 + z_1 \cdot z_3 \)
+        \item Elemento neutro della somma: \( z + 0 = z \)
+        \item Elemento neutro del prodotto: \( z \cdot 1 = z \)
+        \item Elemento opposto della somma: \( z + (-z) = 0 \)
+        \item Elemento inverso del prodotto: \( z \cdot \frac{1}{z} = 1 \)
+    \end{itemize}
+\end{theorem}
+\subsubsection{Coniugato di un numero complesso}
+\begin{definition}[Coniugato di un numero complesso]
+    Il \textbf{coniugato} di un numero complesso \( z = x + iy \) è il numero complesso
+    \[ \overline{z} = x - iy. \]
+\end{definition}
+\subsubsection{Modulo di un numero complesso}
+\noindent\begin{minipage}{\textwidth}
+    \begin{definition}[Modulo di un numero complesso]
+        Il \textbf{modulo} di un numero complesso \( z = x + iy \) è il numero reale
+        \[ |z| = \sqrt{x^2 + y^2}. \]
+    \end{definition}
+\end{minipage}
+\subsection{Coordinate cartesiane}
+È naturale associare al numero \( z = (x, y) = x + iy \) il punto del piano cartesiano
+di coordinate \( x \) e \( y \) (si veda la Figura \ref{fig:cartesiane}). Il numero \( z \) può anche essere
+pensato come il vettore applicato nell'origine e avente tale punto come estremo.
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-2.5,0) -- (2.5,0);
+        \draw[->] (0,-2.5) -- (0,2.5);
+        \draw[dashed, myblue] (2,2) -- (2,0);
+        \draw[dashed, myblue] (2,2) -- (0,2);
+        \draw[dashed, myblue] (2,-2) -- (2,0);
+        \draw[dashed, myblue] (2,-2) -- (0,-2);
+        \node at(2,2)[above right]{$z = x + iy$};
+        \node at(2,-2)[below right]{$\overline{z} = x - iy$};
+        \fill [myblue](2,2) circle (2pt);
+        \fill [myblue](2,-2) circle (2pt);
+        \node at (0, 2.5)[above right]{$\Im(z)$};
+        \node at (2.5, 0)[above right]{$\Re(z)$};
+        \node at (0,2)[left]{$y$};
+        \node at (2,0)[below]{$x$};
+        \node at (0,0)[below left]{$O$};
+    \end{tikzpicture}
+    \caption{Coordinate cartesiane di un numero complesso e il suo coniugato}
+    \label{fig:cartesiane}
+\end{figure}
+\subsection{Notazione trigonometrica o polare}
+\begin{definition}[Notazione trigonometrica o polare]
+    Un numero complesso \( z \) può essere scritto nella \textbf{forma trigonometrica} come
+    \[ z = r(\cos(\theta) + i \sin(\theta)), \]
+    dove \( r = |z| \) e \( \theta \) è l'angolo che \( z \) forma con l'asse reale positivo.
+
+    \noindent Osservazioni e Proprietà:
+    \begin{itemize}
+        \item \(\theta\) è detto \textbf{argomento} di \(z\), e si indica con \(\theta = \arg(z)\). \\
+        \item \(-\pi < \theta \leq pi \) è \textbf{l'argomento principale} di \(z\), e si indica con \(\theta = Arg(z)\).
+    \end{itemize}
+    \footnote{La rappresentazione polare risulta utile per esprimere in maniera semplice il prodotto di due numeri complessi.}
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-2.5,0) -- (2.5,0);
+        \draw[->] (0,-2.5) -- (0,2.5);
+        \draw[dashed, myblue] (2,2) -- (2,0);
+        \draw[dashed, myblue] (2,2) -- (0,2);
+        \draw[thick] (0,0) -- (2,2);
+        \draw[-latex] (1,0) arc (0:45:1);
+        \node at (1,1)[below right] {$\theta$};
+        \node at(1,1)[above left]{$r$};
+        \node at(2,2)[above right]{$z = r(\cos(\theta) + i \sin(\theta))$};
+        \fill [myblue](2,2) circle (2pt);
+        \node at (0, 2.5)[above right]{$\Im(z)$};
+        \node at (2.5, 0)[above right]{$\Re(z)$};
+        \node at (0,2)[left]{$y$};
+        \node at (2,0)[below]{$x$};
+        \node at (0,0)[below left]{$O$};
+    \end{tikzpicture}
+    \caption{Coordinate polari di un numero complesso}
+    \label{fig:polari}
+\end{figure}
+\subsubsection{Prodotto di numeri complessi in forma trigonometrica}
+\noindent\begin{minipage}{\textwidth}
+    \begin{theorem}[Prodotto di numeri complessi in forma trigonometrica]
+        Dati due numeri complessi \( z_1 = r_1(\cos\theta_1 + i \sin\theta_1) \) e \( z_2 = r_2(\cos\theta_2 + i \sin\theta_2) \), il loro \textbf{prodotto} è il numero complesso
+        \[ z_1 \cdot z_2 = r_1 r_2 (\cos(\theta_1 + \theta_2) + i \sin(\theta_1 + \theta_2)). \]
+    \end{theorem}
+\end{minipage}
+\begin{proposition}
+    Vale la seguente proprietà:
+    \[\text{arg}\left(z_1 z_2\right) = \text{arg}\left(z_1\right) + \text{arg}\left(z_2\right)\]
+    che evidenzia la natura rotazionale del prodotto di numeri complessi.
+\end{proposition}
+\begin{curiosity}[Moltiplicare per \(i\)]
+    \'E giunto il momento di parlare di un aspetto importante del significato di \(i\). Consideriamo il numero complesso \(z\) nelle tre forme che abbiamo incontrato finora:
+    \begin{align*}
+        z & = x + iy \text{ (forma algebrica)}                                \\
+        z & = (x, y) \text{ (coppie ordinate)}                                \\
+        z & = r(\cos(\theta) + i \sin(\theta)) \text{ (forma trigonometrica)}
+    \end{align*}
+    ecco come si comporta la moltiplicazione per \(i\) in ciascuna di queste forme:
+    \begin{align*}
+        iz & = i(x + iy) = ix + i^2y = -y + ix \text{ (forma algebrica)}                                               \\
+        iz & = (0,1)(x,y) = (-y, x) \text{ (coppie ordinate)}                                                          \\
+        iz & = 1 \cdot r(\cos(\frac{\pi}{2} + \theta) + i \sin(\frac{\pi}{2} + \theta)) \text{ (forma trigonometrica)}
+    \end{align*}
+    Graficamente questi risultati si possono interpretare come rotazioni di \(z\) di \(90^\circ\) in senso antiorario del piano di Gauss.
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \draw[->] (-2.5,0) -- (2.5,0);
+            \draw[->] (0,-2.5) -- (0,2.5);
+            \draw[thick] (0,0) -- (2,1);
+            \draw[thick] (0,0) -- (-1,2);
+            \draw[-latex] (1,0) arc (0:30:1);
+            \draw[-latex] (1,0.5) arc (30:120:1);
+            \node at (1,0.5)[below right] {$\theta$};
+            \node at(2,1)[above right]{$z = r(\cos(\theta) + i \sin(\theta))$};
+            \node at(-1,2)[above left]{$iz = r(\cos(\frac{\pi}{2} + \theta) + i \sin(\frac{\pi}{2} + \theta))$};
+            \fill [myblue](2,1) circle (2pt);
+            \fill [myblue](-1,2) circle (2pt);
+            \node at (0, 2.5)[above right]{$\Im(z)$};
+            \node at (2.5, 0)[above right]{$\Re(z)$};
+            \node at (0,2)[left]{$y$};
+            \node at (2,0)[below]{$x$};
+            \node at (0,0)[below left]{$O$};
+        \end{tikzpicture}
+        \caption{Rotazione di \(z\) di \(90^\circ\) in senso antiorario del piano di Gauss}
+        \label{fig:rotazione}
+    \end{figure}
+\end{curiosity}
+
+\subsection{Notazione esponenziale}
+\noindent\begin{minipage}{\textwidth}
+    \begin{definition}[Notazione esponenziale]
+        Un numero complesso \( z \) può essere scritto nella \textbf{forma esponenziale} come
+        \[ z = re^{i\theta} = r(\cos\theta + i\sin\theta) \]
+        \noindent Osservazioni e Proprietà:
+        \begin{itemize}
+            \item \(e^{i\theta} = \cos\theta + i\sin\theta\) è detta \textbf{formula di Eulero} \\
+            \item \(e^{i\pi} + 1 = 0\) è detta \textbf{identità di Eulero}
+        \end{itemize}
+    \end{definition}
+\end{minipage}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=2]
+        \pgfmathsetmacro{\rTheta}{180}
+        \small
+        \pgfmathsetmacro{\cosTheta}{cos(\rTheta)}
+        \pgfmathsetmacro{\sinTheta}{sin(\rTheta)}
+        \draw[->] (-1.5,0) -- (1.5,0) node[right] {$\Re$};
+        \draw[->] (0,-1.5) -- (0,1.5) node[above] {$\Im$};
+        \draw[-latex, ultra thick, myblue] (0,0) -- ({cos(\rTheta)}, {sin(\rTheta)});
+        \draw[dashed] ({cos(\rTheta)}, {sin(\rTheta)}) -- ({cos(\rTheta)}, 0);
+        \draw[dashed] ({cos(\rTheta)}, {sin(\rTheta)}) -- (0, {sin(\rTheta)});
+        \draw(0,0) circle (1);
+        \draw[-latex, myblue] (1.2,0) arc (0:180:1.2);
+        \filldraw[black] ({cos(\rTheta)}, {sin(\rTheta)}) circle (1pt) node[anchor=south west] {$e^{i\rTheta}$};
+        \node at (0, -2){$e^{i\rTheta} = \cos\rTheta + i\sin\rTheta = \cosTheta + i(\sinTheta)$};
+        \node at (0, -2.5){$ exp(i\rTheta) = \sum_{n=0}^{+\infty} \frac{(i\rTheta)^n}{n!} = 1 + i\rTheta + \frac{(i\rTheta)^2}{2!} + ... + \frac{(i\rTheta)^n}{n!}$};
+        \node at (0, -3){$\theta = \rTheta^\circ$};
+    \end{tikzpicture}
+    \caption{Identità di Eulero}
+\end{figure}
+
+\noindent\begin{minipage}{\textwidth}
+    \begin{curiosity}[che significa \(e^{i\theta} = \cos\theta + i\sin\theta\)?]
+        La formula di Eulero è una delle più belle formule della matematica, in quanto mette in relazione cinque numeri fondamentali della matematica: \(0\), \(1\), \(\pi\), \(i\) e \(e\).
+        \begin{align*}
+            e^{i\pi} + 1 & = 0
+        \end{align*}
+        Per tentare di capirla prima cosa sia \(e^x\) non si tratta di \(e \cdot e \cdot... \cdot e\) \(x\) volte, ma di
+        \[e^{x} = \exp(x) = \sum_{n=0}^{+\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + ... + \frac{x^n}{n!}\]
+        che se \(x = i\theta\) diventa
+        \[e^{i\theta} = \exp(i\theta) = \sum_{n=0}^{+\infty} \frac{(i\theta)^n}{n!} = 1 + i\theta + \frac{(i\theta)^2}{2!} + ... + \frac{(i\theta)^n}{n!}\]
+        nella pratica se noi pnessimo \(\theta = 1\) risulterebbe
+        \[e^{i} = \exp(i) = \sum_{n=0}^{+\infty} \frac{i^n}{n!} = 1 + i + \frac{i^2}{2!} + ... + \frac{i^n}{n!}\]
+        ma cosa vuol dire elevare \(i^n\)? semplicemente come abbiamo visto prima risulta in un a rotazione di \(90^\circ\) in senso antiorario del piano di Gauss. visualemnte si può vedere come.
+        \begin{figure}[H]
+            \centering
+            \begin{animateinline}[controls,loop]{60}
+                \multiframe{30}{rTheta=0+12}{
+                    \begin{tikzpicture}[scale=2]
+                        \small
+                        \pgfmathsetmacro{\cosTheta}{cos(\rTheta)}
+                        \pgfmathsetmacro{\sinTheta}{sin(\rTheta)}
+                        \draw[->] (-1.5,0) -- (1.5,0) node[right] {$\Re$};
+                        \draw[->] (0,-1.5) -- (0,1.5) node[above] {$\Im$};
+                        \draw[-latex, ultra thick, myblue] (0,0) -- ({cos(\rTheta)}, {sin(\rTheta)});
+                        \draw[dashed] ({cos(\rTheta)}, {sin(\rTheta)}) -- ({cos(\rTheta)}, 0);
+                        \draw[dashed] ({cos(\rTheta)}, {sin(\rTheta)}) -- (0, {sin(\rTheta)});
+                        \draw(0,0) circle (1);
+                        \draw[-latex, myblue] (1.2,0) arc (0:\rTheta:1.2);
+                        \filldraw[black] ({cos(\rTheta)}, {sin(\rTheta)}) circle (1pt) node[anchor=south west] {$e^{i\rTheta}$};
+                        \node at (0, -2){$e^{i\rTheta} = \cos\rTheta + i\sin\rTheta = \cosTheta + i(\sinTheta)$};
+                        \node at (0, -2.5){$ exp(i\rTheta) = \sum_{n=0}^{+\infty} \frac{(i\rTheta)^n}{n!} = 1 + i\rTheta + \frac{(i\rTheta)^2}{2!} + ... + \frac{(i\rTheta)^n}{n!}$};
+                        \node at (0, -3){$\theta = \rTheta^\circ$};
+                    \end{tikzpicture}
+                }
+            \end{animateinline}
+            \caption{Rotazione di \(e^{i\theta}\) di \(\theta\) in senso antiorario del piano di Gauss}
+        \end{figure}
+    \end{curiosity}
+\end{minipage}
+\begin{theorem}[Prodotto di due numeri complessi]
+    Dati due numeri complessi \( z_1 = r_1 e^{i\theta_1} \) e \( z_2 = r_2 e^{i\theta_2} \), il loro \textbf{prodotto} è il numero complesso
+    \[ z_1 \cdot z_2 = r_1 r_2 e^{i(\theta_1 + \theta_2)}. \]
+\end{theorem}
+\begin{theorem}[Quoziente di due numeri complessi]
+    Dati due numeri complessi \( z_1 = r_1 e^{i\theta_1} \) e \( z_2 = r_2 e^{i\theta_2} \), il loro \textbf{quoziente} è il numero complesso
+    \[ \frac{z_1}{z_2} = \frac{r_1}{r_2} e^{i(\theta_1 - \theta_2)}. \]
+\end{theorem}
+
+\begin{theorem}[Potenza di un numero complesso]
+    Dato un numero complesso \( z = r e^{i\theta} \), la sua \textbf{potenza} è il numero complesso
+    \[ z^n = r^n e^{i n \theta}. \]
+\end{theorem}
+\begin{theorem}[Radice di un numero complesso]
+    Dato un numero complesso \( z = r e^{i\theta} \), la sua \textbf{radice} è il numero complesso
+    \[ \sqrt[n]{z} = \sqrt[n]{r} e^{i \frac{\theta + 2k\pi}{n}}, \]
+    dove \( k = 0, 1, 2, ..., n - 1 \).
+\end{theorem}
+\begin{theorem}[Formula di De Moivre]
+    Dato un numero complesso \( z = r e^{i\theta} \), la sua \textbf{potenza} è il numero complesso
+    \[ z^n = r^n e^{i n \theta}. \]
+\end{theorem}
+\begin{definition}[Esponenziale di un qualunque numero complesso]
+    Dato un numero complesso \( z = x + iy \), la sua \textbf{esponenziale} è il numero complesso
+    \[ e^z = e^{x + iy} = e^x e^{iy} = e^x (\cos y + i \sin y). \]
+\end{definition}
+\end{document}

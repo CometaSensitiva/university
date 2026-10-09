@@ -1,0 +1,848 @@
+\documentclass{book}
+
+\title{Analisi Matematica T-A}
+\author{Michele Mazza}
+\date{November 2023}
+
+
+% Pacchetti di Codifica e Lingua
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+
+% Pacchetti Grafici e Diagrammi
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{angles,quotes,arrows.meta, positioning}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% Pacchetti Matematici
+\usepackage{amsmath, amssymb, amsthm}
+
+% Pacchetti per Tabelle e Unità di Misura
+\usepackage{geometry}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{colortbl}
+
+% Pacchetti per Layout e Formattazione
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{microtype}
+
+% Altri Pacchetti Utili
+\usepackage{mdframed}
+\usepackage{animate}
+
+% Pacchetto enumitem
+\usepackage{enumitem}
+
+% Definizioni dei Colori
+\definecolor{lightblue}{HTML}{9cd8fc}
+\definecolor{myblue}{HTML}{139FE9}
+
+% Definizione del comando \norm
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+%\font\nullfont=cmr10 
+
+% Ambienti Personalizzati
+\newmdtheoremenv[
+    backgroundcolor=orange!10,
+    linecolor=myblue,
+    linewidth=0pt,
+    leftmargin=0pt,
+    rightmargin=0pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+    innertopmargin=10pt,
+    innerbottommargin=10pt,
+    nobreak
+]{curiosity}{Curiosità}
+
+\newmdtheoremenv[
+    font=\normalfont\small,
+    linewidth=0pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+]{example}{Esempio}
+
+\newmdtheoremenv[
+  backgroundcolor=lightblue,
+  linecolor=myblue,
+  linewidth=1.5pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt,
+  nobreak
+]{theorem}{Teorema}
+
+\newmdtheoremenv[
+  backgroundcolor=gray!10,
+  linewidth=0pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt,
+  nobreak
+]{definition}{Definizione}
+
+\newmdtheoremenv[
+  backgroundcolor=gray!10,
+  linecolor=myblue,
+  linewidth=1.5pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt,
+  nobreak
+]{proposition}{Proposizione}
+
+% Configurazioni di fancyhdr
+\pagestyle{fancy}
+\fancyhf{} % Pulisce tutti i campi
+\fancyhead[LE,RO]{\thepage} % Numero di pagina
+\fancyhead[RE]{\nouppercase{\leftmark}} % Titolo del capitolo
+\fancyhead[LO]{\nouppercase{\rightmark}} % Titolo della sezione
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\geometry{a4paper, left=20mm, right=20mm, top=20mm, bottom=20mm}
+
+% Pacchetto Hyperref (inserito per ultimo)
+\usepackage{hyperref}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+\tableofcontents
+\mainmatter
+
+\chapter{Confronto locale di funzioni}
+
+\section{Simboli di Landau}
+Come fatto nel capitolo precedentemente indichiamo con \(c\) uno dei simboli \(x_0\), \(x_0^+\), \(x_0^-\), \(+\infty\), \(-\infty\).
+Per 'intorno di \(c\)', intenderemo un intorno di tali simboli.
+
+Siano dunque \(f\) e \(g\) due funzioni definite in un intorno di \(c\), tranne forse in \(c\) stesso; inoltre sia \(g(x) \neq 0\) per \(x \neq c\).
+Supponiamo che esista, finito o infinito, il limite
+\[
+  \lim_{x \to c} \frac{f(x)}{g(x)} = l
+\]
+Quando studiamo le funzioni matematiche e ci interessa capire come si comportano vicino a certi punti, utilizziamo dei simboli speciali noti come simboli di Landau. Questi simboli ci aiutano a descrivere la relazione tra due funzioni in termini di loro crescita o diminuzione vicino a un punto specifico. Vediamo insieme alcuni di questi simboli e cosa rappresentano:
+\begin {definition}
+\subsection{O grande (Big O notation)}
+Se \(l \in \mathbb{R}\) allora
+\[
+  f = O(g) \quad \text{per } x \to c
+\]
+Diciamo che \(f\) è \textbf{O grande} di \(g\), se mentre ci avviciniamo a un punto \(c\), la crescita di \(f\) non supera quella di \(g\) moltiplacata per una costante.
+\end{definition}
+
+\begin{definition}
+  \subsection{Equigrande}
+  se \(l \in \mathbb{R} \setminus \{0\} \) allora
+  \[
+    f \asymp g \quad \text{per } x \to c
+  \]
+  Diciamo che \(f\) è \textbf{equigrande} con \(g\), se mentre ci avviciniamo a un punto \(c\), la crescita di \(f\) non supera quella di \(g\) moltiplacata per una costante.
+\end{definition}
+
+\begin{definition}
+  \subsection{Equivalente}
+  se \(l = 1\) allora
+  \[
+    f \sim g \quad \text{per } x \to c
+  \]
+  Diciamo che \(f\) è \textbf{equivalente} a \(g\), se mentre ci avviciniamo a un punto \(c\), le due funzioni si comportano quasi allo stesso modo.
+\end{definition}
+
+\begin{definition}
+  \subsection{O piccolo (Little O notation)}
+  se \(l = 0\) allora
+  \[
+    f = o(g) \quad \text{per } x \to c
+  \]
+  Diciamo che \(f\) è \textbf{O piccolo} di \(g\), se mentre ci avviciniamo a un punto \(c\), la crescita di \(f\) è molto più piccola di quella di \(g\).
+\end{definition}
+
+\begin{definition}
+  \subsection{caso L inifnito}
+  se \(l = \pm \infty\) allora
+  \begin{align*}
+     & \lim_{x \to c} \frac{f(x)}{g(x)} = l \iff f = O(g) \quad \text{per } x \to c           \\
+     & \lim_{x \to c} \frac{g(x)}{f(x)} = \frac{1}{l} \iff g = o(f) \quad \text{per } x \to c
+  \end{align*}
+  Diciamo che \(f\) è \textbf{O grande} di \(g\), se mentre ci avviciniamo a un punto \(c\), la crescita di \(f\) è molto più grande di quella di \(g\).
+\end{definition}
+
+\begin{example}[Esempi di simboli di Landau]
+  \begin{enumerate}[label=\roman*., start=1]
+    Possiamo ripensare i limiti notevoli in questa ottica:
+    \item  Considerando
+          \[
+            \lim_{x \to 0} \frac{\sin x}{x} = 1
+          \]
+          Quindi
+          \[
+            \sin x \sim x \quad \text{per } x \to 0
+          \]
+    \item Considerando
+          \[
+            \lim_{x \to +\infty} \frac{\sin x}{x} = 0
+          \]
+          Quindi
+          \[
+            \sin x = o(x) \quad \text{per } x \to +\infty
+          \]
+  \end{enumerate}
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        declare function={
+            f(\x) = sin(deg(\x));
+            g(\x) = \x;
+            h(\x) = sin(deg(\x))/\x;
+          }]
+      \begin{axis}
+        [
+          xlabel={\( x \)},
+          ylabel={\( f(x) \)},
+          xmin=-5, xmax=5,
+          ymin=-5, ymax=5,
+          grid=both,
+          axis lines=middle,
+          axis line style=->,
+          grid style={line width=.1pt, draw=gray!10},
+          major grid style={line width=.2pt,draw=gray!50},
+          minor tick num=3,
+          enlargelimits={abs=0.5},
+          xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+          ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+          samples=100,
+          unbounded coords=jump,
+          legend pos=south east
+        ]
+        \addplot[domain=-6:6,ultra thick, color=red]{f(x)};
+        \addplot[domain=-6:6,ultra thick, color=blue]{g(x)};
+        \addplot[domain=-6:6,ultra thick, color=myblue]{h(x)};
+        \legend{\( \sin x \), \( x \), \( \frac{\sin x}{x} \)}
+      \end{axis}
+    \end{tikzpicture}
+    \caption{Grafico di \( \sin x \), \( x \) e \( \frac{\sin x}{x} \)}
+    \label{fig:grafico-sin-x}
+  \end{figure}
+\end{example}
+
+\subsection{Proprietà dei simboli di Landau e loro utilità}
+\noindent\begin{minipage}{\textwidth}
+  \begin{proposition}
+    \subsubsection{Proprietà dei simboli di Landau}
+    Valgono le seguenti proprietà:
+    \begin{enumerate}[label=\roman*., start=1]
+      \item i simboli \(\asymp\), \(\sim\) \(o\) sono casi particolari di \(O\), ovvero per \(x \to c\) vale
+            \begin{align*}
+              f & \asymp g \iff f = O(g)               \\
+              f & \sim g \iff f \asymp g \iff f = O(g) \\
+              f & = o(g) \iff f = O(g)
+            \end{align*}
+      \item Se \(f \asymp g\), allora si
+            \begin{align*}
+               & \lim_{x \to c} \frac{f(x)}{g(x)} = l \iff  \lim_{x \to c} \frac{f(x)}{l\ g(x)} = 1 \\
+               & f \asymp g \iff f \sim lg
+            \end{align*}
+      \item \'E utile la proprietà
+            \begin{align*}
+              f & \sim g \iff f = g + o(g)
+            \end{align*}
+            In sostanza, questa proprietà ci dice che se due funzioni sono \textbf{equivalenti}, possiamo pensare a una di esse come all'altra più un piccolo extra. Questo "piccolo extra" diventa sempre meno importante man mano che ci avviciniamo a c.
+
+      \item Una semplificazione nei calcoli, se \(\lambda \neq 0\) allora:
+            \begin{align*}
+               & o(\lambda f) = o(f) \quad \text{e} \quad \lambda(o(f)) = o(f)
+            \end{align*}
+      \item Notiamo che
+            \begin{align*}
+               & f = o(1) \iff \lim_{x \to c} \frac{f(x)}{1} = 0
+            \end{align*}
+      \item La condizione di continuità di una funzione \(f\) in un punto \(x_0\) può essere scritta mediante il simbolo \(o\).
+            \begin{align*}
+               & f(x) = f(x_0) + o(1) \quad \text{per } x \to x_0
+            \end{align*}
+            Infatti
+            \begin{align*}
+              \lim_{x \to x_0} f(x) = f(x_0) & \iff \lim_{x \to x_0} f(x) - f(x_0) = 0               \\
+                                             & \iff f(x) - f(x_0) = o(1) \quad \text{per } x \to x_0
+            \end{align*}
+    \end{enumerate}
+  \end{proposition}
+\end{minipage}
+\begin{proposition}
+  \subsection{Algebra degli 'o'}
+  Algebra degli 'o' per \(x \to 0\)
+  \begin{align*}
+     & o(x^n) \pm o(x^n) = o(x^n)                                                    \\
+     & o(x^n) \pm o(x^m) = o(x^{\min\{n,m\}})                                        \\
+     & o(\lambda x^n) = o(x^n), \lambda \neq 0                                       \\
+     & \varphi(x) o(x^n) = o(x^n) \text{ , se } \varphi \text{ limitata in I di x=0} \\
+     & x^n \cdot o(x^m) = o(x^{n+m})                                                 \\
+     & o(x^n) \cdot o(x^m) = o(x^{n+m})                                              \\
+     & [o(x^n)]^k = o(x^{nk})
+  \end{align*}
+\end{proposition}
+\begin{enumerate}[label=\roman*., start=1]
+  \item Per \(x \to 0\), tra due potenze di x è trascurabile quella di esponente maggiore
+        \begin{align*}
+          x^a & = o(x^b) \quad \text{per } x \to 0 \quad \text{se } a > b
+        \end{align*}
+        infatti
+        \begin{align*}
+          \lim_{x \to 0} \frac{x^a}{x^b} = \lim_{x \to 0} x^{a-b} = 0 \iff a-b>0
+        \end{align*}
+
+  \item Per \(x \to \infty\), tra due potenze di x è trascurabile quella di esponente minore
+        \begin{align*}
+          x^a & = O(x^b) \quad \text{per } x \to \infty \quad \text{se } a < b
+        \end{align*}
+        infatti
+        \begin{align*}
+          \lim_{x \to \infty} \frac{x^a}{x^b} = \lim_{x \to \infty} x^{a-b} = 0 \iff a-b<0
+        \end{align*}
+\end{enumerate}
+\begin{proposition}
+  \subsection{Limiti notevoli con simboli di Landau}
+  I limiti fondamentali possono essere riformulati in termini di simboli di Landau:
+  \begin{align*}
+     & \sin x \sim x \quad               & \text{per } x \to 0 & \\
+     & 1 - cosx \asymp x^2 \quad         & \text{per } x \to 0 & \\
+     & 1-cosx \sim \frac{1}{2} x^2 \quad & \text{per } x \to 0 & \\
+     & \log(1+x) \sim x \quad            & \text{per } x \to 0 & \\
+     & \log(x) \sim x-1 \quad            & \text{per } x \to 1 & \\
+     & e^x - 1 \sim x \quad              & \text{per } x \to 0 & \\
+     & e^x \sim 1 + x \quad              & \text{per } x \to 0 & \\
+     & (1+x)^\alpha - 1 \sim \alpha\ x   & \text{per } x \to 0 & \\
+     & (1+x)^\alpha \sim 1 + \alpha\ x   & \text{per } x \to 0 &
+  \end{align*}
+  Applicando
+  \[ f \sim g \iff f = g + o(g)\]
+  possiamo riformulare i limiti fondamentali come
+  \begin{align*}
+     & \sin x        = x + o(x) \quad                 & \text{per } x \to 0 \\
+     & 1 - cosx      = \frac{1}{2} x^2 + o(x^2) \quad & \text{per } x \to 0 \\
+     & cosx      = 1 - \frac{1}{2} x^2 + o(x^2) \quad & \text{per } x \to 0 \\
+     & \log(1+x)     = x + o(x) \quad                 & \text{per } x \to 0 \\
+     & e^x            = 1 + x + o(x) \quad            & \text{per } x \to 0 \\
+     & (1+x)^\alpha  = 1 + \alpha\ x + o(x) \quad     & \text{per } x \to 0
+  \end{align*}
+  E in pi\'u definiamo
+  \begin{align}
+     & x^\alpha = o(e^x) \quad                        & \text{per } x \to +\infty & \quad\forall \alpha \in \mathbf{R} \\
+     & e^x=o(|x|^\alpha) \quad                        & \text{per } x \to -\infty & \quad\forall \alpha \in \mathbf{R} \\
+     & \log(x)=o(x^\alpha) \quad                      & \text{per } x \to +\infty & \quad\forall \alpha > 0            \\
+     & \log(x)=o\left(\frac{1}{x^\alpha}\right) \quad & \text{per } x \to +0^+    & \quad\forall \alpha < 0
+  \end{align}
+\end{proposition}
+\subsubsection{Grafici}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale = 0.9,
+      declare function={
+          f(\x) = sin(deg(\x));
+          g(\x) = \x;
+        }]
+    \begin{axis}
+      [
+        title={Grafico di \(\sin x \sim x\) per \(x \to 0\)},
+        title style={at={(0.5,-0.1)}, anchor=north},
+        xlabel={\( x \)},
+        ylabel={\( f(x) \)},
+        xmin=-2, xmax=2,
+        ymin=-2, ymax=2,
+        grid=both,
+        axis lines=middle,
+        axis line style=->,
+        grid style={line width=.1pt, draw=gray!10},
+        major grid style={line width=.2pt,draw=gray!50},
+        minor tick num=3,
+        enlargelimits={abs=0.5},
+        xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+        ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+        xticklabels={},
+        yticklabels={}
+        samples=100,
+        unbounded coords=jump,
+        legend pos=south east
+      ]
+      \addplot[domain=-3:3, ultra thick, smooth, color=red]{f(x)};
+      \addplot[domain=-3:3, ultra thick, smooth, color=myblue]{g(x)};
+      \legend{\( \sin x \), \( x \)}
+    \end{axis}
+  \end{tikzpicture}
+  \begin{tikzpicture}[scale = 0.9,
+      declare function={
+          f(\x) = cos(deg(\x));
+          g(\x) = 1-(1/2)*\x^2;
+        }]
+    \begin{axis}
+      [
+        title={Grafico di \(\cos x \sim 1 - \frac{1}{2}x^2\) per \(x \to 0\)},
+        title style={at={(0.5,-0.1)}, anchor=north},
+        xlabel={\( x \)},
+        ylabel={\( f(x) \)},
+        xmin=-2, xmax=2,
+        ymin=-2, ymax=2,
+        grid=both,
+        axis lines=middle,
+        axis line style=->,
+        grid style={line width=.1pt, draw=gray!10},
+        major grid style={line width=.2pt,draw=gray!50},
+        minor tick num=3,
+        enlargelimits={abs=0.5},
+        xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+        ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+        xticklabels={},
+        yticklabels={}
+        samples=100,
+        unbounded coords=jump,
+        legend pos=south east
+      ]
+      \addplot[domain=-3:3, ultra thick, smooth, color=myblue]{f(x)};
+      \addplot[domain=-3:3, ultra thick, smooth, color=red]{g(x)};
+      \legend{\( \cos x \), \( 1 - \frac{1}{2}x^2 \)}
+    \end{axis}
+  \end{tikzpicture}
+  \begin{tikzpicture}[scale = 0.9,
+      declare function={
+          f(\x) = ln(\x);
+          g(\x) = \x-1;
+        }]
+    \begin{axis}
+      [
+        title={Grafico di \(\log(x) \sim x-1\) per \(x \to 1\)},
+        title style={at={(0.5,-0.1)}, anchor=north},
+        xlabel={\( x \)},
+        ylabel={\( f(x) \)},
+        xmin=-2, xmax=2,
+        ymin=-2, ymax=2,
+        grid=both,
+        axis lines=middle,
+        axis line style=->,
+        grid style={line width=.1pt, draw=gray!10},
+        major grid style={line width=.2pt,draw=gray!50},
+        minor tick num=3,
+        enlargelimits={abs=0.5},
+        xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+        ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+        xticklabels={},
+        yticklabels={}
+        samples=100,
+        unbounded coords=jump,
+        legend pos=south east
+      ]
+      \addplot[domain=0.01:3, ultra thick, smooth, color=myblue]{f(x)};
+      \addplot[domain=-3:3, ultra thick, smooth, color=red]{g(x)};
+      \legend{\( \log(x) \), \( x-1 \)}
+    \end{axis}
+  \end{tikzpicture}
+  \begin{tikzpicture}[scale = 0.9,
+      declare function={
+          f(\x) = ln(1+\x);
+          g(\x) = \x;
+        }]
+    \begin{axis}
+      [
+        title={Grafico di \(\log(1+x) \sim x\) per \(x \to 0\)},
+        title style={at={(0.5,-0.1)}, anchor=north},
+        xlabel={\( x \)},
+        ylabel={\( f(x) \)},
+        xmin=-2, xmax=2,
+        ymin=-2, ymax=2,
+        grid=both,
+        axis lines=middle,
+        axis line style=->,
+        grid style={line width=.1pt, draw=gray!10},
+        major grid style={line width=.2pt,draw=gray!50},
+        minor tick num=3,
+        enlargelimits={abs=0.5},
+        xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+        ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+        xticklabels={},
+        yticklabels={}
+        samples=100,
+        unbounded coords=jump,
+        legend pos=south east
+      ]
+      \addplot[domain=-1.01:3, ultra thick, smooth, color=myblue]{f(x)};
+      \addplot[domain=-3:3, ultra thick, smooth, color=red]{g(x)};
+      \legend{\( \log(1+x) \), \( x \)}
+    \end{axis}
+  \end{tikzpicture}
+  \begin{tikzpicture}[scale = 0.9,
+      declare function={
+          f(\x) = e^\x-1;
+          g(\x) = \x;
+        }]
+    \begin{axis}
+      [
+        title={Grafico di \(e^x-1 \sim x\) per \(x \to 0\)},
+        title style={at={(0.5,-0.1)}, anchor=north},
+        xlabel={\( x \)},
+        ylabel={\( f(x) \)},
+        xmin=-2, xmax=2,
+        ymin=-2, ymax=2,
+        grid=both,
+        axis lines=middle,
+        axis line style=->,
+        grid style={line width=.1pt, draw=gray!10},
+        major grid style={line width=.2pt,draw=gray!50},
+        minor tick num=3,
+        enlargelimits={abs=0.5},
+        xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+        ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+        xticklabels={},
+        yticklabels={}
+        samples=100,
+        unbounded coords=jump,
+        legend pos=south east
+      ]
+      \addplot[domain=-3:1.5, ultra thick, smooth, color=myblue]{f(x)};
+      \addplot[domain=-3:3, ultra thick, smooth, color=red]{g(x)};
+      \legend{\( e^x-1 \), \( x \)}
+    \end{axis}
+  \end{tikzpicture}
+  \begin{tikzpicture}[scale = 0.9,
+      declare function={
+          f(\x) = e^\x;
+          g(\x) = \x+1;
+        }]
+    \begin{axis}
+      [
+        title={Grafico di \(e^x \sim 1+x\) per \(x \to 0\)},
+        title style={at={(0.5,-0.1)}, anchor=north},
+        xlabel={\( x \)},
+        ylabel={\( f(x) \)},
+        xmin=-2, xmax=2,
+        ymin=-2, ymax=2,
+        grid=both,
+        axis lines=middle,
+        axis line style=->,
+        grid style={line width=.1pt, draw=gray!10},
+        major grid style={line width=.2pt,draw=gray!50},
+        minor tick num=3,
+        enlargelimits={abs=0.5},
+        xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+        ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+        xticklabels={},
+        yticklabels={}
+        samples=100,
+        unbounded coords=jump,
+        legend pos=south east
+      ]
+      \addplot[domain=-3:1, ultra thick, smooth, color=myblue]{f(x)};
+      \addplot[domain=-3:3, ultra thick, smooth, color=red]{g(x)};
+      \legend{\( e^x \), \( 1+x \)}
+    \end{axis}
+  \end{tikzpicture}
+  \begin{tikzpicture}[scale = 0.9,
+      declare function={
+          f(\x) = (1+\x)^2-1;
+          g(\x) = 2*\x;
+        }]
+    \begin{axis}
+      [
+        title={Grafico di \((1+x)^2-1 \sim 2x\) per \(x \to 0\)},
+        title style={at={(0.5,-0.1)}, anchor=north},
+        xlabel={\( x \)},
+        ylabel={\( f(x) \)},
+        xmin=-2, xmax=2,
+        ymin=-2, ymax=2,
+        grid=both,
+        axis lines=middle,
+        axis line style=->,
+        grid style={line width=.1pt, draw=gray!10},
+        major grid style={line width=.2pt,draw=gray!50},
+        minor tick num=3,
+        enlargelimits={abs=0.5},
+        xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+        ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+        xticklabels={},
+        yticklabels={}
+        samples=100,
+        unbounded coords=jump,
+        legend pos=south east
+      ]
+      \addplot[domain=-3:1, ultra thick, smooth, color=myblue]{f(x)};
+      \addplot[domain=-3:3, ultra thick, smooth, color=red]{g(x)};
+      \legend{\( (1+x)^2-1 \), \( 2x \)}
+    \end{axis}
+  \end{tikzpicture}
+  \begin{tikzpicture}[scale = 0.9,
+      declare function={
+          f(\x) = (1+\x)^2;
+          g(\x) = 1+2*\x;
+        }]
+    \begin{axis}
+      [
+        title={Grafico di \((1+x)^2 \sim 1+2x\) per \(x \to 0\)},
+        title style={at={(0.5,-0.1)}, anchor=north},
+        xlabel={\( x \)},
+        ylabel={\( f(x) \)},
+        xmin=-2, xmax=2,
+        ymin=-2, ymax=2,
+        grid=both,
+        axis lines=middle,
+        axis line style=->,
+        grid style={line width=.1pt, draw=gray!10},
+        major grid style={line width=.2pt,draw=gray!50},
+        minor tick num=3,
+        enlargelimits={abs=0.5},
+        xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+        ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+        xticklabels={},
+        yticklabels={}
+        samples=100,
+        unbounded coords=jump,
+        legend pos=south east
+      ]
+      \addplot[domain=-3:1, ultra thick, smooth, color=myblue]{f(x)};
+      \addplot[domain=-3:3, ultra thick, smooth, color=red]{g(x)};
+      \legend{\( (1+x)^2 \), \( 1+2x \)}
+    \end{axis}
+  \end{tikzpicture}
+\end{figure}
+
+\noindent\begin{minipage}{\textwidth}
+  \begin{proposition}
+    \subsection{Utilizzo dei simboli di Landau nel calcolo di limiti}
+    Sono importanti le seguenti proprietà:
+    \begin{enumerate}[label=\roman*., start=1]
+      \item  Si vogliono studiare i limiti:
+            \begin{align*}
+              \lim_{x \to c} f(x)g(x) & \text{ oppure } \lim_{x \to c} \frac{f(x)}{g(x)}
+            \end{align*}
+            Se \(\tilde{f}\) e \(\tilde{g}\) sono funzioni tali che \(\tilde{f} \sim f\) e \(\tilde{g} \sim g\) per \(x \to c\), allora
+            \begin{equation*}
+              \lim_{x \to c} f(x)g(x) = \lim_{x \to c} \tilde{f}(x)\tilde{g}(x) \\
+              \lim_{x \to c} \frac{f(x)}{g(x)} = \lim_{x \to c} \frac{\tilde{f}(x)}{\tilde{g}(x)}
+            \end{equation*}
+      \item Si vogliono studiare i limiti:
+            \begin{align*}
+              \lim_{x \to c} [(f(x) + f_1(x))(g(x) + g_1(x))] & \text{ oppure } \lim_{x \to c} \frac{(f(x) + f_1(x))}{(g(x) + g_1(x))}
+            \end{align*}
+            Se \(f_1 = o(f)\) e \(g_1 = o(g)\) per \(x \to c\), allora
+            \begin{align*}
+               & \lim_{x \to c} [(f(x) + f_1(x))(g(x) + g_1(x))]         = \lim_{x \to c} f(x)g(x)          \\
+               & \lim_{x \to c} \frac{(f(x) + f_1(x))}{(g(x) + g_1(x))}  = \lim_{x \to c} \frac{f(x)}{g(x)}
+            \end{align*}
+    \end{enumerate}
+  \end{proposition}
+  Le precedenti regole di ‘semplificazione’ nel calcolo dei limiti valgono soltanto
+  nel caso di prodotti o quozienti. Non è lecito applicare tali regole nel
+  calcolo del limite di una somma o differenza di funzioni
+\end{minipage}
+
+\section{Infinitesimi e infiniti}
+
+\begin{definition}
+  \subsection{Infinitesimo}
+  Sia \(f\) una funzione definita in un intorno di \(c\), tranne forse in \(c\) stesso. Diciamo che \(f\) è un \textbf{infinitesimo} per \(x \to c\) se
+  \[
+    \lim_{x \to c} f(x) = 0
+  \]
+\end{definition}
+\begin{definition}
+  \subsection{Infinito}
+  Sia \(f\) una funzione definita in un intorno di \(c\), tranne forse in \(c\) stesso. Diciamo che \(f\) è un \textbf{infinito} per \(x \to c\) se
+  \[
+    \lim_{x \to c} f(x) = \pm \infty
+  \]
+\end{definition}
+\noindent\begin{minipage}{\textwidth}
+  \begin{proposition}
+    \subsection{Confronto tra infinitesimi}
+    Siano \(f\) e \(g\) due infinitesimi per \(x \to c\). Allora
+    \begin{align*}
+       & \text{Se } f \asymp g \text{ allora } f \text{ e } g \text{ si dicono \textbf{infinitesimi dello stesso ordine}.} \\
+       & \text{Se } f = o(g) \text{ allora } f \text{ dicesi \textbf{infinitesimo di ordine superiore} rispetto a } g.     \\
+       & \text{Se } g = o(f) \text{ allora } f \text{ dicesi \textbf{infinitesimo di ordine inferiore} rispetto a } g.     \\
+       & \text{Se nessuna delle tre, allora } f \text{ e } g \text{ sono infinitesimi \textbf{non confrontabili}.}
+    \end{align*}
+  \end{proposition}
+  \begin{proposition}
+    \subsection{Confronto tra infiniti}
+    Siano \(f\) e \(g\) due infiniti per \(x \to c\). Allora
+    \begin{align*}
+       & \text{Se } f \asymp g \text{ allora } f \text{ e } g \text{ si dicono \textbf{infiniti dello stesso ordine}.} \\
+       & \text{Se } f = o(g) \text{ allora } f \text{ dicesi \textbf{infinito di ordine inferiore} rispetto a } g.     \\
+       & \text{Se } g = o(f) \text{ allora } f \text{ dicesi \textbf{infinito di ordine superiore} rispetto a } g.     \\
+       & \text{Se nessuna delle tre, allora } f \text{ e } g \text{ sono infiniti \textbf{non confrontabili}.}
+    \end{align*}
+  \end{proposition}
+  \begin{theorem}
+    \subsection{Gerarchia degli infiniti}
+    Per \(x \to +\infty\), valgono le seguenti relazioni:
+    \begin{align*}
+      \log_a x < x^\alpha < x^\beta < b^x < x! < x^x
+    \end{align*}
+    con \(a>0\) \(\lor\) \(a\neq 1\), \(0<\alpha<\beta\), \(b>1\), \(x>0\).
+  \end{theorem}
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale = 1,
+        declare function={
+            f(\x) = ln(\x);
+            g(\x) = \x^0.5;
+            h(\x) = \x^1.5;
+            i(\x) = 2^\x;
+          }]
+      \begin{axis}
+        [
+          xlabel={\( x \)},
+          ylabel={\( f(x) \)},
+          xmin=-1, xmax=15,
+          ymin=-1, ymax=15,
+          grid=both,
+          axis lines=middle,
+          axis line style=->,
+          grid style={line width=.1pt, draw=gray!10},
+          major grid style={line width=.2pt,draw=gray!50},
+          minor tick num=3,
+          enlargelimits={abs=0.5},
+          xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+          ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+          samples=100,
+          unbounded coords=jump,
+          legend pos=south east
+        ]
+        \addplot[domain=0:15, thick, smooth, color=red]{f(x)};
+        \addplot[domain=0:15, thick, smooth, color=blue]{g(x)};
+        \addplot[domain=0:15, thick, smooth, color=green]{h(x)};
+        \addplot[domain=0:6, thick, smooth, color=orange]{i(x)};
+        \addplot+[thick, smooth, mark=none, color=red] coordinates {
+            (0, 1)
+            (1, 1)
+            (2, 2)
+            (3, 6)
+            (4, 24)
+          };
+        \addplot+[color=black, thick, smooth, mark=none, solid] coordinates {
+            (0, 1)
+            (1, 1)
+            (2, 4)
+            (3, 27)
+          };
+        \node[red, below] at (axis cs: 14, 2.63) {$\log_a x$};
+        \node[blue, above] at (axis cs: 10, 3.16) {$x^\alpha$};
+        \node[green, right] at (axis cs: 5, 11) {$x^\beta$};
+        \node[orange, right] at (axis cs: 3.5, 11.5) {$b^x$};
+        \node[red] at (axis cs: 2.9, 12) {$x!$};
+        \node[black] at (axis cs: 2, 12.5) {$x^x$};
+      \end{axis}
+    \end{tikzpicture}
+    \caption{Gerarchia degli infiniti}
+    \label{fig:gerarchia-infiniti}
+  \end{figure}
+\end{minipage}
+\noindent\begin{minipage}{\textwidth}
+  \section{Asintoti}
+  \begin{definition}
+    \subsection{Asintoto verticale}
+    Sia \(f\) una funzione definita in un intorno di \(c\), tranne forse in \(c\) stesso. Diciamo che \(x = c\) è un \textbf{asintoto verticale} per \(x \to c\) se
+    \[
+      \lim_{x \to c} f(x) = \pm \infty
+    \]
+  \end{definition}
+  \begin{definition}
+    \subsection{Asintoto orizzontale}
+    Sia \(f\) una funzione definita in un intorno di \(c\), tranne forse in \(c\) stesso. Diciamo che \(y = l\) è un \textbf{asintoto orizzontale} per \(x \to c\) se
+    \[
+      \lim_{x \to c} f(x) = l
+    \]
+  \end{definition}
+  \begin{definition}
+    \subsection{Asintoto obliquo}
+    Sia \(f\) una funzione definita in un intorno di \(c\), tranne forse in \(c\) stesso. Diciamo che \(y = mx + q\) è un \textbf{asintoto obliquo} per \(x \to c\) se
+    \[
+      \lim_{x \to c} [f(x) - (mx + q)] = 0
+    \]
+  \end{definition}
+  \begin{proposition}
+    \begin{align*}
+       & m = \lim_{x \to c} \frac{f(x)}{x} \quad \text{e} \quad q = \lim_{x \to c} [f(x) - mx]
+    \end{align*}
+  \end{proposition}
+\end{minipage}
+
+\begin{example}
+  Sia \(f(x) = \sqrt{1+x^2}\). Studiamo gli asintoti di \(f\).
+  \begin{enumerate}
+    \item  Nessun punto di discontinuità, quindi nessun asintoto verticale.
+    \item  Cerchiamo asintoti orizzontali calcolando il limite per \(x \to \pm \infty\)
+          \begin{align*}
+            \lim_{x \to \pm\infty} \sqrt{1+x^2} = \pm\infty \implies \text{nessun asintoto orizzontale}
+          \end{align*}
+    \item Cerchiamo asintoti obliqui
+          \begin{align*}
+            m & = \lim_{x \to \pm\infty} \frac{f(x)}{x}                                    & =                   \lim_{x \to \pm\infty} \frac{\sqrt{1+x^2}}{x} & \\
+              & = \lim_{x \to \pm\infty} \frac{|x|\sqrt{\frac{1}{x^2}+1}}{x}               & =\begin{cases}
+                                                                                                \lim_{x \to +\infty} \frac{x\sqrt{\frac{1}{x^2}+1}}{x} = +1 \\
+                                                                                                \lim_{x \to -\infty} \frac{-x\sqrt{\frac{1}{x^2}+1}}{x} = -1
+                                                                                              \end{cases}   &       \\
+            \\
+            q & = \lim_{x \to \pm\infty} [f(x) - mx]                                       & = \lim_{x \to \pm\infty} \sqrt{1+x^2} - x                         & \\
+              & =                                                            \begin{cases}
+                                                                               \lim_{x \to +\infty} \sqrt{1+x^2} - x = 0 \\
+                                                                               \lim_{x \to -\infty} \sqrt{1+x^2} - x = 0
+                                                                             \end{cases} &                                                                   &   \\
+          \end{align*}
+          Abbiamo quindi due asintoti obliqui:
+          \begin{align*}
+             & y = x \quad \text{per } x \to +\infty  \\
+             & y = -x \quad \text{per } x \to -\infty
+          \end{align*}
+  \end{enumerate}
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale = 1,
+        declare function={
+            f(\x) = sqrt(1+\x^2);
+            g(\x) = -\x;
+            h(\x) = \x;
+          }]
+      \begin{axis}
+        [
+          xlabel={\( x \)},
+          ylabel={\( f(x) \)},
+          xmin=-3, xmax=3,
+          ymin=-0.5, ymax=3,
+          grid=both,
+          axis lines=middle,
+          axis line style=->,
+          grid style={line width=.1pt, draw=gray!10},
+          major grid style={line width=.2pt,draw=gray!50},
+          minor tick num=3,
+          enlargelimits={abs=0.5},
+          xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+          ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+          samples=100,
+          unbounded coords=jump,
+          legend pos=south east
+        ]
+        \addplot[domain=-4:4, ultra thick, smooth, color=myblue]{f(x)};
+        \addplot[domain=-4:-1, thick, dashed, smooth, color=gray]{g(x)};
+        \addplot[domain=1:4, thick, dashed, smooth, color=gray]{h(x)};
+        \node[color=gray] at (axis cs: -2.5, 1.5) {\( y = -x \)};
+        \node[color=gray] at (axis cs: +2.5, 1.5) {\( y = x \)};
+        \legend{\( f(x) = \sqrt{1+x^2} \)};
+      \end{axis}
+    \end{tikzpicture}
+    \caption{Asintoti obliqui}
+    \label{fig:asintoti-obliqui}
+  \end{figure}
+\end{example}
+\end{document}

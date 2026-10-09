@@ -1,0 +1,193 @@
+% FORMULARIO CONTROLLO AUTOMATICI
+\documentclass[a4paper,11pt]{article}
+\usepackage{amsmath,amssymb,siunitx,tikz}
+\usepackage{geometry}
+\usepackage{amsthm} % definisce ambienti theorem-like
+\newtheorem{exercise}{Esercizio}[section]
+\newtheorem{example}{Esempio}[section]
+
+\geometry{margin=2cm}
+\title{Formulario di Controlli Automatici}
+\author{}
+\date{\today}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+%-----------------------------------------------------------------
+\section*{Legenda}
+\begin{description}
+  \item[$s$] variabile complessa di Laplace
+  \item[$G(s)$] funzione di trasferimento del plant
+  \item[$H(s)$] funzione di trasferimento del sensore (feedback)
+  \item[$K$] guadagno di retroazione
+\end{description}
+
+%=================================================================
+\section{Modulo 1 – Fondamenti di sistemi}
+
+% --------------------- Contenuti Modulo 1 ---------------------
+\subsection*{Micro-lezione (15 righe)}
+\begin{itemize}
+  \item Un \emph{sistema} elabora un ingresso $u(t)$ e restituisce un'uscita $y(t)$.
+  \item Se è \textbf{lineare} e \textbf{tempo invariante} (LTI) vale la sovrapposizione e poli/zeri non cambiano nel tempo.
+  \item La \emph{quiete iniziale} impone condizioni iniziali nulle per studiare la sola risposta all’ingresso.
+  \item Lo \textbf{schema a blocchi} rappresenta catene di funzioni di trasferimento e si riduce con 8 regole (somma, serie, parallelo, retroazione …).
+  \item Nel \textbf{controllo in retroazione} si sottrae la misura dal riferimento: $e=r-y$.
+  \item Il \textbf{controllo diretto} (feed–forward) agisce su $u$ senza chiudere l’anello ma richiede un modello preciso.
+  \item \textbf{Stabilità interna}: tutti i poli di $G(s)$ nel semipiano sinistro $\Rightarrow$ risposta limitata.
+  \item \textbf{Sensibilità} $S=\dfrac{1}{1+G(s)H(s)}$ misura l’effetto dei disturbi sull’uscita.
+\end{itemize}
+
+\subsection*{Esempio numerico – Cruise‑control}
+Massa $m=1000\,\mathrm{kg}$, attrito lineare $b=50\,\mathrm{N\,s/m}$.
+\[
+G(s)=\frac{1/m}{s+\tfrac{b}{m}}=\frac{0{,}001}{s+0{,}05}.
+\]
+Tempo di assestamento ($\pm2\%$) I‑ordine: $t_s\approx4\,\tau=80\,\mathrm{s}$ con $\tau=20\,\mathrm{s}$.
+
+\subsection*{Mappa concettuale}
+\begin{center}\small
+\begin{verbatim}
+   r ─┬─►(+)──► C(s) ─► u ─► G(s) ─► y
+      │          ^               │
+      │          │               │
+      └──────────┴── H(s) ◄──────┘
+\end{verbatim}
+\end{center}
+
+\subsection*{Quiz rapido Mod. 1}
+\begin{exercise}[V/F]
+Indicare se le affermazioni sono vere (V) o false (F):
+\begin{enumerate}
+  \item Un sistema con polo in $s=0$ è asintoticamente stabile. \hfill\textbf{F}
+  \item La somma di due sistemi LTI è ancora LTI. \hfill\textbf{V}
+  \item In retroazione unitaria $T(s)=\dfrac{C(s)G(s)}{1+C(s)G(s)}$. \hfill\textbf{V}
+\end{enumerate}
+\end{exercise}
+
+%-----------------------------------------------------------------
+\section{Modulo 2 – Modelli dinamici \& Laplace}
+\subsection*{Trasformate elementari (promemoria)}
+\[
+\mathcal{L}\{1\} = \frac{1}{s},\qquad
+\mathcal{L}\{t\} = \frac{1}{s^{2}},\qquad
+\mathcal{L}\{e^{at}\} = \frac{1}{s-a},\qquad
+\mathcal{L}\{\sin \omega t\} = \frac{\omega}{s^{2}+\omega^{2}},\qquad
+\mathcal{L}\{\cos \omega t\} = \frac{s}{s^{2}+\omega^{2}}.
+\]
+
+\subsection*{Antitrasformate rapide via scomposizione}
+Dato
+\[
+Y(s)=\frac{k_1}{(s-a)}+\frac{k_2}{(s-b)}
+\quad\Longrightarrow\quad
+y(t)=k_1 e^{a t}+k_2 e^{b t}.
+\]
+
+\subsection*{Micro-lezione}
+\begin{enumerate}
+  \item Le equazioni differenziali lineari diventano algebriche applicando la trasformata di Laplace.
+  \item Funzione di trasferimento: $G(s)=\dfrac{Y(s)}{U(s)}$ con condizioni iniziali nulle.
+  \item Teorema del valore iniziale: $\displaystyle \lim_{t\to0^+}y(t)=\lim_{s\to\infty}sY(s)$.
+  \item Teorema del valore finale (poli nel semipiano sinistro): $\displaystyle \lim_{t\to\infty}y(t)=\lim_{s\to0}sY(s)$.
+  \item Convoluzione nel tempo $\Longleftrightarrow$ prodotto in dominio $s$.
+\end{enumerate}
+
+\subsection*{Esempio svolto}
+Calcolare $y(t)$ per ingresso gradino unitario e
+\[
+G(s)=\frac{5}{s(s+2)}.
+\]
+\textbf{Soluzione}\\
+\[
+Y(s)=G(s)\frac{1}{s}= \frac{5}{s^{2}(s+2)}
+=\frac{A}{s}+\frac{B}{s^{2}}+\frac{C}{s+2}.
+\]
+Con i residui si ottiene $A=\tfrac{5}{2}$, $B=-\tfrac{5}{2}$, $C=-\tfrac{5}{2}$:
+\[
+y(t)=\frac{5}{2}-\frac{5}{2}e^{-2t}-\frac{5}{2}t.
+\]
+
+\subsection*{Mini‑mappa}
+\begin{center}\small
+\begin{verbatim}
+equaz.diff  →  Laplace  →  algebra  →  antitrasformata →  y(t)
+\end{verbatim}
+\end{center}
+
+%-----------------------------------------------------------------
+\section{Modulo 3 – Risposta al gradino}
+% TODO
+
+%-----------------------------------------------------------------
+\section{Modulo 4 – Analisi armonica}
+% TODO
+
+%-----------------------------------------------------------------
+\section{Modulo 5 – Stabilità \& retroazione}
+
+\subsection*{Criterio di Routh – intervallo di stabilità (grado 3)}
+Sia
+\[
+\chi(s)=a s^{3}+b s^{2}+c s + d = 0 ,\qquad a>0 .
+\]
+La \emph{tabella di Routh} è
+\[
+\begin{array}{c|cc}
+s^{3} & a & c \\
+s^{2} & b & d \\
+s^{1} & x & 0 \\
+s^{0} & d & 0
+\end{array}
+\qquad
+x=\frac{b c - a d}{b}.
+\]
+Stabilità $\;\Longleftrightarrow\;$ tutti gli elementi della prima colonna hanno lo stesso segno, da cui
+\[
+a>0,\; b>0,\; d>0,\; x>0.
+\]
+
+\begin{example}[Intervallo di stabilità con parametro $K$]
+Determinare i valori di $K$ che rendono stabile il sistema a retroazione unitaria con
+\[
+G_d(s)=K\,\frac{10^{4}}{s(s+5)(s+20)}.
+\]
+\textbf{Soluzione} – Equazione caratteristica:
+\[
+1+K\,\frac{10^{4}}{s(s+5)(s+20)}=0
+\Longrightarrow
+s^{3}+25 s^{2}+100 s + 10^{4} K = 0.
+\]
+Imponendo la positività della prima colonna della tabella di Routh si ottiene
+\[
+0 < K < 0{,}25.
+\]
+\end{example}
+
+\begin{exercise}[Secondo esempio]
+Ripetere la procedura per
+\[
+G_d(s)=K\,\frac{100}{s(s+3)(s+40)}\quad\Rightarrow\quad 0<K<51{,}6.
+\]
+\end{exercise}
+
+\bigskip
+\noindent\textbf{Formule utili (grado 3):}
+\[
+x=\frac{b c - a d}{b},\quad
+y=\frac{b e - a f}{b},\quad
+z=\frac{x d - b f}{x}.
+\]
+% TODO: verificare notazione ed esempi aggiuntivi
+
+%-----------------------------------------------------------------
+\section{Modulo 6 – Luogo delle radici}
+% TODO
+
+%-----------------------------------------------------------------
+\section{Modulo 7 – Sintesi \& compensazione}
+% TODO
+
+\end{document}

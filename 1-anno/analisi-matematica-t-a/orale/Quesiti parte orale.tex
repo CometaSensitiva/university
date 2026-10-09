@@ -1,0 +1,269 @@
+\documentclass{book}
+
+\title{Quesiti parte orale Analisi Matematica T-A}
+\author{Michele Mazza}
+\date{November 2023}
+
+
+% Pacchetti di Codifica e Lingua
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+
+% Pacchetti Grafici e Diagrammi
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{angles,quotes,arrows.meta, positioning}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% Pacchetti Matematici
+\usepackage{amsmath, amssymb, amsthm}
+
+% Pacchetti per Tabelle e Unità di Misura
+\usepackage{geometry}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{colortbl}
+
+% Pacchetti per Layout e Formattazione
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{microtype}
+
+% Altri Pacchetti Utili
+\usepackage{mdframed}
+\usepackage{animate}
+
+% Definizioni dei Colori
+\definecolor{lightblue}{HTML}{9cd8fc}
+\definecolor{myblue}{HTML}{139FE9}
+
+% Definizione del comando \norm
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+%\font\nullfont=cmr10 
+
+% Ambienti Personalizzati
+\newmdtheoremenv[
+    backgroundcolor=orange!10,
+    linecolor=myblue,
+    linewidth=0pt,
+    leftmargin=0pt,
+    rightmargin=0pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+    innertopmargin=10pt,
+    innerbottommargin=10pt
+    nobreak
+]{curiosity}{Curiosità}
+
+\newmdtheoremenv[
+    font=\normalfont\small,
+    linewidth=0pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+]{example}{Esempio}
+
+\newmdtheoremenv[
+  backgroundcolor=lightblue,
+  linecolor=myblue,
+  linewidth=1.5pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt
+  nobreak
+]{theorem}{Teorema}
+
+\newmdtheoremenv[
+  backgroundcolor=gray!10,
+  linewidth=0pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt
+  nobreak
+]{definition}{Definizione}
+
+\newmdtheoremenv[
+  backgroundcolor=gray!10,
+  linecolor=myblue,
+  linewidth=1.5pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt
+  nobreak
+]{proposition}{Proposizione}
+
+% Configurazioni di fancyhdr
+\pagestyle{fancy}
+\fancyhf{} % Pulisce tutti i campi
+\fancyhead[LE,RO]{\thepage} % Numero di pagina
+\fancyhead[RE]{\nouppercase{\leftmark}} % Titolo del capitolo
+\fancyhead[LO]{\nouppercase{\rightmark}} % Titolo della sezione
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\geometry{a4paper, left=20mm, right=20mm, top=20mm, bottom=20mm}
+
+% Pacchetto Hyperref (inserito per ultimo)
+\usepackage{hyperref}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+\tableofcontents
+\mainmatter
+\chapter{La Retta Reale R}
+Esploriamo le proprietà fondamentali della retta reale \( \mathbb{R} \), concentrandoci su relazioni d'ordine e di equivalenza, insiemi, estremi e limiti.
+
+\subsection*{Relazioni d'Ordine e di Equivalenza}
+Sia \( F \) un insieme non vuoto. Una relazione binaria \( A \) in \( F \) è definita come segue:
+\begin{itemize}
+  \item \textbf{Riflessiva:} \( A \) è riflessiva se \( aAa \) per ogni \( a \in F \).
+  \item \textbf{Transitiva:} \( A \) è transitiva se da \( aAb \) e \( bAc \) segue \( aAc \) per ogni \( a, b, c \in F \).
+  \item \textbf{Simmetrica:} \( A \) è simmetrica se da \( aAb \) segue \( bAa \) per ogni \( a, b \in F \).
+  \item \textbf{Antisimmetrica:} \( A \) è antisimmetrica se da \( aAb \) e \( bAa \) segue \( a=b \) per ogni \( a, b \in F \).
+\end{itemize}
+Una \textbf{relazione di equivalenza} è riflessiva, simmetrica e transitiva. Una \textbf{relazione d'ordine parziale} è riflessiva, transitiva e antisimmetrica.
+
+\subsection*{Insiemi Separati e Contigui}
+\begin{itemize}
+  \item Due insiemi si dicono \textbf{separati} se per ogni \( e \in F \) e \( g \in G \), \( e \neq g \).
+  \item Sono \textbf{contigui} se sono separati e l'estremo superiore di uno coincide con l'estremo inferiore dell'altro.
+\end{itemize}
+
+\subsection*{Massimi e Minimi}
+Per un sottoinsieme \( A \subseteq \mathbb{R} \):
+\begin{itemize}
+  \item \( A \) ha un \textbf{massimo} se esiste \( x_0 \in A \) tale che \( x_0 \geq x \) per ogni \( x \in A \).
+  \item \( A \) ha un \textbf{minimo} se esiste \( x_0 \in A \) tale che \( x_0 \leq x \) per ogni \( x \in A \).
+\end{itemize}
+
+\subsection*{Estremo Superiore e Inferiore}
+Un insieme \( A \) è:
+\begin{itemize}
+  \item \textbf{Limitato superiormente} se esiste \( K \in \mathbb{R} \) tale che \( K \geq x \) per ogni \( x \in A \). \( \sup(A) \) è il più piccolo \( K \) che soddisfa questa proprietà.
+  \item \textbf{Limitato inferiormente} se esiste \( K \in \mathbb{R} \) tale che \( K \leq x \) per ogni \( x \in A \). \( \inf(A) \) è il più grande \( K \) che soddisfa questa proprietà.
+\end{itemize}
+
+\subsection*{Modulo di un Numero Reale}
+Il \textbf{modulo} \( |x| \) di un numero reale \( x \) è definito come:
+\[
+  |x| =
+  \begin{cases}
+    x  & \text{se } x \geq 0, \\
+    -x & \text{se } x < 0.
+  \end{cases}
+\]
+Il modulo gode delle seguenti proprietà:
+\begin{itemize}
+  \item \( |x| = 0 \) se e solo se \( x = 0 \).
+  \item \( |xy| = |x||y| \) per tutti \( x, y \in \mathbb{R} \).
+  \item \( |x+y| \leq |x| + |y| \) (disuguaglianza triangolare).
+\end{itemize}
+
+\subsection*{Insiemi Limitati e Non Limitati}
+Un insieme \( A \subset \mathbb{R} \) è \textbf{non limitato superiormente} se il suo estremo superiore è \( +\infty \) e \textbf{non limitato inferiormente} se il suo estremo inferiore è \( -\infty \).
+
+\subsection*{Definizione di Limite}
+Per una funzione \( f: A \to \mathbb{R} \) definita su un insieme \( A \subseteq \mathbb{R} \) non limitato superiormente, si ha:
+\[
+  \lim_{x \to +\infty} f(x) = L \in \mathbb{R}
+\]
+se e solo se per ogni \( \epsilon > 0 \) esiste \( M \) tale che per ogni \( x > M \) con \( x \in A \), \( |f(x) - L| < \epsilon \).
+
+\chapter{Funzioni reali di variabile reale}
+Sia \( f: A \to \mathbb{R} \) una funzione definita su un sottoinsieme \( A \) di \( \mathbb{R} \).
+
+\subsection*{Limitatezza e Estremi di Funzioni}
+Una funzione \( f \) si dice:
+\begin{itemize}
+  \item \textbf{Limitata superiormente} se esiste \( M \in \mathbb{R} \) tale che \( f(x) \leq M \) per ogni \( x \in A \). Il più piccolo di tali \( M \) è detto \(\sup f(A)\), l'estremo superiore di \( f \).
+  \item \textbf{Limitata inferiormente} se esiste \( m \in \mathbb{R} \) tale che \( f(x) \geq m \) per ogni \( x \in A \). Il più grande di tali \( m \) è detto \(\inf f(A)\), l'estremo inferiore di \( f \).
+  \item \textbf{Limitata} se è sia limitata superiormente che inferiormente.
+\end{itemize}
+
+\subsection*{Massimo e Minimo di Funzioni}
+\begin{itemize}
+  \item \( f \) ha un \textbf{massimo} in \( A \) se esiste \( x_0 \in A \) tale che \( f(x_0) \geq f(x) \) per ogni \( x \in A \). Tale \( f(x_0) \) è il massimo di \( f \), denotato come \(\max f(A)\).
+  \item \( f \) ha un \textbf{minimo} in \( A \) se esiste \( x_0 \in A \) tale che \( f(x_0) \leq f(x) \) per ogni \( x \in A \). Tale \( f(x_0) \) è il minimo di \( f \), denotato come \(\min f(A)\).
+\end{itemize}
+
+\subsection*{Funzioni Monotone}
+\begin{itemize}
+  \item \( f \) si dice \textbf{monotona crescente} se per ogni \( x_1, x_2 \in A \) con \( x_1 < x_2 \), si ha \( f(x_1) \leq f(x_2) \).
+  \item \( f \) si dice \textbf{monotona decrescente} se per ogni \( x_1, x_2 \in A \) con \( x_1 < x_2 \), si ha \( f(x_1) \geq f(x_2) \).
+\end{itemize}
+
+\subsection*{Limiti di Funzioni Monotone}
+\begin{itemize}
+  \item Se \( f \) è monotona crescente su \([a, b]\), allora \( \lim_{x \to b^-} f(x) = \sup f([a,b]) \).
+  \item Se \( f \) è monotona decrescente su \([a, b]\), allora \( \lim_{x \to b^-} f(x) = \inf f([a,b]) \).
+\end{itemize}
+
+\subsection*{Teorema Generalizzato per Intervallo Infinito}
+Per una funzione \( f: \mathbb{R} \to \mathbb{R} \) monotona:
+\begin{itemize}
+  \item Se \( f \) è monotona crescente nell'intervallo \( (-\infty, M) \), allora \( \lim_{x \to M^-} f(x) = \inf f((-\infty, M)) \).
+  \item Se \( f \) è monotona decrescente nell'intervallo \( (M, +\infty) \), allora \( \lim_{x \to M^+} f(x) = \sup f((M, +\infty)) \).
+\end{itemize}
+
+\chapter{Il numero \( e \)}
+Dimostriamo che la successione
+\[ a_n = \left(1 + \frac{1}{n}\right)^n, \quad n = 1, 2, 3, \ldots \]
+è crescente e limitata superiormente.
+
+\subsection*{Crescita della Successione}
+Consideriamo la successione \( a_n = \left(1 + \frac{1}{n}\right)^n \). Utilizziamo il Binomio di Newton che esprime \((1 + x)^n\) come una somma di termini binomiali:
+
+\[ (1 + x)^n = \sum_{k=0}^{n} \binom{n}{k} x^k \]
+dove
+\[ \binom{n}{k} = \frac{n!}{k!(n-k)!}. \]
+
+Applicando la disuguaglianza di Bernoulli, che afferma che per ogni \( a \geq 0 \) e \( n \in \mathbb{N} \):
+\[ (1 + a)^n \geq 1 + na, \]
+mostra che \( a_{n+1} \geq a_n \), ovvero la successione è crescente.
+
+\subsection*{Limitatezza Superiore}
+Osserviamo che \( a_n \) può essere espresso come
+\[ a_n = \left(1 + \frac{1}{n}\right)^n = \sum_{k=0}^{n} \binom{n}{k} \left(\frac{1}{n}\right)^k = \sum_{k=0}^{n} \frac{1}{k!} \prod_{j=0}^{k-1} \left(\frac{n-j}{n}\right). \]
+Notiamo che il prodotto \( \prod_{j=0}^{k-1} \left(\frac{n-j}{n}\right) \) è sempre minore o uguale a 1, quindi
+\[ a_n \leq \sum_{k=0}^{n} \frac{1}{k!}, \]
+e questa serie converge a \( e \), la base dei logaritmi naturali.
+
+\subsection*{Conclusione}
+La successione \( a_n \) è crescente e limitata superiormente. Il limite di questa successione, per \( n \to \infty \), è il numero \( e \), ovvero
+\[ \lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n = e. \]
+Quindi,
+\[ \sup \left\{ \left(1 + \frac{1}{n}\right)^n : n \in \mathbb{N} \right\} = e. \]
+
+\chapter*{Limiti di \( f: A \to \mathbb{R} \), con \( A \subseteq \mathbb{R} \)}
+
+\subsection*{Punti di Accumulazione e Interni}
+Un punto \( x_0 \in \mathbb{R} \) è detto di accumulazione di \( A \) se ogni intorno di \( x_0 \) contiene un punto di \( A \). Un punto è interno ad \( A \) se esiste un intorno completamente contenuto in \( A \).
+
+\subsection*{Frontiera e Chiusura}
+La frontiera di \( A \), denotata \( \partial A \), è composta da punti dove ogni intorno interseca sia \( A \) che il suo complemento. La chiusura di \( A \), \( \overline{A} \), include tutti i punti aderenti ad \( A \).
+
+\subsection*{Limite di una Restrizione}
+Per \( f: A \to \mathbb{R} \) e \( x_0 \) punto di accumulazione, se \( \lim_{x \to x_0} f(x) = L \), allora per ogni sottoinsieme \( B \subseteq A \), \( \lim_{x \to x_0, x \in B} f(x) = L \).
+
+\subsection*{Limiti Destro e Sinistro}
+Il limite destro di \( f \) in \( x_0 \) è definito su \( A^+ = A \cap [x_0, +\infty) \) e analogamente per il limite sinistro su \( A^- = A \cap (-\infty, x_0] \).
+
+\subsection*{Teoremi sui Limiti}
+I limiti sono locali e implicano la limitatezza di \( f \) in un intorno di \( x_0 \). Conservano il segno e seguono le proprietà delle funzioni composte.
+
+\subsection*{Confronto di Infinitesimi e Infiniti}
+Il confronto tra infinitesimi o infiniti si basa sul rapporto tra le funzioni. Due funzioni sono infinitesimi dello stesso ordine se il loro rapporto tende a un limite finito e non nullo.
+
+\section*{Dimostrazione del limite \( \lim_{x \to 0}\frac{\sin x}{x} = 1 \)}
+Per dimostrare \( \lim_{x \to 0}\frac{\sin x}{x} = 1 \), consideriamo la disuguaglianza \( \cos x < \frac{\sin x}{x} < 1 \) per \( 0 < x < \frac{\pi}{2} \). La continuità del coseno in \( 0 \) e il Teorema del Confronto confermano il limite.
+
+\end{document}

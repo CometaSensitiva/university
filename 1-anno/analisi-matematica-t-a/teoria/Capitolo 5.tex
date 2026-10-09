@@ -1,0 +1,519 @@
+\documentclass{book}
+
+\title{Analisi Matematica T-A}
+\author{Michele Mazza}
+\date{November 2023}
+
+
+% Pacchetti di Codifica e Lingua
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+
+% Pacchetti Grafici e Diagrammi
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{angles,quotes,arrows.meta, positioning}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% Pacchetti Matematici
+\usepackage{amsmath, amssymb, amsthm}
+
+% Pacchetti per Tabelle e Unità di Misura
+\usepackage{geometry}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{colortbl}
+
+% Pacchetti per Layout e Formattazione
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{microtype}
+
+% Altri Pacchetti Utili
+\usepackage{mdframed}
+\usepackage{animate}
+
+% Pacchetto enumitem
+\usepackage{enumitem}
+
+% Definizioni dei Colori
+\definecolor{lightblue}{HTML}{9cd8fc}
+\definecolor{myblue}{HTML}{139FE9}
+
+% Definizione del comando \norm
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+%\font\nullfont=cmr10 
+
+% Ambienti Personalizzati
+\newmdtheoremenv[
+    backgroundcolor=orange!10,
+    linecolor=myblue,
+    linewidth=0pt,
+    leftmargin=0pt,
+    rightmargin=0pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+    innertopmargin=10pt,
+    innerbottommargin=10pt,
+    nobreak
+]{curiosity}{Curiosità}
+
+\newmdtheoremenv[
+    font=\normalfont\small,
+    linewidth=0pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+]{example}{Esempio}
+
+\newmdtheoremenv[
+  backgroundcolor=lightblue,
+  linecolor=myblue,
+  linewidth=1.5pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt,
+  nobreak
+]{theorem}{Teorema}
+
+\newmdtheoremenv[
+  backgroundcolor=gray!10,
+  linewidth=0pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt,
+  nobreak
+]{definition}{Definizione}
+
+\newmdtheoremenv[
+  backgroundcolor=gray!10,
+  linecolor=myblue,
+  linewidth=1.5pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt,
+  nobreak
+]{proposition}{Proposizione}
+
+% Configurazioni di fancyhdr
+\pagestyle{fancy}
+\fancyhf{} % Pulisce tutti i campi
+\fancyhead[LE,RO]{\thepage} % Numero di pagina
+\fancyhead[RE]{\nouppercase{\leftmark}} % Titolo del capitolo
+\fancyhead[LO]{\nouppercase{\rightmark}} % Titolo della sezione
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\geometry{a4paper, left=20mm, right=20mm, top=20mm, bottom=20mm}
+
+% Pacchetto Hyperref (inserito per ultimo)
+\usepackage{hyperref}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+\tableofcontents
+\mainmatter
+
+
+\chapter{Proprietà e calcolo di limiti}
+
+\section{Teorema di unicità del limite e permanenza del segno}
+
+\begin{theorem}[\textbf{Teorema di unicità del limite}]
+    Sia \(f(x)\) definita in un intorno di \(x_0\). Se \(\exists \lim_{x \to x_0} f(x) = l\) allora \(l\) è unico.
+\end{theorem}
+
+
+\begin{theorem}[\textbf{Teorema di permanenza del segno}]
+    Supponiamo che \(f\) ammetta limite \(L\) (finito o infinito) per \(x\) tendente a \(c\). Se \(L > 0\) oppure \(L = +\infty\), esiste un intorno \(I(c)\) di \(c\) tale che \(f\) è strettamente positiva in \(I(c) \setminus \{c\}\). Un risultato analogo vale per il segno negativo.
+
+    \textbf{Osservazione}
+    Vale anche il contrario, se \(f\) è strettamente positiva in un intorno di \(c\), allora \(\lim_{x \to c} f(x) \geq 0\).
+\end{theorem}
+
+\begin{theorem}[\textbf{Teorema di Limitatezza Locale}]
+    Se una funzione \( f \) ammette limite finito per \( x \to c \), allora esiste un intorno \( I(c) \) di \( c \) e una costante \( M > 0 \) tale che, per ogni \( x \) in \( \text{dom}\,f \cap I(c) \setminus \{c\} \), si ha \( |f(x)| < M \).
+\end{theorem}
+
+\subsection*{Considerazione}
+
+I tre teoremi presentati, pur trattando aspetti differenti dei limiti, sono strettamente interconnessi e offrono una visione completa del comportamento di una funzione vicino a un punto di interesse. Il Teorema di unicità del limite assicura che, quando un limite esiste in un punto, questo sia l'unico valore a cui la funzione tende, eliminando ambiguità e fornendo coerenza matematica. Il Teorema di permanenza del segno e il Teorema di Limitatezza Locale, invece, offrono informazioni preziose sul comportamento della funzione nell'intorno del punto: il primo garantisce la coerenza del segno della funzione con il segno del suo limite, mentre il secondo fornisce una garanzia di limitatezza, assicurando che i valori della funzione non diventino arbitrariamente grandi o piccoli. Insieme, questi teoremi formano un quadro potente per comprendere e analizzare il comportamento delle funzioni in prossimità dei loro punti di limite.
+
+\section{Teorema del confronto}
+
+\begin{theorem}[\textbf{Primo Teorema del confronto}]
+    Supponiamo che, per \( x \) tendente a \( c \), la funzione \( f \) abbia limite \( l \) mentre la funzione \( g \) abbia limite \( m \) (entrambi finiti o infiniti). Se esiste un intorno \( I(c) \) di \( c \) tale che \( f(x) < g(x) \) in \( I(c) \setminus \{c\} \), allora \( \ell < m \).
+\end{theorem}
+
+\begin{theorem}[\textbf{Secondo Teorema del Confronto - Caso Finito}]
+    Siano date tre funzioni \(f\), \(g\), \(h\); supponiamo che \(f\) e \(h\) abbiano lo stesso limite finito per \(x\) tendente a \(c\):
+    \[\lim_{x \to c} f(x) = \lim_{x \to c} h(x) = L.\]
+    Se esiste un intorno \(I(c)\) di \(c\) nel quale siano definite le tre funzioni (tranne al più nel punto \(c\)) e tale che
+    \[f(x) \leq g(x) \leq h(x), \forall x \in I(c) \setminus \{c\},\]
+    allora si ha anche
+    \[\lim_{x \to c} g(x) = L.\]
+\end{theorem}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+            declare function={
+                    h(\x) = -\x^2+4*\x-2);
+                    f(\x) = \x^2;
+                    g(\x) = 2*\x-1;
+                }]
+        \begin{axis}
+            [
+                xlabel={\( x \)},
+                ylabel={\( f(x) \)},
+                xmin=-2, xmax=3,
+                ymin=-2, ymax=3,
+                xtick={-2,-1,...,3},
+                ytick={-2,-1,...,3},
+                grid=both,
+                axis lines=middle,
+                axis line style=->,
+                grid style={line width=.1pt, draw=gray!10},
+                major grid style={line width=.2pt,draw=gray!50},
+                minor tick num=5,
+                enlargelimits={abs=0.5},
+                xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+                ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+                samples=100,
+                unbounded coords=jump, % Gestisce i punti non definiti
+                legend pos=south east
+            ]
+            \addplot[domain=-3:4,ultra thick, color=red]{h(x)};
+            \addplot[domain=-3:3,ultra thick, color=black]{f(x)};
+            \addplot[domain=-3:3,ultra thick, color=myblue]{g(x)};
+            \filldraw[myblue] (axis cs: 1,1) circle (2pt);
+            \draw [dashed, myblue] (axis cs: 1,0) -- (axis cs: 1,1);
+            \draw [dashed, myblue] (axis cs: 0,1) -- (axis cs: 1,1);
+            \node [font=\small, above right, myblue] at (axis cs: 1,0) {\(x_0\)};
+            \node [font=\small, above right, myblue] at (axis cs: 0,1) {\(L\)};
+            \legend{\(h(x)\), \(f(x)\), \(g(x)\)}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Esempio di funzioni che soddisfano le ipotesi del secondo teorema del confronto.}
+    \label{fig:secondo-teorema-confronto}
+\end{figure}
+\subsubsection{Esempio notevole}
+Il limite della funzione  \(y = \frac{sinx}{x} \) per \(x \to 0\) non può essere calcolato direttamente.
+Tuttavia è possibile dimostrare direttamente il limite
+fondamentale
+\[\lim_{x \to 0}\frac{\sin x}{x} = 1\]
+
+\begin{enumerate}
+    \item Determinazione Diretta del Limite
+          Il limite della funzione \( y = \frac{\sin x}{x} \) per \( x \to 0 \) non può essere determinato applicando il Teorema 5.5, in quanto sia il numeratore sia il denominatore tendono a 0. Tuttavia, possiamo dimostrare il limite fondamentale direttamente. Osserviamo che
+          \[
+              y = \frac{\sin x}{x} \quad \text{e pari, infatti} \quad \frac{\sin(-x)}{-x} = \frac{\sin x}{x}.
+          \]
+          Dunque, è sufficiente far tendere \( x \) a 0 per valori positivi.
+
+          Ricordando una disuguaglianza trigonometrica fondamentale, per ogni \( x > 0 \) si ha \( \sin x < x \), cioè
+          \[
+              \frac{\sin x}{x} < 1.
+          \]\\
+
+    \item Limitazione Inferiore e Superiore
+          Per ottenere una limitazione inferiore, supponiamo \( x < \frac{\pi}{2} \) e consideriamo sulla circonferenza trigonometrica il punto \( A \) di coordinate \( (1,0) \), il punto \( P \) di coordinate \( (\cos x, \sin x) \) e il punto \( Q \) di coordinate \( (1, \tan x) \). Il settore circolare \( OAP \) è strettamente contenuto nel triangolo \( OAQ \), dunque
+          \[
+              \text{area } OAP < \text{area } OAQ.
+          \]
+          Essendo
+          \[
+              \text{area } OAP = \frac{1}{2} x \quad \text{e} \quad \text{area } OAQ = \frac{1}{2} \tan x,
+          \]
+          si ha
+          \[
+              \frac{1}{2} x < \frac{1}{2} \tan x, \quad \text{cioè} \quad \cos x < \frac{\sin x}{x}.
+          \]
+          In conclusione, per \( 0 < x < \frac{\pi}{2} \), abbiamo
+          \[
+              \cos x < \frac{\sin x}{x} < 1.
+          \]
+          \begin{figure}[H]
+              \centering
+              \begin{tikzpicture}[
+                      declare function={
+                              f(\x) = sqrt(1-\x^2);
+                              g(\x) = \x;
+                          }]
+                  \begin{axis}
+                      [
+                          xmin=0, xmax=1,
+                          ymin=0, ymax=1,
+                          xtick=\empty,
+                          ytick=\empty,
+                          axis equal,
+                          grid=both,
+                          axis lines=middle,
+                          axis line style=->,
+                          grid style={line width=.1pt, draw=gray!10},
+                          major grid style={line width=.2pt,draw=gray!50},
+                          minor tick num=5,
+                          enlargelimits={abs=0.5},
+                          xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+                          ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+                          samples=100,
+                          unbounded coords=jump,
+                          legend pos=south east
+                      ]
+                      \node (A) at (axis cs:0,0) {};
+                      \node (B) at (axis cs:1,0) {};
+                      \node (C) at (axis cs:1,1) {};
+                      \filldraw[fill=lightblue] (A.center) -- (B.center) -- (C.center) -- cycle;
+                      \addplot[domain=0:1,ultra thick]{f(x)};
+                      \addplot[domain=0:1.2,ultra thick]{g(x)};
+                      \draw [ultra thick] (axis cs: 1,0) -- (axis cs: 1,1.2);
+                      \node [below right] at (axis cs: 0.3,0.2) {\(x\)};
+                      \node [below left] at (axis cs: 0,0) {\(O\)};
+                      \node [below] at (axis cs: 1,0) {\(A\)};
+                      \node [above] at (axis cs: 0.7,0.71) {\(P\)};
+                      \node [above left] at (axis cs: 1,1) {\(Q\)};
+                      \draw [dashed, myblue] (axis cs: 0.7,0.71) -- (axis cs: 0.7,0);
+                      \draw [dashed, myblue] (axis cs: 0.7,0.71) -- (axis cs: 0,0.71);
+                      \node [above, myblue] at (axis cs: 0.35,0.71) {\(\cos x\)};
+                      \node [right, myblue] at (axis cs: 0.7,0.35) {\(\sin x\)};
+                  \end{axis}
+              \end{tikzpicture}
+          \end{figure}
+          La continuità della funzione coseno assicura che \( \lim_{x \to 0^+} \cos x = 1 \). Pertanto, applicando il secondo Teorema del Confronto, otteniamo la tesi.
+    \item Studio del Comportamento Limite per \( x \to +\infty \)
+          Vogliamo ora studiare il comportamento limite della funzione \( g(x) = \frac{\sin x}{x} \) per \( x \) tendente a \( +\infty \). Ricordiamo che per ogni \( x \) reale si ha
+          \[
+              -1 \leq \sin x \leq 1.
+          \]
+          Dividendo ciascun termine per \( x > 0 \), le disuguaglianze si conservano; pertanto, in ogni intorno \( I(c) \) di \( +\infty \) si ha
+          \[
+              -\frac{1}{x} \leq \frac{\sin x}{x} \leq \frac{1}{x}.
+          \]
+          Posto \( f(x) = -\frac{1}{x} \), \( h(x) = \frac{1}{x} \) e osservato che \( \lim_{x \to +\infty} \frac{1}{x} = 0 \), deduciamo dal teorema precedente che
+          \[
+              0 \leq \frac{\sin x}{x} \leq 0.
+          \]
+          \[
+              \lim_{x \to +\infty} \frac{\sin x}{x} = 0.
+          \]
+          \begin{figure}[H]
+              \centering
+              \begin{tikzpicture}[
+                      declare function={
+                              h(\x) = 1/\x;
+                              f(\x) = sin(deg(\x))/\x;
+                              g(\x) = -1/\x;
+                          }]
+                  \begin{axis}
+                      [
+                          xlabel={\( x \)},
+                          ylabel={\( f(x) \)},
+                          xmin=-5, xmax=5,
+                          ymin=-5, ymax=5,
+                          grid=both,
+                          axis lines=middle,
+                          axis line style=->,
+                          grid style={line width=.1pt, draw=gray!10},
+                          major grid style={line width=.2pt,draw=gray!50},
+                          minor tick num=3,
+                          enlargelimits={abs=0.5},
+                          xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+                          ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+                          samples=100,
+                          unbounded coords=jump, % Gestisce i punti non definiti
+                          legend pos=south east
+                      ]
+                      \addplot[domain=-5:5,ultra thick, color=red] {ifthenelse(abs(x)>0.1, h(x), NaN)};
+                      \addplot[domain=-5:5,ultra thick, color=blue] {ifthenelse(abs(x)>0.1, g(x), NaN)};
+                      \addplot[domain=-5:5,ultra thick, color=myblue]{f(x)};
+                      \legend{\(h(x)\), \(h(x)\), \(f(x)\), \(g(x)\), \(g(x)\)}
+                  \end{axis}
+              \end{tikzpicture}
+          \end{figure}
+\end{enumerate}
+\begin{theorem}[\textbf{Secondo Teorema del Confronto - Caso Infinito}]
+    Siano date due funzioni \(f\) e \(g\) ed esista il limite
+    \[\lim_{x \to c} f(x) = +\infty.\]
+    Se esiste un intorno \(I(c)\) di \(c\) nel quale siano definite entrambe le funzioni (tranne al più nel punto \(c\)) e tale che
+    \[f(x) \leq g(x), \forall x \in I(c) \setminus \{c\},\]
+    allora si ha anche
+    \[\lim_{x \to c} g(x) = +\infty.\]
+    Un risultato analogo vale nel caso del limite \(-\infty\).
+\end{theorem}
+\subsection*{Considerazione sui Teoremi del Confronto}
+
+I Teoremi del Confronto, nella loro varietà, offrono una visione profonda e versatile nel campo dell'analisi dei limiti. Questi teoremi sono essenziali per determinare il comportamento asintotico delle funzioni in punti critici, senza la necessità di calcolare direttamente i limiti, che possono talvolta essere complessi o irrisolvibili con metodi standard.
+
+Il \textbf{Primo Teorema del Confronto} stabilisce una relazione diretta tra i limiti di due funzioni: se una funzione è sistematicamente inferiore a un'altra in un intorno di un punto e entrambe tendono a un limite, allora il limite della funzione inferiore è al massimo uguale a quello della funzione superiore. Questo principio è fondamentale per comprendere come il comportamento di una funzione sia influenzato dalla sua "posizione" relativa rispetto ad altre funzioni.
+
+Il \textbf{Secondo Teorema del Confronto - Caso Finito} amplia questa idea al caso di tre funzioni, permettendo di dedurre il limite di una funzione intermedia quando è "schiacciata" tra due funzioni con lo stesso limite noto. Questo teorema è particolarmente utile per stabilire limiti in situazioni in cui il calcolo diretto è complesso, utilizzando invece funzioni ausiliarie più gestibili.
+
+Infine, il \textbf{Secondo Teorema del Confronto - Caso Infinito} si occupa di situazioni in cui almeno una delle funzioni tende all'infinito. Questo teorema è cruciale per stabilire il comportamento asintotico delle funzioni che esibiscono crescita o decrescita illimitate, fornendo un metodo per trattare limiti altrimenti difficili da affrontare.
+
+In conclusione, i Teoremi del Confronto sono strumenti indispensabili nell'analisi dei limiti, fornendo un metodo potente e flessibile per esplorare e comprendere il comportamento delle funzioni in prossimità di punti critici. La loro applicazione spazia dall'analisi reale all'ingegneria, dimostrando ancora una volta l'importanza fondamentale dei concetti di limite e confronto nell'ambito matematico.
+
+\section{Algebra dei Limiti}
+\begin{proposition}[\textbf{Operazioni definite}]
+    \begin{align*}
+        +\infty + s                      & = +\infty \quad   & \text{(se } s \in \mathbb{R} \text{ oppure } s = +\infty\text{)}                   \\
+        -\infty + s                      & = -\infty \quad   & \text{(se } s \in \mathbb{R} \text{ oppure } s = -\infty\text{)}                   \\
+        \pm\infty \cdot s                & = \pm\infty \quad & \text{(se } s > 0 \text{ oppure } s = +\infty\text{)}                              \\
+        \pm\infty \cdot s                & = \mp\infty \quad & \text{(se } s < 0 \text{ oppure } s = -\infty\text{)}                              \\
+        \displaystyle\frac{\pm\infty}{s} & = \pm\infty \quad & \text{(se } s > 0\text{)}                                                          \\
+        \displaystyle\frac{\pm\infty}{s} & = \mp\infty \quad & \text{(se } s < 0\text{)}                                                          \\
+        \displaystyle\frac{s}{0}         & = \infty \quad    & \text{(se } s \in \mathbb{R} \setminus \{0\} \text{ oppure } s = \pm\infty\text{)} \\
+        \displaystyle\frac{s}{\pm\infty} & = 0 \quad         & \text{(se } s \in \mathbb{R}\text{)}
+    \end{align*}
+\end{proposition}
+\begin{proposition}[\textbf{Operazioni indefinite}]
+    \begin{align*}
+        \infty - \infty       & = \text{indeterminato} \\
+        \frac{\infty}{\infty} & = \text{indeterminato} \\
+        \frac{0}{0}           & = \text{indeterminato} \\
+        0 \cdot \infty        & = \text{indeterminato}
+    \end{align*}
+\end{proposition}
+\begin{theorem}[\textbf{Algebra dei limiti}]
+    Supponiamo che, per \( x \) tendente a \( c \), la funzione \( f \) ammetta limite \( \ell \) (finito o infinito) e la funzione \( g \) ammetta limite \( m \) (anch'esso finito o infinito). Allora, ogniqualvolta l'espressione al secondo membro è definita, si ha
+    \begin{align*}
+        \lim_{x \to c} (f(x) \pm g(x))   & = \ell \pm m,    \\
+        \lim_{x \to c} (f(x)g(x))        & = \ell m,        \\
+        \lim_{x \to c} \frac{f(x)}{g(x)} & = \frac{\ell}{m}
+    \end{align*}
+    \footnote[1]{in quest'ultimo caso supponiamo inoltre che \(g(x) \neq 0\) in un intorno di \(c\) escluso al più il punto \(c\).}
+\end{theorem}
+\noindent\begin{minipage}{\textwidth}
+    \begin{proposition}[\textbf{Limiti di funzioni elementari}]
+        i limiti più significativi delle principali funzioni elementari:
+        \begin{center}
+            \renewcommand{\arraystretch}{1.5} % Aumenta lo spazio tra le righe
+            \begin{tabular}{l l}
+                $\displaystyle \lim_{x \to +\infty} x^a = 0$                                                                                                & se $a > 0$                                                                    \\
+                $\displaystyle \lim_{x \to 0^+} x^a = 0$, $\displaystyle \lim_{x \to 0^+} x^a = +\infty$                                                    & se $a < 0$                                                                    \\
+                \\
+                $\displaystyle \lim_{x \to +\infty} \frac{a_n x^n + \ldots + a_1 x + a_0}{b_m x^m + \ldots + b_1 x + b_0}$                                  &                                                                               \\
+                $= \infty$                                                                                                                                  & se $n > m$                                                                    \\
+                $= \frac{a_n}{b_m}$                                                                                                                         & se $n = m$                                                                    \\
+                $= 0$                                                                                                                                       & se $n < m$                                                                    \\
+                \\
+                $\displaystyle \lim_{x \to +\infty} a^x = +\infty$, $\displaystyle \lim_{x \to +\infty} a^x = 0$                                            & se $a > 1$                                                                    \\
+                $\displaystyle \lim_{x \to +\infty} a^x = 0$, $\displaystyle \lim_{x \to +\infty} a^x = +\infty$                                            & se $a < 1$                                                                    \\
+                \\
+                $\displaystyle \lim_{x \to 0^+} \log_a x = +\infty$, $\displaystyle \lim_{x \to 0^+} \log_a x = -\infty$                                    & se $a > 1$                                                                    \\
+                $\displaystyle \lim_{x \to 0^+} \log_a x = -\infty$, $\displaystyle \lim_{x \to 0^+} \log_a x = +\infty$                                    & se $a < 1$                                                                    \\
+                \\
+                $\displaystyle \lim_{x \to \pm\infty} \sin x$, $\displaystyle \lim_{x \to \pm\infty} \cos x$, $\displaystyle \lim_{x \to \pm\infty} \tan x$ & non esistono                                                                  \\
+                $\displaystyle \lim_{x \to (k + \frac{1}{2})\pi \pm 0} \tan x$                                                                              & $= \pm\infty, \forall k \in \mathbb{Z}$                                       \\
+                \\
+                $\displaystyle \lim_{x \to \pm 1} \arcsin x$                                                                                                & $= \pm \frac{\pi}{2} = \arcsin(\pm 1)$                                        \\
+                $\displaystyle \lim_{x \to +1} \arccos x = 0$                                                                                               & $= \arccos 1$, $\displaystyle \lim_{x \to -1} \arccos x = \pi = \arccos (-1)$ \\
+                $\displaystyle \lim_{x \to \pm\infty} \arctan x$                                                                                            & $= \pm \frac{\pi}{2}$                                                         \\
+            \end{tabular}
+        \end{center}
+    \end{proposition}
+\end{minipage}
+\section{Teorema di sostiuzione}
+\noindent\begin{minipage}{\textwidth}
+    \begin{theorem}[\textbf{Teorema di Sostituzione}]
+        Supponiamo che esista (finito o infinito)
+        \[\lim_{x \to c} f(x) = \ell.\]
+        Sia poi \( g \) una funzione definita in un intorno di \( \ell \), (escluso al più il punto \( \ell \)) e tale che:
+        \begin{enumerate}
+            \item se \( \ell \in \mathbb{R} \), \( g \) è continua in \( \ell \);
+            \item se \( \ell = +\infty \) oppure \( \ell = -\infty \), esiste (finito o infinito) \(\lim_{y \to \ell} g(y)\).
+        \end{enumerate}
+        Allora, esiste il limite per \( x \) tendente a \( c \) della funzione composta \( g \circ f \) e si ha
+        \[\lim_{x \to c} (g \circ f)(x) = \lim_{y \to \ell} g(y).\]
+    \end{theorem}
+\end{minipage}
+\subsection*{Considerazione}
+In pratica, nel calcolo del limite della funzione \( g(f(x)) \), il Teorema di Sostituzione ci permette di effettuare la sostituzione \( y = f(x) \) e successivamente studiare il comportamento limite della funzione \( g(y) \). Questo approccio semplifica l'analisi, in particolare quando la funzione composta \( g(f(x)) \) presenta una struttura complicata o non immediatamente evidente. Analizzando il comportamento di \( g(y) \) mentre \( y \) tende al limite di \( f(x) \), possiamo determinare il limite della funzione composta.
+
+\section{Limiti notevoli}
+
+\begin{proposition}
+    Vale il seguente risultato
+    \[
+        \lim_{{x \to \infty}} \left(1 + \frac{1}{x}\right)^x = e
+    \]
+\end{proposition}
+
+\noindent\begin{minipage}{\textwidth}
+    \begin{proposition}[\textbf{Limiti Notevoli}]
+        I limiti notevoli delle principali funzioni elementari:
+        \begin{center}
+            \renewcommand{\arraystretch}{2} % Aumenta lo spazio tra le righe
+            \begin{tabular}{l l}
+                $\displaystyle \lim_{x \to 0} \frac{\sin(x)}{x} = 1$                       &                               \\
+                $\displaystyle \lim_{x \to 0} \frac{\cos(x)}{x} = \text{indeterminato}$    &                               \\
+                $\displaystyle \lim_{x \to \infty} \frac{\sin(x)}{x} = 0$                  &                               \\
+                $\displaystyle \lim_{x \to \infty} \frac{\cos(x)}{x} = 0$                  &                               \\
+                $\displaystyle \lim_{x \to 0} \frac{\tan(x)}{x} = 1$                       &                               \\
+                $\displaystyle \lim_{x \to 0} \frac{1 - \cos(x)}{x^2} = \frac{1}{2}$       &                               \\
+                $\displaystyle \lim_{x \to \infty} \left(1 + \frac{a}{x}\right)^x = e^a$   & con $a \in \mathbb{R}$        \\
+                $\displaystyle \lim_{x \to 0} \left(1 + x\right)^{\frac{1}{x}} = e$        &                               \\
+                $\displaystyle \lim_{x \to 0} \frac{\log_a(1 + x)}{x} = \frac{1}{\log(a)}$ & con $a > 0$ e $a \neq 1$      \\
+                $\displaystyle \lim_{x \to 0} \frac{\log(1 + x)}{x} = 1$                   & (logaritmo naturale)          \\
+                $\displaystyle \lim_{x \to 0} \frac{a^x - 1}{x} = \log(a)$                 & con $a > 0$                   \\
+                $\displaystyle \lim_{x \to 0} \frac{e^x - 1}{x} = 1$                       & (base dei logaritmi naturali) \\
+                $\displaystyle \lim_{x \to 0} \frac{(1 + x)^\alpha - 1}{x} = \alpha$       & con $\alpha \in \mathbb{R}$   \\
+            \end{tabular}
+        \end{center}
+    \end{proposition}
+\end{minipage}
+
+\section{Forme indeterminate di tipo esponenziale}
+
+\begin{proposition}[Identità Fondamentale]
+    Per ogni $x > 0$, abbiamo che
+    \[
+        f(x) = x = e^{\log(x)}
+    \]
+    Questo perché $\log(x)$ è il logaritmo naturale di $x$, e $e$ è la base del logaritmo naturale, quindi le due operazioni si annullano a vicenda.
+\end{proposition}
+\subsection{Analisi dei Limiti con Funzioni Esponenziali e Logaritmiche}
+\noindent\begin{minipage}{\textwidth}
+    \begin{proposition}[\textbf{Trasformazione di una funzione in una forma esponenziale}]
+        Supponiamo di avere una funzione esponenziale che vogliamo analizzare.
+        \[
+            \displaystyle h(x) = [f(x)]^{g(x)}
+        \]
+        Possiamo trasformarla in una forma che coinvolge esponenti e logaritmi, ovvero
+        \[
+            \displaystyle h(x) = e^{g(x) \log(f(x))}
+        \]
+        dove $g(x)$ e $f(x)$ sono altre funzioni che dipendono da $x$.
+    \end{proposition}
+\end{minipage}
+
+\begin{proposition}[Trasformazione di una funzione in forma esponenziale per calcolo limit]
+    Vale la seguente proprietà
+    \begin{align*}
+        \renewcommand{\arraystretch}{2}
+        \displaystyle \lim_{x \to c} h(x) & = \lim_{x \to c} [f(x)]^{g(x)}                      \\
+        \displaystyle                     & = \lim_{x \to c} e^{g(x) \log(f(x))}                \\
+        \displaystyle                     & = \exp\left[{\lim_{x \to c} g(x) \log(f(x))}\right] \\
+        \displaystyle                     & = e^{\lim_{x \to c} g(x) \log(f(x))}                \\
+    \end{align*}
+\end{proposition}
+\begin{proposition}[Forme indeterminate connesse a funzioni Esponenziali]
+    \[
+        0 \cdot \infty
+    \]
+    \[
+        0^0
+    \]
+    \[
+        \infty^0
+    \]
+\end{proposition}
+
+\end{document}

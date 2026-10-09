@@ -1,0 +1,256 @@
+% Author: Izaak Neutelings (September 2020)
+\documentclass[border=3pt,tikz]{standalone}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage[outline]{contour} % glow around text
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{angles,quotes} % for pic
+\usetikzlibrary{arrows.meta} % for arrow size
+\usetikzlibrary{bending} % for arrow head angle
+\usetikzlibrary{decorations.pathmorphing} % for decorate random steps
+\tikzset{>=latex} % for LaTeX arrow head
+\usepackage{xcolor}
+\contourlength{1.3pt}
+
+\colorlet{xcol}{blue!70!black}
+\colorlet{xcol'}{xcol!50!red}
+\colorlet{vcol}{green!45!black}
+\colorlet{acol}{red!50!blue!80!black!80}
+\tikzstyle{rvec}=[->,very thick,xcol,line cap=round]
+\tikzstyle{vvec}=[->,very thick,vcol,line cap=round]
+\tikzstyle{avec}=[->,very thick,acol,line cap=round]
+\colorlet{myred}{red!65!black}
+\tikzstyle{force}=[->,myred,very thick,line cap=round]
+\tikzstyle{mass}=[line width=0.5,draw=red!50!black,fill=red!50!black!10,rounded corners=1,
+                  top color=red!50!black!30,bottom color=red!50!black!10,shading angle=20]
+\tikzstyle{disk}=[line width=0.5,orange!30!black,fill=orange!40!black!10,
+                  top color=orange!40!black!20,bottom color=orange!40!black!10,shading angle=20]
+\tikzstyle{pole}=[line width=0.5,blue!20!black,fill=orange!20!black!10,
+                  top color=blue!20!black!20,bottom color=blue!20!black!10,shading angle=20]
+\tikzstyle{rope}=[brown!70!black,line width=1,line cap=round] %very thick
+\tikzstyle{myarr}=[-{Latex[length=3,width=2,flex'=1]},thin]
+\tikzstyle{mydashed}=[dash pattern=on 2pt off 1pt]
+\def\rope#1{ \draw[rope,black,line width=1.4] #1; \draw[rope,line width=1.1] #1; }
+\def\tick#1#2{\draw[thick] (#1) ++ (#2:0.1) --++ (#2-180:0.2)}
+\newcommand\rightAngle[4]{
+  \pgfmathanglebetweenpoints{\pgfpointanchor{#2}{center}}{\pgfpointanchor{#3}{center}}
+  \coordinate (tmpRA) at ($(#2)+(\pgfmathresult+45:#4)$);
+  %\draw[white,line width=0.6] ($(#2)!(tmpRA)!(#1)$) -- (tmpRA) -- ($(#2)!(tmpRA)!(#3)$);
+  \draw[black] ($(#2)!(tmpRA)!(#1)$) -- (tmpRA) -- ($(#2)!(tmpRA)!(#3)$);
+}
+
+
+\begin{document}
+
+
+% ROTATION
+\def\L{3.1}     % axis lengths
+\def\R{1.0*\L}  % position vector radial distance
+\def\Rang{52}   % position vector angle
+\def\ang{25}    % angle of the CM velocity
+% STATIONARY REFERENCE FRAME - CENTRIFUGAL
+\def\R{2}      % disk radius
+\def\t{0.1}    % disk thickness
+\def\p{0.05}   % pole radius
+\def\P{1.3}    % pole height
+\def\r{0.24}   % mass radius
+\def\L{0.7*\R} % rope length
+\def\H{2.0}    % human height
+
+
+
+% STATIONARY REFERENCE FRAME - CORIOLIS
+\def\R{2}       % disk radius
+\def\r{0.1}     % mass radius
+\def\v{0.35*\R} % mass velocity
+\def\x{0.48}    % mass position (fraction of \R)
+\def\ang{50}    % angle displacement
+
+% MOVING REFERENCE FRAME - CORIOLIS
+\begin{tikzpicture}
+  \def\v{0.40*\R}        % mass velocity
+  \def\vv{2.0}           % velocity for plot
+  \def\FC{0.30*\R}       % Coriolis force
+  \def\om{180/pi}        % angular frequency omega
+  \def\tmax{1.10}        % maximum t
+  \def\xt{0.98*\x*\tmax} % mass position
+  \coordinate (T) at (0,\r);
+  \coordinate (S) at (-145-\ang:1.6*\R);
+  \coordinate (M) at ({\vv*\xt*sin(\om*\xt)},{\vv*\xt*cos(\om*\xt)});
+  \coordinate (V) at ({\v*sin(\om*\xt)+\v*\xt*cos(\om*\xt)},{\v*cos(\om*\xt)-\v*\xt*sin(\om*\xt)});
+  \coordinate (F) at ({\FC*cos(\om*\xt)-\FC*\xt*sin(\om*\xt)},{-\FC*sin(\om*\xt)-\FC*\xt*cos(\om*\xt)});
+
+  % DISK & DOTS
+  \draw[disk] (0,0) circle(\R);
+  \fill[myred] (90:0.88*\R) circle(0.05*\R);
+
+  % AXIS
+  \draw[xcol,dashed] (0,0) --++ (90:1.1*\R);
+  \node[below left=-1] at (0,0) {S$'$};
+  \draw[<->,line width=0.9]
+  (0,0.35*\R) node[left,scale=0.9] {$y'$} |-++
+  (0.35*\R,-0.35*\R) node[below right=-3.5,scale=0.9] {$x'$};
+
+  % MASS
+  \draw[xcol,samples=50,smooth,variable=\t,domain=0:\tmax]
+  plot({\vv*\t*sin(\om*\t)},{\vv*\t*cos(\om*\t)});
+  %\fill[myred] (90-\ang:0.88*\R) circle(0.05); % check
+  \draw[vvec] (M) --++ (V) node[above=3,left=0] {$\vb{v}$};
+  \draw[force] (M) --++ (F) node[right=-1] {$\vb{F}_\mathrm{Cor}$};
+  \draw[mass] (M) circle(\r) node[left=4,above=2] {$m$};
+
+  % AXIS
+  \node[left=2] at (S) {S};
+  \draw[<->,black!25,line width=0.9]
+  (-145:1.6*\R)++(0,0.38*\R) node[left,scale=0.9] {$y$} |-++
+  (0.35*\R,-0.35*\R) node[below right=-3,scale=0.9] {$x$};
+  \draw[<->,line width=0.9]
+  (S)++(90-\ang:0.38*\R) node[left=3,scale=0.9] {$y$} --++ (-90-\ang:0.38*\R) --++
+  (-\ang:0.38*\R) node[below right=-3,scale=0.9] {$x$};
+  \draw[->] (-165:1.55*\R) arc(-150:-210:0.6*\R) node[midway,left=0] {$\omega$};
+
+\end{tikzpicture}
+
+
+% CENTRIFUGAL + CORIOLIS
+\begin{tikzpicture}
+  \def\vv{3.2}         % velocity for plot
+  \def\v{0.25*\R}      % velocity size
+  \def\Fc{0.40*\R}     % centrifugal force
+  \def\FC{0.30*\R}     % Coriolis force
+  \def\om{180/pi}      % angular frequency omega
+  \def\tmax{1.6}       % maximum t
+  \def\ta{0.26*\tmax} % mass position A
+  \def\tb{0.60*\tmax} % mass position B
+  \def\tc{0.90*\tmax} % mass position C
+  \def\vRM#1{{\vv*#1*sin(\om*#1)},{\vv*#1*cos(\om*#1)}}
+  \def\vvc#1{{\v*sin(\om*#1)+\v*#1*cos(\om*#1)},{\v*cos(\om*#1)-\v*#1*sin(\om*#1)}}
+  \def\vFc#1{{\Fc*#1*sin(\om*#1)},{\Fc*#1*cos(\om*#1)}}
+  \def\vFC#1{{\FC*cos(\om*#1)-\FC*#1*sin(\om*#1)},{-\FC*sin(\om*#1)-\FC*#1*cos(\om*#1)}}
+  \def\vang#1{atan2({\v*cos(\om*#1)-\v*#1*sin(\om*#1)},{\v*sin(\om*#1)+\v*#1*cos(\om*#1)})}
+  \coordinate (O) at (0,0);
+  \coordinate (MA) at (\vRM{\ta});
+  \coordinate (MB) at (\vRM{\tb});
+  \coordinate (MC) at (\vRM{\tc});
+  %\node[mass,circle,inner sep=2] (MA) at (\vRM{\ta}) {};
+  %\node[mass,circle,inner sep=2] (MB) at (\vRM{\tb}) {};
+  %\node[mass,circle,inner sep=2] (MC) at (\vRM{\tc}) {};
+
+  % AXIS
+  \node[below left=-1] at (0,0) {S$'$};
+  \draw[<->,line width=0.9]
+  (0,0.5*\R) node[left,scale=0.9] {$y'$} |-++
+  (0.5*\R,-0.5*\R) node[below right=-3.5,scale=0.9] {$x'$};
+
+  % PLOT
+  \draw[xcol,samples=50,smooth,variable=\t,domain=0:\tmax]
+  plot({\vv*\t*sin(\om*\t)},{\vv*\t*cos(\om*\t)});
+  \draw[dashed,xcol] (O) -- (MA);
+  \draw[dashed,xcol] (O) -- (MB);
+  \draw[dashed,xcol] (O) -- (MC);
+
+  % MASS A
+  \draw[vvec]  (MA)++({\vang{\ta}}:\r) --++ (\vvc{\ta}) node[right=1,above=-2] {$\vb{v}$};
+  \draw[force] (MA)++(90-\om*\ta:\r) --++ (\vFc{\ta}) node[above=3,left=0] {$\vb{F}_\mathrm{cf}$};
+  \draw[force] (MA)++({\vang{\ta}-90}:\r) --++ (\vFC{\ta}) node[right=6,below=-1] {\contour{white}{$\vb{F}_\mathrm{Cor}$}};
+  \draw[mass]  (MA) circle(\r); %node[left=4,above=2] {$m$};
+
+  % MASS B
+  \draw[vvec]  (MB)++({\vang{\tb}}:\r) --++ (\vvc{\tb}) node[right=-2] {$\vb{v}$};
+  \draw[force] (MB)++(90-\om*\tb:\r) --++ (\vFc{\tb}) node[above=3,left=3] {$\vb{F}_\mathrm{cf}$};
+  \draw[force] (MB)++({\vang{\tb}-90}:\r) --++ (\vFC{\tb}) node[right=4,below=-2] {$\vb{F}_\mathrm{Cor}$};
+  \draw[mass]  (MB) circle(\r);
+
+  % MASS C
+  \draw[vvec]  (MC)++({\vang{\tc}}:\r) --++ (\vvc{\tc}) node[right=-2] {$\vb{v}$};
+  \draw[force] (MC)++(90-\om*\tc:\r) --++ (\vFc{\tc}) node[above=-1] {$\vb{F}_\mathrm{cf}$};
+  \draw[force] (MC)++({\vang{\tc}-90}:\r) --++ (\vFC{\tc}) node[below=2,left=-5] {$\vb{F}_\mathrm{Cor}$};
+  \draw[mass]  (MC) circle(\r);
+
+\end{tikzpicture}
+
+
+% EARTH + CENTRIFUGAL
+\contourlength{0.7pt}
+\begin{tikzpicture}
+  \def\E{1.2}
+  \def\ang{30} % latidude
+  \coordinate (O) at (0,0);
+
+  % EARTH
+  %\draw[dashed,rotate=-11] (0,-1.3*\E) -- (0,1.45*\E);
+  \fill[blue!70!black!70] (0,0) circle (1.2);
+  \draw[very thin,ball color=blue!70!black!40,fill opacity=0.2] (0,0) circle (\E);
+  \begin{scope}[rotate=-11]
+    \draw[-{Latex[length=3,width=2,flex'=1]}]
+    (0,1.22*\E)++(120:{0.2*\E} and 0.1*\E) arc(120:430:{0.2*\E} and 0.1*\E)
+    node[pos=0.7,right=0] {$\omega$};
+    \clip (0,0) circle (\E);
+    \fill[white] (0,\E) ellipse ({0.6*\E} and {0.15*\E});
+    \fill[white] (0,-\E) ellipse ({0.8*\E} and {0.08*\E});
+    \fill[green!70!black!60,rotate=-30] (160:1.1*\E) ellipse ({0.2*\E} and {0.8*\E});
+    \fill[green!70!black!60,rotate=40] (-10:1.14*\E) ellipse ({0.2*\E} and {0.9*\E});
+    \fill[green!60!black!60,very thick,rotate=-20] % Australia
+    (230:0.86*\E) ellipse ({0.25*\E} and {0.18*\E});
+    \fill[fill=white,fill opacity=0.8] (0,0) circle (\E);
+  \end{scope}
+  \begin{scope}[rotate=-11]
+    %\draw[dashed] (-\E,0) to[out=-20,in=-160] (\E,0);
+    %\draw[->,thick] (-1.2*\E,0) -- (1.2*\E,0);
+    \draw[dashed] (-\E,0) -- (\E,0) coordinate (X);
+    \draw[dashed] (O) -- (\ang:\E) coordinate (R);
+    \draw[->,thick] (0,-1.2*\E) -- (0,1.6*\E);
+    \draw[rvec] (0,{\E*sin(\ang)}) -- (R) node[midway,above=0] {$\vb{r}$};
+    \draw[force] (R) --++ (0.4*\E,0) node[right] {$\vb{F}_\mathrm{cf}$};
+    \draw pic[->,"$\phi$"{scale=0.9}, %{Latex[length=3,width=2,flex'=1]}
+    draw,angle radius=17,angle eccentricity=1.3] {angle=X--O--R};
+  \end{scope}
+
+\end{tikzpicture}
+
+
+% EARTH + CORIOLIS
+\contourlength{0.7pt}
+\begin{tikzpicture}
+  \def\E{1.2}
+  \coordinate (O) at (0,0);
+
+  % EARTH
+  \draw[dashed,rotate=-11] (0,-1.3*\E) -- (0,1.45*\E);
+  \fill[blue!70!black!70] (0,0) circle (1.2);
+  \draw[very thin,ball color=blue!70!black!40,fill opacity=0.2] (0,0) circle (\E);
+  \begin{scope}[rotate=-11]
+    \draw[-{Latex[length=3,width=2,flex'=1]}] (0,1.22*\E)++(120:{0.2*\E} and 0.1*\E) arc(120:430:{0.2*\E} and 0.1*\E);
+    \clip (0,0) circle (\E);
+    \fill[white] (0,\E) ellipse ({0.6*\E} and {0.15*\E});
+    \fill[white] (0,-\E) ellipse ({0.8*\E} and {0.08*\E});
+    \fill[green!70!black!60,rotate=-30] (160:1.1*\E) ellipse ({0.2*\E} and {0.8*\E});
+    \fill[green!70!black!60,rotate=40] (-10:1.14*\E) ellipse ({0.2*\E} and {0.9*\E});
+    \fill[green!60!black!60,very thick,rotate=-20] % Australia
+    (230:0.86*\E) ellipse ({0.25*\E} and {0.18*\E});
+    \draw[dashed] (-\E,0) to[out=-20,in=-160] (\E,0);
+
+    % CORIOLIS
+    \draw[myred,mydashed,very thin] (0,-0.1*\E) coordinate (NS) --++ (0, 0.70*\E) coordinate (NN);
+    \draw[myred,mydashed,very thin] (0,-0.3*\E) coordinate (SN) --++ (0,-0.60*\E) coordinate (SS);
+    \draw[myred,mydashed,very thin] (-0.4*\E,0.32*\E) coordinate (NW) to[out=-20,in=-160]++ (0.8*\E,0) coordinate (NE);
+    \draw[myred,mydashed,very thin] (-0.4*\E,-0.53*\E) coordinate (SW) to[out=-20,in=-160]++ (0.8*\E,0) coordinate (SE);
+    \draw[myarr,red] (NN) to[out=-90,in=  50]++ (-110:0.35*\E); % northern hemisphere
+    \draw[myarr,red] (NS) to[out= 90,in=-120]++ (  70:0.35*\E);
+    \draw[myarr,red] (SN) to[out=-90,in= 130]++ ( -65:0.30*\E); % southern hemisphere
+    \draw[myarr,red] (SS) to[out= 90,in= -60]++ ( 110:0.30*\E);
+    \draw[myarr,red] (NE) to[out=200,in= -40]++ (170:0.38*\E); % northern hemisphere
+    \draw[myarr,red] (NW) to[out=-20,in= 140]++ (-30:0.42*\E);
+    \draw[myarr,red] (SE) to[out=200,in=  40]++ (210:0.42*\E); % southern hemisphere
+    \draw[myarr,red] (SW) to[out=-20,in=-140]++ ( 10:0.38*\E);
+  \end{scope}
+
+  \node at (108-11:1.2*\E) {N};
+  \node at (180-11:1.2*\E) {W};
+  \node at (   -11:1.2*\E) {E};
+  \node at (-98-11:1.2*\E) {S};
+
+\end{tikzpicture}
+\end{document}

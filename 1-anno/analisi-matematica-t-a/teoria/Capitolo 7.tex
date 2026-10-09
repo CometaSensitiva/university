@@ -1,0 +1,450 @@
+\documentclass{book}
+
+\title{Analisi Matematica T-A}
+\author{Michele Mazza}
+\date{November 2023}
+
+
+% Pacchetti di Codifica e Lingua
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+
+% Pacchetti Grafici e Diagrammi
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{angles,quotes,arrows.meta, positioning}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% Pacchetti Matematici
+\usepackage{amsmath, amssymb, amsthm}
+
+% Pacchetti per Tabelle e Unità di Misura
+\usepackage{geometry}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{colortbl}
+
+% Pacchetti per Layout e Formattazione
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{microtype}
+
+% Altri Pacchetti Utili
+\usepackage{mdframed}
+\usepackage{animate}
+
+% Pacchetto enumitem
+\usepackage{enumitem}
+
+% Definizioni dei Colori
+\definecolor{lightblue}{HTML}{9cd8fc}
+\definecolor{myblue}{HTML}{139FE9}
+
+% Definizione del comando \norm
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+%\font\nullfont=cmr10 
+
+% Ambienti Personalizzati
+\newmdtheoremenv[
+    backgroundcolor=orange!10,
+    linecolor=myblue,
+    linewidth=0pt,
+    leftmargin=0pt,
+    rightmargin=0pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+    innertopmargin=10pt,
+    innerbottommargin=10pt,
+    nobreak
+]{curiosity}{Curiosità}
+
+\newmdtheoremenv[
+    font=\normalfont\small,
+    linewidth=0pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+]{example}{Esempio}
+
+\newmdtheoremenv[
+  backgroundcolor=lightblue,
+  linecolor=myblue,
+  linewidth=1.5pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt,
+  nobreak
+]{theorem}{Teorema}
+
+\newmdtheoremenv[
+  backgroundcolor=gray!10,
+  linewidth=0pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt,
+  nobreak
+]{definition}{Definizione}
+
+\newmdtheoremenv[
+  backgroundcolor=gray!10,
+  linecolor=myblue,
+  linewidth=1.5pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt,
+  nobreak
+]{proposition}{Proposizione}
+
+% Configurazioni di fancyhdr
+\pagestyle{fancy}
+\fancyhf{} % Pulisce tutti i campi
+\fancyhead[LE,RO]{\thepage} % Numero di pagina
+\fancyhead[RE]{\nouppercase{\leftmark}} % Titolo del capitolo
+\fancyhead[LO]{\nouppercase{\rightmark}} % Titolo della sezione
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\geometry{a4paper, left=20mm, right=20mm, top=20mm, bottom=20mm}
+
+% Pacchetto Hyperref (inserito per ultimo)
+\usepackage{hyperref}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+\tableofcontents
+\mainmatter
+
+\chapter{Proprietà globali delle funzioni continue}
+
+\section{Teorema di esistenza degli zeri}
+\begin{definition}
+    \subsection{Zero di una funzione}
+    Data una funzione reale \(f\), chiamiamo \textbf{zero} di \(f\) ogni punto \(x_0 \in dom f\) tale che \[f(x_0) = 0\]
+\end{definition}
+
+\begin{theorem}
+    \subsection{T. di esistenza degli zeri}
+    Sia \(\mathbf{f}\) una funzione \textbf{continua} in \(\mathbf{[a, b]}\) tale che \(\mathbf{f(a) \cdot f(b) < 0}\). Allora esiste \textbf{almeno un} punto \(\mathbf{x_0 \in (a, b)}\) tale che \(\mathbf{f(x_0) = 0}\).
+
+    \noindent Ovvero se una funzione è continua in un intervallo chiuso e limitato e assume valori di segno opposto agli estremi, allora esiste almeno un punto in cui la funzione si annulla.
+\end{theorem}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale = 1,
+            declare function={
+                    f(\x) = sin(deg(\x-2.5))*2;
+                }]
+        \begin{axis}
+            [
+                xlabel={\( x \)},
+                ylabel={\( f(x) \)},
+                xmin=-1, xmax=5,
+                ymin=-3, ymax=3,
+                grid=both,
+                axis lines=middle,
+                axis line style=->,
+                grid style={line width=.1pt, draw=gray!10},
+                major grid style={line width=.2pt,draw=gray!50},
+                minor tick num=3,
+                enlargelimits={abs=0.5},
+                xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+                ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+                xticklabels={},
+                yticklabels={}
+                samples=100,
+                unbounded coords=jump,
+                legend pos=south east
+            ]
+            \draw [dashed, thick, color=gray] (axis cs: 0.25, {f(0.25)}) -- (axis cs: 0.25, 0);
+            \draw [dashed, thick, color=gray] (axis cs: 0.25, {f(0.25)}) -- (axis cs: 0, {f(0.25)});
+            \draw [dashed, thick, color=gray] (axis cs: 4.5, {f(4.5)}) -- (axis cs: 4.5, 0);
+            \draw [dashed, thick, color=gray] (axis cs: 4.5, {f(4.5)}) -- (axis cs: 0, {f(4.5)});
+            \addplot[domain=0.3:4.5, ultra thick, smooth, color=myblue]{f(x)};
+            \filldraw[color=myblue] (axis cs: 0.3, {f(0.3)}) circle (1.5pt);
+            \filldraw[color=myblue] (axis cs: 4.5, {f(4.5)}) circle (1.5pt);
+            \filldraw[color=myblue] (axis cs: 2.5, {f(2.5)}) circle (1pt);
+            \node[below right, color=myblue] at (axis cs:  2.4, {f(2.5)}) {\(x_0\)};
+            \node[above, color=myblue] at (axis cs: 0.25, 0) {\(a\)};
+            \node[below, color=myblue] at (axis cs: 4.5, 0) {\(b\)};
+            \node[left, font=\small, color=myblue] at (axis cs: 0, {f(0.25)}) {\(f(a)\)};
+            \node[left, font=\small, color=myblue] at (axis cs: 0, {f(4.5)}) {\(f(b)\)};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Grafico di una funzione \(f\) che soddisfa le ipotesi del teorema.}
+\end{figure}
+
+\begin{theorem}
+    [\textbf{Corollario 1 Unicità dello zero}]
+    \noindent Se \(f\) è una funzione \textbf{continua e monotona} in \([a, b]\), e \(\mathbf{f(a) \cdot f(b) < 0}\), allora esiste un \textbf{unico} punto \(x_0 \in (a, b)\) tale che \(f(x_0) = 0\).
+\end{theorem}
+
+\begin{theorem}
+    [\textbf{Corollario 2, Intersezione tra due funzioni}]
+    Siano \(f, g\) due funzioni \textbf{continue} in \([a, b]\) tali che \(\mathbf{f(a) < g(a)}\) e \(\mathbf{f(b) > g(b)}\), allora esiste almeno un punto \(x_0 \in (a, b)\) tale che \(f(x_0) = g(x_0)\).
+\end{theorem}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale = 1,
+            declare function={
+                    f(\x) = sin(deg(\x-2.5))*2+4;
+                    g(\x) = sin(deg(\x-2.5))*3.4+4;
+                }]
+        \begin{axis}
+            [
+                xlabel={\( x \)},
+                ylabel={\( f(x) \)},
+                xmin=-1, xmax=5,
+                ymin=-1, ymax=7,
+                grid=both,
+                axis lines=middle,
+                axis line style=->,
+                grid style={line width=.1pt, draw=gray!10},
+                major grid style={line width=.2pt,draw=gray!50},
+                minor tick num=3,
+                enlargelimits={abs=0.5},
+                xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+                ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+                xticklabels={},
+                yticklabels={}
+                samples=100,
+                unbounded coords=jump,
+                legend pos=south east
+            ]
+            \draw [dashed, thick, color=gray] (axis cs: 0.25, {f(0.25)}) -- (axis cs: 0.25, 0);
+            \draw [dashed, thick, color=gray] (axis cs: 0.25, {f(0.25)}) -- (axis cs: 0, {f(0.25)});
+            \draw [dashed, thick, color=gray] (axis cs: 4.5, {f(4.5)}) -- (axis cs: 4.5, 0);
+            \draw [dashed, thick, color=gray] (axis cs: 4.5, {f(4.5)}) -- (axis cs: 0, {f(4.5)});
+            \draw [dashed, thick, color=gray] (axis cs: 4.5, {g(4.5)}) -- (axis cs: 4.5, 0);
+            \draw [dashed, thick, color=gray] (axis cs: 0.25, {g(0.25)}) -- (axis cs: 0, {g(0.25)});
+            \draw [dashed, thick, color=gray] (axis cs: 4.5, {g(4.5)}) -- (axis cs: 0, {g(4.5)});
+            \draw [dashed, thick, color=myblue] (axis cs: 2.5, {g(2.5)}) -- (axis cs: 2.5, 0);
+            \addplot[domain=0.3:4.5, ultra thick, smooth, color=myblue]{f(x)};
+            \addplot[domain=0.3:4.5, ultra thick, smooth, color=myblue]{g(x)};
+            \filldraw[color=myblue] (axis cs: 0.3, {f(0.3)}) circle (1.5pt);
+            \filldraw[color=myblue] (axis cs: 4.5, {f(4.5)}) circle (1.5pt);
+            \filldraw[color=myblue] (axis cs: 0.3, {g(0.3)}) circle (1.5pt);
+            \filldraw[color=myblue] (axis cs: 4.5, {g(4.5)}) circle (1.5pt);
+            \filldraw[color=myblue] (axis cs: 2.5, {f(2.5)}) circle (2pt);
+            \node[below right, color=myblue] at (axis cs:  2.4, 0) {\(x_0\)};
+            \node[below] at (axis cs: 0.25, 0) {\(a\)};
+            \node[below] at (axis cs: 4.5, 0) {\(b\)};
+            \node[left, font=\small] at (axis cs: 0, {f(0.25)}) {\(f(a)\)};
+            \node[left, font=\small] at (axis cs: 0, {f(4.5)}) {\(f(b)\)};
+            \node[left, font=\small] at (axis cs: 0, {g(0.25)}) {\(g(a)\)};
+            \node[left, font=\small] at (axis cs: 0, {g(4.5)}) {\(g(b)\)};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Grafico di due funzioni \(f\) e \(g\) che soddisfano le ipotesi del teorema.}
+\end{figure}
+
+\section{Immagini di funzioni continue definite su intervalli}
+In questo paragrafo studiamo l’immagine di una funzione continua definita su
+un intervallo della retta reale.
+\begin{theorem}
+    \subsection{Teorema dei valori intermedi}
+    Sia \(\mathbf{f}\) una funzione \textbf{continua} in \(\mathbf{[a, b]}\), chiuso e limitato allora \(\mathbf{f}\) assume tutti i valori compresi tra \(\mathbf{f(a)}\) e \(\mathbf{f(b)}\).
+\end{theorem}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale = 1,
+            declare function={
+                    f(\x) = sin(deg(\x-2.5))*2+4;
+                }]
+        \begin{axis}
+            [
+                xlabel={\( x \)},
+                ylabel={\( f(x) \)},
+                xmin=-1, xmax=5,
+                ymin=-1, ymax=7,
+                grid=both,
+                axis lines=middle,
+                axis line style=->,
+                grid style={line width=.1pt, draw=gray!10},
+                major grid style={line width=.2pt,draw=gray!50},
+                minor tick num=3,
+                enlargelimits={abs=0.5},
+                xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+                ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+                xticklabels={},
+                yticklabels={}
+                samples=100,
+                unbounded coords=jump,
+                legend pos=south east
+            ]
+            \draw [dashed, thick, color=gray] (axis cs: 0.25, {f(0.25)}) -- (axis cs: 0.25, 0);
+            \draw [dashed, thick, color=gray] (axis cs: 0.25, {f(0.25)}) -- (axis cs: 0, {f(0.25)});
+            \draw [dashed, thick, color=gray] (axis cs: 4.5, {f(4.5)}) -- (axis cs: 4.5, 0);
+            \draw [dashed, thick, color=gray] (axis cs: 4.5, {f(4.5)}) -- (axis cs: 0, {f(4.5)});
+            \addplot[domain=0.3:4.5, ultra thick, smooth, color=myblue]{f(x)};
+            \filldraw[color=myblue] (axis cs: 0.3, {f(0.3)}) circle (1.5pt);
+            \filldraw[color=myblue] (axis cs: 4.5, {f(4.5)}) circle (1.5pt);
+            \filldraw[color=myblue] (axis cs: 2.5, {f(2.5)}) circle (1pt);
+            \node[below] at (axis cs: 0.25, 0) {\(a\)};
+            \node[below] at (axis cs: 4.5, 0) {\(b\)};
+            \node[left, font=\small] at (axis cs: 0, {f(0.25)}) {\(f(a)\)};
+            \node[left, font=\small] at (axis cs: 0, {f(4.5)}) {\(f(b)\)};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Grafico di una funzione \(f\) che soddisfa le ipotesi del teorema.}
+\end{figure}
+\noindent\begin{minipage}{\textwidth}
+    \begin{theorem}
+        [\textbf{Corollario 1-Ponte da T. dei valori intermedi a T. di Weierstrass}]
+        Se \( f \) è una funzione continua definita su un intervallo \( I \), allora l'insieme dei valori
+        che \( f \) assume su \( I \) forma un intervallo che va da \( \inf_{x \in I} f(x) \) a
+        \( \sup_{x \in I} f(x) \).
+    \end{theorem}
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}[scale = 1,
+                declare function={
+                        f(\x) = sin(deg(\x-2.5))*2+4;
+                    }]
+            \begin{axis}
+                [
+                    xlabel={\( x \)},
+                    ylabel={\( f(x) \)},
+                    xmin=-2, xmax=5,
+                    ymin=-1, ymax=7,
+                    grid=both,
+                    axis lines=middle,
+                    axis line style=->,
+                    grid style={line width=.1pt, draw=gray!10},
+                    major grid style={line width=.2pt,draw=gray!50},
+                    minor tick num=3,
+                    enlargelimits={abs=0.5},
+                    xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+                    ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+                    xticklabels={},
+                    yticklabels={}
+                    samples=100,
+                    unbounded coords=jump,
+                    legend pos=south east
+                ]
+                \draw [dashed, thick, color=gray] (axis cs: 0.93, {f(0.93)}) -- (axis cs: 0.93, 0);
+                \draw [dashed, thick, color=gray] (axis cs: 0.93, {f(0.93)}) -- (axis cs: 0, {f(0.93)});
+                \draw [dashed, thick, color=gray] (axis cs: 4.07, {f(4.07)}) -- (axis cs: 4.07, 0);
+                \draw [dashed, thick, color=gray] (axis cs: 4.07, {f(4.07)}) -- (axis cs: 0, {f(4.07)});
+                \addplot[domain=0.3:4.5, ultra thick, smooth, color=myblue]{f(x)};
+                \draw[ultra thick, color=myblue] (axis cs: 0.25,0) -- (axis cs: 4.5,0);
+                \draw[ultra thick, color=myblue] (axis cs: 0,{f(0.93)}) -- (axis cs: 0,{f(4.07)});
+                \filldraw[color=myblue] (axis cs: 0.93, {f(0.93)}) circle (1.5pt);
+                \filldraw[color=myblue] (axis cs: 4.07, {f(4.07)}) circle (1.5pt);
+                \node[below] at (axis cs: 0.25, 0) {\(a\)};
+                \node[below] at (axis cs: 4.5, 0) {\(b\)};
+                \node[below] at (axis cs: 0.93, 0) {\(x_m\)};
+                \node[below] at (axis cs: 4.07, 0) {\(x_M\)};
+                \node[left, font=\small] at (axis cs: 0, {f(0.93)}) {\(\inf_{x \in [a,b]} f\)};
+                \node[left, font=\small] at (axis cs: 0, {f(4.07)}) {\(\sup_{x \in [a,b]} f\)};
+            \end{axis}
+        \end{tikzpicture}
+        \caption{Grafico di una funzione \(f\) che soddisfa le ipotesi del teorema.}
+    \end{figure}
+\end{minipage}
+\begin{theorem}
+    \subsection{Teorema di Weierstrass}
+    Sia \(\mathbf{f}\) una funzione \textbf{continua} in \(\mathbf{[a, b]}\), chiuso e limitato allora \(\mathbf{f}\) è limitata e ivi assume valori \textbf{minimo} e \textbf{massimo}.
+    \begin{align*}
+        m=min_{x \in [a,b]} f(x) \quad \text{e} \quad M=max_{x \in [a,b]} f(x)
+    \end{align*}
+    dunque
+    \begin{align*}
+        f[a,b]=[m,M]
+    \end{align*}
+\end{theorem}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale = 1,
+            declare function={
+                    f(\x) = sin(deg(\x-2.5))*2+4;
+                }]
+        \begin{axis}
+            [
+                xlabel={\( x \)},
+                ylabel={\( f(x) \)},
+                xmin=-1, xmax=5,
+                ymin=-1, ymax=7,
+                grid=both,
+                axis lines=middle,
+                axis line style=->,
+                grid style={line width=.1pt, draw=gray!10},
+                major grid style={line width=.2pt,draw=gray!50},
+                minor tick num=3,
+                enlargelimits={abs=0.5},
+                xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+                ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+                xticklabels={},
+                yticklabels={}
+                samples=100,
+                unbounded coords=jump,
+                legend pos=south east
+            ]
+            \draw [dashed, thick, color=gray] (axis cs: 0.93, {f(0.93)}) -- (axis cs: 0.93, 0);
+            \draw [dashed, thick, color=gray] (axis cs: 0.93, {f(0.93)}) -- (axis cs: 0, {f(0.93)});
+            \draw [dashed, thick, color=gray] (axis cs: 4.07, {f(4.07)}) -- (axis cs: 4.07, 0);
+            \draw [dashed, thick, color=gray] (axis cs: 4.07, {f(4.07)}) -- (axis cs: 0, {f(4.07)});
+            \addplot[domain=0.3:4.5, ultra thick, smooth, color=myblue]{f(x)};
+            \draw[ultra thick, color=myblue] (axis cs: 0.25,0) -- (axis cs: 4.5,0);
+            \draw[ultra thick, color=myblue] (axis cs: 0,{f(0.93)}) -- (axis cs: 0,{f(4.07)});
+            \filldraw[color=myblue] (axis cs: 0.93, {f(0.93)}) circle (1.5pt);
+            \filldraw[color=myblue] (axis cs: 4.07, {f(4.07)}) circle (1.5pt);
+            \node[below] at (axis cs: 0.25, 0) {\(a\)};
+            \node[below] at (axis cs: 4.5, 0) {\(b\)};
+            \node[below] at (axis cs: 0.93, 0) {\(x_m\)};
+            \node[below] at (axis cs: 4.07, 0) {\(x_M\)};
+            \node[left, font=\small] at (axis cs: 0, {f(0.93)}) {\(m\)};
+            \node[left, font=\small] at (axis cs: 0, {f(4.07)}) {\(M\)};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Grafico di una funzione \(f\) che soddisfa le ipotesi del teorema di Weierstrass.}
+\end{figure}
+
+\section{Invertibilità delle funzioni continue}
+Nel capitolo 2 abbiamo visto che una funzione \(f\) è invertibile se è \textbf{biettiva}, ovvero se è \textbf{iniettiva} e \textbf{suriettiva}. In questo paragrafo studiamo le condizioni che permettono di affermare che una funzione continua è invertibile.
+\begin{proposition}
+    Sia \(f\) \textbf{continua} e \textbf{invertibile} su un intervallo \(I\), presi tre punti qualsiasi tali che \(x_1 < x_2 < x_3, \in I\), si verifica o una o l'altra delle seguenti relazioni:
+    \begin{enumerate}
+        \item \(f(x_1) < f(x_2) < f(x_3)\)
+        \item \(f(x_1) > f(x_2) > f(x_3)\)
+    \end{enumerate}
+    Ciò deriva dalla proposizione che se \(f\) è invertibile allora è \textbf{monotona}.
+\end{proposition}
+
+\section{Funzioni Lipschitziane}
+Le funzioni Lipschitziane sono funzioni che soddisfano una proprietà di \textbf{continuità} più forte rispetto a quella classica.
+\begin{definition}
+    \subsection{Funzione Lipschitziana}
+    Sia \(f\) una funzione definita su un intervallo \(I\), diciamo che \(f\) è \textbf{Lipschitziana} su \(I\) se esiste una costante \(k > 0\) tale che
+    \begin{align*}
+        |f(x_1) - f(x_2)| \leq k|x_1 - x_2| \quad \forall x_1, x_2 \in I
+    \end{align*}
+    La costante \(k\) è detta \textbf{costante di Lipschitz} di \(f\).
+\end{definition}
+\textbf{Interpretazione}:
+Una funzione Lipschitziana è una funzione che non cambia troppo rapidamente. Se sposti di un po' il punto su cui la stai calcolando, il suo valore non può aumentare o diminuire più di una certa quantità, che dipende dalla costante di Lipschitz.
+
+\noindent\textbf{Applicazioni}:
+Questo tipo di funzione è molto utile in matematica perché il suo comportamento è prevedibile e non presenta variazioni troppo drastiche. È spesso usata in campi come l'analisi numerica e le equazioni differenziali, dove la stabilità e la prevedibilità sono importanti.
+
+\begin{proposition}
+    Sia \(f\) una funzione \textbf{Lipschitziana} su un intervallo \(I\), allora \(f\) è \textbf{uniformemente continua} su \(I\).
+\end{proposition}
+\textbf{Uniformemente continua}:
+Questo significa che la funzione non ha punti in cui cambia improvvisamente o drasticamente il suo comportamento. La continuità uniforme è una proprietà più forte della semplice continuità, poiché implica un tipo di regolarità e prevedibilità in tutto l'intervallo su cui la funzione è definita.
+
+\begin{theorem}
+    \subsection{Teorema di Heine-Cantor}
+    Sia \(f\) una funzione \textbf{continua} su un intervallo \textbf{chiuso e limitato} \(I\), allora \(f\) è \textbf{uniformemente continua} su \(I\).
+\end{theorem}
+\end{document}

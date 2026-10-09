@@ -1,0 +1,682 @@
+\documentclass{book}
+
+\title{Analisi Matematica T-A}
+\author{Michele Mazza}
+\date{November 2023}
+
+
+% Pacchetti di Codifica e Lingua
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+
+% Pacchetti Grafici e Diagrammi
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{angles,quotes,arrows.meta, positioning}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% Pacchetti Matematici
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{polynom}
+
+% Pacchetti per Tabelle e Unità di Misura
+\usepackage{geometry}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{colortbl}
+
+% Pacchetti per Layout e Formattazione
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{microtype}
+
+% Altri Pacchetti Utili
+\usepackage{mdframed}
+\usepackage{animate}
+
+% Definizioni dei Colori
+\definecolor{lightblue}{HTML}{9cd8fc}
+\definecolor{myblue}{HTML}{139FE9}
+
+% Definizione del comando \norm
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+% Ambienti Personalizzati
+\newmdtheoremenv[
+        backgroundcolor=orange!10,
+        linecolor=myblue,
+        linewidth=0pt,
+        leftmargin=0pt,
+        rightmargin=0pt,
+        innerleftmargin=10pt,
+        innerrightmargin=10pt,
+        innertopmargin=10pt,
+        innerbottommargin=10pt
+        nobreak
+]{curiosity}{Curiosità}
+
+\newmdtheoremenv[
+        font=\normalfont\small,
+        linewidth=0pt,
+        innerleftmargin=10pt,
+        innerrightmargin=10pt,
+]{example}{Esempio}
+
+\newmdtheoremenv[
+    backgroundcolor=lightblue,
+    linecolor=myblue,
+    linewidth=1.5pt,
+    linewidth=0pt,
+    leftmargin=0pt,
+    innertopmargin=10pt,
+    innerbottommargin=10pt,
+    innerrightmargin=10pt,
+    innerleftmargin=10pt
+    nobreak
+]{theorem}{Teorema}
+
+\newmdtheoremenv[
+    backgroundcolor=gray!10,
+    linewidth=0pt,
+    linewidth=0pt,
+    leftmargin=0pt,
+    innertopmargin=10pt,
+    innerbottommargin=10pt,
+    innerrightmargin=10pt,
+    innerleftmargin=10pt
+    nobreak
+]{definition}{Definizione}
+
+\newmdtheoremenv[
+    backgroundcolor=gray!10,
+    linecolor=myblue,
+    linewidth=1.5pt,
+    linewidth=0pt,
+    leftmargin=0pt,
+    innertopmargin=10pt,
+    innerbottommargin=10pt,
+    innerrightmargin=10pt,
+    innerleftmargin=10pt
+    nobreak
+]{proposition}{Proposizione}
+
+% Configurazioni di fancyhdr
+\pagestyle{fancy}
+\fancyhf{} % Pulisce tutti i campi
+\fancyhead[LE,RO]{\thepage} % Numero di pagina
+\fancyhead[RE]{\nouppercase{\leftmark}} % Titolo del capitolo
+\fancyhead[LO]{\nouppercase{\rightmark}} % Titolo della sezione
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\geometry{a4paper, left=20mm, right=20mm, top=20mm, bottom=20mm}
+
+% Pacchetto Hyperref (inserito per ultimo)
+\usepackage{hyperref}
+
+% Additional Packages
+\usepackage{xparse,array}
+
+\ExplSyntaxOn
+
+\NewDocumentCommand{\ruffini}{mmmm}
+ {% #1 = polynomial, #2 = divisor, #3 = middle row, #4 = result
+    \franklin_ruffini:nnnn { #1 } { #2 } { #3 } { #4 }
+ }
+
+\seq_new:N \l_franklin_temp_seq
+\tl_new:N \l_franklin_scheme_tl
+\int_new:N \l_franklin_degree_int
+
+\cs_new_protected:Npn \franklin_ruffini:nnnn #1 #2 #3 #4
+ {
+    % Start the first row
+    \tl_set:Nn \l_franklin_scheme_tl { & }
+    % Split the list of coefficients
+    \seq_set_split:Nnn \l_franklin_temp_seq { , } { #1 }
+    % Remember the number of columns
+    \int_set:Nn \l_franklin_degree_int { \seq_count:N \l_franklin_temp_seq }
+    % Fill the first row
+    \tl_put_right:Nx \l_franklin_scheme_tl
+     { \seq_use:Nn \l_franklin_temp_seq { & } }
+    % End the first row and leave two empty places in the next
+    \tl_put_right:Nn \l_franklin_scheme_tl { \\ #2 & & }
+    % Split the list of coefficients and fill the second row
+    \seq_set_split:Nnn \l_franklin_temp_seq { , } { #3 }
+    \tl_put_right:Nx \l_franklin_scheme_tl
+     { \seq_use:Nn \l_franklin_temp_seq { & } }
+    % End the second row
+    \tl_put_right:Nn \l_franklin_scheme_tl { \\ \hline }
+    % Split and fill the third row
+    \seq_set_split:Nnn \l_franklin_temp_seq { , } { #4 }
+    \tl_put_right:Nx \l_franklin_scheme_tl
+     { & \seq_use:Nn \l_franklin_temp_seq { & } }
+    % Start the array (with \use:x because the array package
+    % doesn't expand the argument)
+    \use:x
+     {
+        \exp_not:n { \begin{array} } { r | *{\int_eval:n { \l_franklin_degree_int - 1 }} { r } | r }
+     }
+    % Body of the array and finish
+    \tl_use:N \l_franklin_scheme_tl
+    \end{array}
+ }
+\ExplSyntaxOff
+
+\begin{document}
+
+\frontmatter
+\maketitle
+\tableofcontents
+
+\chapter*{Prefazione}
+Il presente libro rappresenta un riassunto del corso di Analisi Matematica T-A tenuto dal Prof.re Cataldo Grammatico presso l'Università di Bologna. Rivolto agli studenti del corso di laurea in Ingegneria Gestionale (codice laurea 0925, Tipo di laurea L-9, Codice corso 28622).
+
+\mainmatter
+
+\chapter{Elementi di base}
+
+\section{Insiemi}
+\begin{center}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \rowcolor{lightblue}
+        Nome                & Simbolo            & Descrizione                          \\
+        \hline
+        Insieme vuoto       & \(\emptyset\)      & Insieme senza elementi               \\
+        Unione              & \(A \cup B\)       & Elementi in A o in B o in entrambi   \\
+        Intersezione        & \(A \cap B\)       & Elementi comuni a A e B              \\
+        Differenza          & \(A \setminus B\)  & Elementi in A ma non in B            \\
+        Complementare       & \(A^c\)            & Tutti gli elementi non in A          \\
+        Prodotto Cartesiano & \(A \times B\)     & Coppie ordinate di elementi da A e B \\
+        Potenza             & \(\mathcal{P}(A)\) & Insieme di tutti i sottoinsiemi di A \\
+        \hline
+    \end{tabular}
+\end{center}
+
+\section{Logica Matematica}
+\begin{center}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \rowcolor{lightblue}
+        Simbolo             & Nome         & Significato                 \\
+        \hline
+        \(\land\)           & AND          & E logico                    \\
+        \(\lor\)            & OR           & O logico                    \\
+        \(\neg\)            & NOT          & Negazione                   \\
+        \(\Rightarrow\)     & Implica      & Implicazione                \\
+        \(\Leftrightarrow\) & Se e solo se & Equivalenza                 \\
+        $\forall$           & Per ogni     & Quantificatore universale   \\
+        $\exists$           & Esiste       & Quantificatore esistenziale \\
+        \hline
+    \end{tabular}
+\end{center}
+
+\section{Insiemi Numerici}
+\begin{center}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \rowcolor{lightblue}
+        Insieme        & Nome      & Proprietà           & Esempi                        \\
+        \hline
+        \(\mathbb{N}\) & Naturali  & Solo positivi       & 1, 2, 3                       \\
+        \(\mathbb{Z}\) & Interi    & Positivi e negativi & -2, -1, 0, 1                  \\
+        \(\mathbb{Q}\) & Razionali & Rapporto di interi  & \(\frac{1}{2}, \frac{-3}{4}\) \\
+        \(\mathbb{R}\) & Reali     & Include irrazionali & \(\sqrt{2}, \pi\)             \\
+        \(\mathbb{C}\) & Complessi & Include immaginari  & \(1 + 2i, -i\)                \\
+        \hline
+    \end{tabular}
+\end{center}
+
+\section{Metodi di Dimostrazione in Matematica}
+\noindent\begin{minipage}{\textwidth}
+    \begin{theorem}
+        \subsection{Principio di Induzione}
+        Sia \( P(n) \) una proprietà definita per ogni intero \( n \geq n_0 \), dove \( n_0  \geq 0\) è un intero fissato. Se
+        \begin{enumerate}
+            \item \( P(n_0) \) è vera (caso base),
+            \item per ogni \( n \geq n_0 \), l'implicazione \( P(n) \Rightarrow P(n+1) \) è vera (passo induttivo),
+        \end{enumerate}
+        allora la proprietà \( P(n) \) è vera per ogni intero \( n \geq n_0 \).
+
+        \textbf{Esempio:}
+        \(P(n)\): La somma degli angoli interni di un poligono di \( n \) lati è \( (n-2)\pi \) radianti.
+        \begin{enumerate}
+            \item \textbf{Passo Base:} Consideriamo un triangolo (un poligono con \( n = 3 \) lati). La somma dei suoi angoli interni è \( \pi \) radianti. Poiché \( (3-2)\pi = \pi \), il teorema è valido per \( n = 3 \).
+            \item \textbf{Passo Induttivo:} Supponiamo che \( P(n) \) sia vera per un poligono di \( n \) lati. Consideriamo un poligono di \( n+1 \) lati. Tracciamo una diagonale che divide il poligono in un triangolo e un poligono di \( n \) lati. La somma degli angoli interni del triangolo è \( \pi \) radianti, e per l'ipotesi induttiva, la somma degli angoli interni del poligono di \( n \) lati è \( (n-2)\pi \) radianti. Quindi, la somma degli angoli interni del poligono di \( n+1 \) lati è \( \pi + (n-2)\pi = (n-1)\pi \), che corrisponde esattamente a \( (n+1-2)\pi \). Pertanto, la proprietà è vera per un poligono di \( n+1 \) lati.
+        \end{enumerate}
+    \end{theorem}
+\end{minipage}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \filldraw[fill=lightblue, draw=myblue, thick] (0,0) -- (2,0) -- (2.5,1.5) -- (1.5,3) -- (0,2.5) -- cycle;
+        \draw[dashed] (0,0) -- (1.5,3);
+        \node at (3,1) {\( n \)-gon};
+        \node at (-1,2) {Triangle};
+    \end{tikzpicture}
+    \caption{Poligono di n-lati}
+\end{figure}
+
+\begin{theorem}
+    \subsection{Disuguaglianza di Bernoulli}
+    Per ogni numero reale \( r \geq -1 \) e per ogni numero intero \( n \geq 0 \), vale la seguente disuguaglianza:
+    \[ (1 + r)^n \geq 1 + nr \]
+
+    \textbf{Osservazioni:}
+    \begin{enumerate}
+        \item L'elemento \(1\) rappresenta il valore iniziale, o il capitale iniziale in contesti finanziari, prima di qualsiasi aumento.
+        \item L'espressione \( (1 + r) \) rappresenta un aumento del valore iniziale di una frazione \( r \). Per esempio, \( r = 0.05 \) significa un incremento del 5% rispetto al valore iniziale.
+        \item \( (1 + r)^n \) descrive la crescita composta per \( n \) periodi, dove non solo l'incremento \( r \), ma l'intero valore \( 1 + r \), viene moltiplicato ripetutamente.
+        \item Al contrario, \( 1 + nr \) rappresenta una crescita lineare, dove solo l'incremento \( r \) viene sommato ripetutamente al valore iniziale. Qui, \( 1 \) rimane costante, mentre \( nr \) è la somma totale degli incrementi.
+        \item La disuguaglianza illustra che la crescita composta (elevamento a potenza) è più efficace della semplice somma ripetuta di un incremento, specialmente per valori grandi di \( n \) e per \( r \) positivo.
+    \end{enumerate}
+\end{theorem}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+                title={Confronto tra Crescita Esponenziale e Lineare},
+                xlabel={$n$},
+                ylabel={Valore},
+                xmin=0, xmax=10,
+                ymin=0, ymax=20,
+                grid=both,
+                axis lines=middle,
+                axis line style=->,
+                grid style={line width=.1pt, draw=gray!10},
+                major grid style={line width=.2pt,draw=gray!50},
+                minor tick num=5,
+                enlargelimits={abs=0.5},
+                ticklabel style={font=\small},
+                xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+                ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+                legend pos=south east
+            ]
+            \addplot+[myblue, thick, smooth] plot coordinates {
+                    (0,1)(1,2)(2,4)(3,8)(4,16)(5,32)
+                };
+            \addlegendentry{$(1+r)^n$}
+            \addplot+[red, thick, smooth] plot coordinates {
+                    (0,1)(1,2)(2,3)(3,4)(4,5)(5,6)(6,7)(7,8)(8,9)(9,10)(10,11)
+                };
+            \addlegendentry{$1+nr$}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Confronto tra Crescita Esponenziale e Lineare per \( r = 1 \)}
+\end{figure}
+
+\section{Valore Assoluto}
+\begin{definition}
+    \subsection{Valore Assoluto (o modulo)}
+    Il valore assoluto di un numero reale \( x \) è definito come
+    \[ |x| =
+        \begin{cases}
+            x  & \text{se } x \geq 0, \\
+            -x & \text{se } x < 0.
+        \end{cases} \]
+    Questa funzione restituisce la distanza di \( x \) dall'origine sul numero reale.
+\end{definition}
+
+\begin{theorem}
+    \subsection{Disuguaglianza Triangolare, (Cauchy, Shwarz)}
+    Per tutti i numeri reali \( x \) e \( y \), vale la seguente disuguaglianza:
+    \[ |x + y| \leq |x| + |y| \]
+    Questa disuguaglianza afferma che la magnitudine della somma di due numeri reali non è mai maggiore della somma delle loro magnitudini.
+\end{theorem}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        % Triangolo
+        \coordinate (A) at (0,0);
+        \coordinate (B) at (1,2);
+        \coordinate (C) at (3,0);
+
+        % Riempi il triangolo di un colore
+        \fill[lightblue] (A) -- (B) -- (C) -- cycle;
+
+        % Lati
+        \draw [->,thick](A) -- (B);
+        \node[left] at (B) {$x$};
+        \draw [->,thick](B) -- (C);
+        \node[right] at (C) {$y$};
+        \draw [<-,thick](C) -- (A);
+        \node[below] at (A) {$z = |x+y|$};
+    \end{tikzpicture}
+    \caption{Magnitudine della somma di due numeri reali}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \coordinate (A') at(0,-1);
+        \coordinate (B') at(2.23,-1);
+        \coordinate (C') at(4.472,-1);
+        \draw [->,thick](A') -- (B');
+        \draw [->,thick](B') -- (C');
+        \node at (2.23, -1.5) {$|x|+|y|$};
+    \end{tikzpicture}
+    \caption{Somma delle magnitudini di due numeri reali}
+\end{figure}
+
+\begin{theorem}
+    \subsection{Proprietà del Prodotto}
+    Per tutti i numeri reali \( x \) e \( y \), vale la seguente proprietà:
+    \[ |xy| = |x||y| \]
+    Questa proprietà afferma che il valore assoluto del prodotto di due numeri reali è uguale al prodotto dei loro valori assoluti.
+\end{theorem}
+
+\section{Intervalli}
+\begin{definition}
+    \subsection{Intervallo}
+    Un \textbf{intervallo} è insieme di numeri tra due estremi, \(a\) e \(b\).
+    \begin{itemize}
+        \item \text{Chiuso} \([a, b]\)
+        \item \text{Aperto} \((a, b)\)
+    \end{itemize}
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \draw[-latex] (-1,0) -- (5,0) ; % Linea numerica
+        \foreach \x in  {1,3} % Punti
+        \draw[shift={(\x,0)},color=black] (0pt,2pt) -- (0pt,-2pt);
+        \filldraw [myblue] (1,0) circle (2pt); % Cerchio pieno per a
+        \filldraw [myblue] (3,0) circle (2pt); % Cerchio pieno per b
+        \draw[thick, myblue](1,0) -- (3,0);
+        \draw (1,0);
+        \node[below] at (1,0) {$a$};
+        \draw (3,0);
+        \node[below] at (3,0) {$b$};
+        \draw (5,-0.5);
+        \node[right] at (5,-0.5) {\([a, b]\)};
+    \end{tikzpicture}
+    \caption{Intervallo aperto}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-1,-1) -- (5,-1) ; % Linea numerica
+        \draw [myblue](1,-1) circle (2pt); % Cerchio vuoto per a
+        \draw [myblue](3,-1) circle (2pt); % Cerchio vuoto per b
+        \draw[thick, myblue](1.05,-1) -- (2.95,-1);
+        \draw (1,-1);
+        \node[below] at (1,-1) {$a$};
+        \draw (3,-1);
+        \node[below] at (3,-1) {$b$};
+        \draw (5,-1.5);
+        \node[right] at (5,-1.5) {\((a, b)\)};
+    \end{tikzpicture}
+    \caption{Intervallo chiuso}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-1,-1) -- (5,-1) ; % Linea numerica
+        \filldraw [myblue](1,-1) circle (2pt); % Cerchio vuoto per a
+        \draw[thick, myblue](1.05,-1) -- (5,-1);
+        \draw (1,-1);
+        \node[below] at (1,-1) {$a$};
+        \draw (5,-1);
+        \node[below] at (5,-1) {$\infty$};
+        \draw (5,-1.5);
+        \node[right] at (5,-1.5) {\([a, +\infty)\)};
+    \end{tikzpicture}
+    \caption{Intervallo semiaperto a sinistra}
+\end{figure}
+
+\begin{definition}
+    \subsection{Maggiorante e Minorante}
+    Sia A un intervallo, (chiuso o aperto).
+    \begin{itemize}
+        \item M è un \textbf{maggiorante} di A se \[\forall x \in A, \, x \leq M.\]
+        \item m è un \textbf{minorante} di A se \[\forall x \in A, \, x \geq m.\]
+    \end{itemize}
+\end{definition}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-1,0) -- (5,0) ; % Linea numerica
+        \filldraw [myblue] (1,0) circle (2pt); % Cerchio pieno per a
+        \draw [myblue] (3,0) circle (2pt); % Cerchio vuoto per b
+        \filldraw [black] (0.4,0) circle (1pt); % Cerchio pieno per a
+        \filldraw [black] (3.6,0) circle (1pt); % Cerchio vuoto per b
+        \draw[thick, myblue](1,0) -- (3,0);
+        % Aggiungi le parentesi e le etichette
+        \node at (0.4,0.5) [above] {$m$};
+        \node at (3.6,0.5) [above] {$M$};
+        \node at (1,-0.5) [below] {$a$};
+        \node at (3,-0.5) [below] {$b$};
+        \node at (5,-0.5) [below] {\([a, b)\)};
+    \end{tikzpicture}
+    \caption{minorante e maggiorante di A}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-1,0) -- (5,0) ; % Linea numerica
+        \filldraw [myblue] (1,0) circle (2pt); % Cerchio pieno per a
+        \draw [myblue] (3,0) circle (2pt); % Cerchio vuoto per b
+        \filldraw [black] (1,0) circle (1pt); % Cerchio pieno per a
+        \filldraw [black] (3,0) circle (1pt); % Cerchio vuoto per b
+        \draw[thick, myblue](1,0) -- (3,0);
+        % Aggiungi le parentesi e le etichette
+        \node at (1,0.5) [above] {$m$};
+        \node at (3,0.5) [above] {$M$};
+        \node at (1,-0.5) [below] {$a$};
+        \node at (3,-0.5) [below] {$b$};
+        \node at (5,-0.5) [below] {\([a, b)\)};
+    \end{tikzpicture}
+    \caption{minorante e maggiorante di A che coincidono con gli estremi dell'insieme}
+\end{figure}
+
+\begin{definition}
+    \subsection{Estremo superiore e Estremo inferiore}
+    Sia \(A  \subset R \) un intervallo, chiuso o aperto .
+    \begin{itemize}
+        \item \(\exists\ supA \in A\) \textbf{estremo superiore} di A se,
+              \[\forall x \in A, \, x \leq supA.\]
+              \[\forall r \in \mathbb{R}, \, \exists x \in A | x > r.\]
+              è dunque il pi\'u piccolo dei maggioranti
+        \item \(\exists\ infA \in A\) \textbf{estremo inferiore} di A se,
+              \[\forall x \in A, \, x \geq infA.\]
+              \[\forall r \in \mathbb{R}, \, \exists x \in A | x < r.\]
+              è dunque il pi\'u grande dei minoranti
+    \end{itemize}
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-1,0) -- (5,0) ; % Linea numerica
+        \foreach \x in  {1,3} % Punti
+        \draw[shift={(\x,0)},color=black] (0pt,2pt) -- (0pt,-2pt);
+        \filldraw [myblue] (1,0) circle (2pt); % Cerchio pieno per a
+        \draw [myblue] (3,0) circle (2pt); % Cerchio vuoto per b
+        \filldraw [black] (1,0) circle (1pt); % Cerchio pieno per a
+        \filldraw [black] (3,0) circle (1pt); % Cerchio vuoto per b
+        \draw[thick, myblue](1,0) -- (3,0);
+        % Aggiungi le parentesi e le etichette
+        \node at (1,0.5) [above] {$infA$};
+        \node at (3,0.5) [above] {$supA$};
+        \node at (1,-0.5) [below] {$a$};
+        \node at (3,-0.5) [below] {$b$};
+        \node at (5,-0.5) [below] {\([a, b)\)};
+    \end{tikzpicture}
+    \caption{Estremo inferiore ovvero massimo dei minoranti, estremo superiore ovvero minimo dei maggioranti}
+\end{figure}
+
+\begin{definition}
+    \subsection{Massimo e Minimo}
+    Sia \(A \subset R, A = [a,b]\) un intervallo chiuso.
+    \begin{itemize}
+        \item \(x_M=\max{A} \in A\) è un \textbf{massimo} di A se,
+              \[\forall x \in A, \, x \leq x_M.\]
+        \item \(x_m=\min{A} \in A\) è un \textbf{minimo} di A se,
+              \[\forall x \in A, \, x \geq x_m.\]
+    \end{itemize}
+\end{definition}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-1,0) -- (5,0) ; % Linea numerica
+        \filldraw [myblue] (1,0) circle (2pt); % Cerchio pieno per a
+        \filldraw [myblue] (3,0) circle (2pt); % Cerchio vuoto per b
+        \filldraw [black] (1,0) circle (1pt); % Cerchio pieno per a
+        \filldraw [black] (3,0) circle (1pt); % Cerchio vuoto per b
+        \draw[thick, myblue](1,0) -- (3,0);
+        % Aggiungi le parentesi e le etichette
+        \node at (1,0.5) [above] {$x_m=\min{A}$};
+        \node at (3,0.5) [above] {$x_M=\max{A}$};
+        \node at (1,-0.5) [below] {$a$};
+        \node at (3,-0.5) [below] {$b$};
+        \node at (5,-0.5) [below] {\([a, b]\)};
+    \end{tikzpicture}
+    \caption{Massimo e minimo}
+\end{figure}
+
+ma \textbf{non}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-1,0) -- (5,0) ; % Linea numerica
+        \draw [myblue] (1,0) circle (2pt); % Cerchio pieno per a
+        \draw [myblue] (3,0) circle (2pt); % Cerchio vuoto per b
+        % Croce al punto (1,0)
+        \draw [black] (0.9,0.1) -- (1.1,-0.1);
+        \draw [black] (0.9,-0.1) -- (1.1,0.1);
+        % Croce al punto (3,0)
+        \draw [black] (2.9,0.1) -- (3.1,-0.1);
+        \draw [black] (2.9,-0.1) -- (3.1,0.1);
+        \draw[thick, myblue](1,0) -- (3,0);
+        % Aggiungi le parentesi e le etichette
+        \node at (1,0.5) [above left] {$\nexists x_m=\min{A}$};
+        \node at (3,0.5) [above right] {$\nexists x_M=\max{A}$};
+        \node at (1,-0.5) [below] {$a$};
+        \node at (3,-0.5) [below] {$b$};
+        \node at (5,-0.5) [below] {\((a, b)\)};
+    \end{tikzpicture}
+    \caption{Massimo e minimo $\nexists$ in intervalli aperti}
+\end{figure}
+
+\section{Fattoriali e Coefficienti binomiali}
+\begin{definition}
+    \subsection{Fattoriale}
+    La definizione del fattoriale di un numero naturale \( n \) è data dalla seguente formula:
+    \[n! = \begin{cases}
+            1               & \text{se } n = 0, \\
+            n \times (n-1)! & \text{se } n > 0.
+        \end{cases}\]
+    Questo significa che il fattoriale di un numero \( n \) è il prodotto di tutti i numeri interi positivi fino a \( n \). Per esempio, \[ 4! = 4 \times 3 \times 2 \times 1 = 24 \]
+    \(n!\) rappresenta il numero di possibili \textbf{disposizioni di n oggetti distinti in sequenza}, o - che è lo stesso - il numero di possibili \textbf{permutazioni} di \(n\) oggetti ordinati
+\end{definition}
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+                xlabel={\( n \)},
+                ylabel={\( n! \)},
+                xmin=0, xmax=4,
+                ymin=0, ymax=24,
+                grid=both,
+                axis lines=middle,
+                axis line style=->,
+                grid style={line width=.1pt, draw=gray!10},
+                major grid style={line width=.2pt,draw=gray!50},
+                minor tick num=5,
+                enlargelimits={abs=0.5},
+                ticklabel style={font=\small},
+                xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+                ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+                legend pos=south east
+            ]
+            \addplot+[myblue, thick, smooth] plot coordinates {
+                    (0,1)
+                    (1,1)
+                    (2,2)
+                    (3,6)
+                    (4,24)
+                    (5,120)
+                };
+            \legend{\(n!\)}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Grafico del Fattoriale}
+\end{figure}
+\noindent\begin{minipage}{\textwidth}
+    \begin{curiosity}
+        \subsubsection{Perché (0 ! = 1)}
+        La definizione del fattoriale di un numero naturale \( n \), denotato come \( n! \), è il prodotto di tutti i numeri interi positivi fino a \( n \). Tuttavia, questa definizione solleva una domanda: qual è il valore di \( 0! \)?
+        Per convenzione matematica, il valore di \( 0! \) è definito come 1. Questa scelta può sembrare arbitraria, ma ci sono diverse ragioni matematiche che giustificano questa definizione:
+        \begin{enumerate}
+            \item \textbf{Consistenza con la definizione di fattoriale}: Se consideriamo il fattoriale di un numero come il prodotto di tutti i numeri interi fino a quel numero, allora \( 0! \) sarebbe il prodotto di nessun numero. In matematica, il prodotto di nessun fattore è definito come l'elemento neutro del prodotto, che è 1.
+            \item \textbf{Coerenza con la formula del coefficiente binomiale}: In combinatoria, il coefficiente binomiale \( \binom{n}{k} \) rappresenta il numero di modi in cui si possono scegliere \( k \) elementi da un insieme di \( n \) elementi. La formula per il coefficiente binomiale è \( \binom{n}{k} = \frac{n!}{k!(n-k)!} \). Se si sceglie \( k = 0 \), cioè nessun elemento da un insieme di \( n \) elementi, dovrebbe esserci esattamente 1 modo per farlo, il che richiede che \( 0! = 1 \).
+            \item \textbf{Convenienza nelle serie matematiche}: In molte serie matematiche e in analisi, avere \( 0! = 1 \) semplifica notevolmente le formule e i calcoli, evitando la necessità di trattare separatamente il caso in cui \( n = 0 \).
+        \end{enumerate}
+        Inoltre, consideriamo un esempio operativo della definizione a ritroso dei valori del fattoriale:
+        \[4! = 4 \times 3 \times 2 \times 1 = 24\]
+        Da questo esempio, possiamo vedere come il fattoriale di un numero si costruisce moltiplicando tutti i numeri interi positivi fino a quel numero. Per definizione, possiamo poi vedere che:
+        \[3! = \frac{4!}{4} = \frac{24}{4} = 6\]
+        E proseguendo in questo modo:
+        \[2! = \frac{3!}{3} = \frac{6}{3} = 2\]
+        E infine:
+        \[1! = \frac{2!}{2} = \frac{2}{2} = 1\]
+        E da qui segue che:
+        \[0! = \frac{1!}{1} = \frac{1}{1} = 1\]
+        La definizione di \(0! = 1\) è quindi non solo una convenzione, ma anche una conseguenza logica della definizione generale di fattoriale.
+    \end{curiosity}
+\end{minipage}
+
+\begin{curiosity}
+    \subsubsection{Perché (a elevato alla 0 = 1)}
+    Vista la curiosità precedente aggiungo anche questo esempio operativo per completezza, prendo un a = 4
+    \[ \frac{4^a}{4^b} = 4^{a-b} \Longleftrightarrow 4^{a-b} \ = \frac{4^a}{4^b}  \]
+    \[4^0 = 4^{1-1} = \frac{4^1}{4^1} = \frac{4}{4} \]
+\end{curiosity}
+
+\section{Scomposizione con Ruffini}
+\subsection{How to Ruffini}
+\begin{example}
+    Vogliamo scomporre il polinomio
+    \[2x^5 + x^3 + 5x - 8\]
+    \begin{enumerate}
+        \item Troviamo una radice \(r\) del polinomio, ovvero un valore di \(x\) per cui il polinomio si annulla.
+        \item per farlo possiamo usare il teorema di Ruffini, che ci dice che se \(r\) è una radice del polinomio allora \(r\) è un divisore del termine noto, in questo caso \(r\) è un divisore di \(8\), quindi possibili valori di \(r\) sono \(\pm 1, \pm 2, \pm 4, \pm 8\).
+        \item Proviamo con \(r = 1\), ottendendo
+              \begin{align*}
+                  2x^5 + x^3 + 5x - 8       & = 0 \\
+                  2(1)^5 + (1)^3 + 5(1) - 8 & = 0 \\
+                  2 + 1 + 5 - 8             & = 0 \\
+                  0                         & = 0
+              \end{align*}
+        \item Quindi \(r = 1\) è una radice del polinomio.
+        \item Ora dobbiamo scomporre il polinomio in fattori, per farlo usiamo le regola di Ruffini.
+        \item Scriviamo i coefficienti del polinomio in una tabella, in questo caso abbiamo \(2, 0, 1, 5, -8\).
+              \[
+                  \ruffini{2,0,0,1,5,-8}{1}{ }{ }
+              \]
+              \[
+                  \ruffini{2,0,0,1,5,-8}{1}{}{2}
+              \]
+              \[
+                  \ruffini{2,0,0,1,5,-8}{1}{2,2}{2,2,2}
+              \]
+              \[
+                  \ruffini{2,0,0,1,5,-8}{1}{2,2,2,3,8}{2,2,2,3,8,0}
+              \]
+        \item il polinomio ottenuto sarà
+              \begin{align*}
+                  2x^5 + x^3 + 5x - 8 = (x-1)(2x^4 + 2x^3 + 2x^2 + 3x + 8)
+              \end{align*}
+    \end{enumerate}
+\end{example}
+\end{document}

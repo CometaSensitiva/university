@@ -1,0 +1,521 @@
+\documentclass[a4paper,10pt]{article}
+
+% --- Pacchetti minimi ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{adjustbox}
+\usepackage{geometry}
+\usepackage[table]{xcolor} 
+\definecolor{myblue}{HTML}{139FE9}
+\geometry{margin=1.5cm}
+\usepackage{footnote}
+% Pacchetti per Layout e Formattazione 
+\usepackage{fancyhdr} 
+\usepackage{float} 
+% Pacchetti Grafici e Diagrammi 
+\usepackage{graphicx} 
+\usepackage{tikz} 
+\usepackage{tikz-3dplot} 
+\usetikzlibrary{angles,quotes,arrows.meta, positioning} 
+\usepackage{pgfplots} 
+\pgfplotsset{compat=1.18} % Pacchetti Matematici 
+\usepackage{amsmath, amssymb, amsthm} 
+
+
+\usepackage{siunitx} 
+\usepackage{eurosym} 
+% --- Spaziatura tabella ---
+\setlength{\extrarowheight}{2pt}
+
+% --- Solo i comandi necessari (Note/Descrizioni) ---
+\newcolumntype{Y}[1]{>{\centering\arraybackslash}m{#1}}
+
+\begin{document}
+\section*{01 Il Valore delle imprese}
+Outline completa dei contenuti della lezione:
+{\small
+\begin{enumerate}
+    \item Il valore delle imprese
+    \item Obiettivo dell’impresa
+    \item Qual è l’obiettivo dell’impresa?
+    \item La creazione di valore e gli obiettivi dell’impresa
+    \item Il significato di valore (Contabile, Economico, di Mercato)
+    \item Valore contabile dell’impresa
+    \item Valore economico dell’impresa
+    \item Valore contabile e valore economico: due logiche diverse
+    \item Il valore di mercato
+    \item Valore di liquidazione e avviamento
+    \item Calcolo del valore economico di un’impresa
+    \item Dividend discount model - 1 (Componenti del ritorno)
+    \item Dividend discount model - 2 (Prezzo futuro e formula generale)
+    \item Dividend discount model - 3 (Orizzonte infinito e capital gains)
+    \item Dividend discount model - 4 (Modello di Gordon)
+    \item Discounted cash flow (DCF)
+    \item Discounted cash flow: le attività dell’impresa
+    \item Discounted cash flow: calcolo del flusso di cassa operativo
+    \item Flusso di cassa unlevered: calcolo (EBITDA $\rightarrow$ FCF)
+    \item Valutazione Lusso SpA (Esempio numerico)
+    \item Esempio di valutazione Lusso SpA: Ipotesi e dati (Capex e CCN)
+    \item Valutazione Lusso SpA: Terminal value (TV)
+    \item Enterprise Value e valore dei debiti
+    \item Valutazione del valore economico dell’azienda (Formula finale)
+    \item Per chi si deve creare valore: shareholders o stakeholders?
+    \item Shareholder e stakeholder: il dibattito (Diritti espliciti e impliciti)
+    \item Obiettivo dell’impresa: Creazione di valore economico per l’azionista
+\end{enumerate}
+}
+\hrule
+\vspace{0.5cm}
+
+Buongiorno! Sono felice di iniziare questo percorso con te. Preparare Gestione Aziendale non è solo imparare formule, ma capire la "vita" e la direzione strategica di una realtà complessa come l'impresa. In questa prima lezione ci interroghiamo su un concetto fondamentale: qual è l'obiettivo ultimo di un'impresa?
+
+\subsection*{Dall'illusione del Profitto alla Realtà del Valore}
+
+Tradizionalmente, si è sempre pensato che l'obiettivo fosse la \textbf{massimizzazione del profitto}, ma oggi sappiamo che questo approccio è troppo generico per guidare davvero il comportamento aziendale. Il profitto è un dato contabile soggetto a molte interpretazioni: ad esempio, capitalizzare un costo invece di spesarlo aumenta i profitti di breve periodo ma riduce quelli di lungo. Per questo motivo, la bussola del management si è spostata sulla \textbf{creazione di valore}.
+
+Ma cosa intendiamo esattamente per "valore"? In azienda non esiste un'unica definizione, ma dobbiamo saper navigare tra tre accezioni diverse e complementari:
+
+\begin{table}[H]
+    \setlength{\extrarowheight}{12pt}
+    \adjustbox{max width=\textwidth,center}{
+        \centering
+        \begin{tabular}{|l|V{0.35\textwidth}|V{0.35\textwidth}|}
+            \hline
+            \rowcolor{myblue}
+            \textbf{Tipologia di Valore} & \textbf{Logica Sottostante} & \textbf{Significato Pratico} \\
+            \hline
+            \textbf{Valore Contabile} & 
+            \small \textbf{Quanto denaro è stato investito?} Deriva dallo Stato Patrimoniale (Capitale Netto) e segue principi di prudenza e costi storici. & 
+            \small È un dato "povero" e storico; non riflette il potenziale futuro né le risorse intangibili come la reputazione o la tecnologia. \\
+            \hline
+            \textbf{Valore Economico} & 
+            \small \textbf{Quali benefici trarremo in futuro?} Si basa sull'attualizzazione dei flussi di cassa futuri attesi. & 
+            \small Dipende dalla redditività attesa e dal rischio (costo opportunità del capitale). \\
+            \hline
+            \textbf{Valore di Mercato} & 
+            \small \textbf{A che prezzo avviene lo scambio?} È il prezzo di equilibrio tra domanda e offerta sui mercati. & 
+            \small Coincide con il valore economico solo se i mercati sono efficienti. \\
+            \hline
+        \end{tabular}
+    }
+    \caption{Tipologie di valore d'impresa}
+\end{table}
+
+\subsection*{La Logica del Valore Economico: Perché la Cassa e non l'Utile?}
+
+È qui che molti studenti si confondono, ma seguimi bene: la teoria finanziaria preferisce i \textbf{flussi di cassa} (Cash Flows) ai ricavi o ai costi economici. Il motivo è logico: un ricavo (fatturato) non è un'entrata immediata di denaro se vendo a credito. Per valutare un investimento, dobbiamo guardare al "soldo" che entra ed esce realmente, perché è quello che determina la capacità dell'impresa di sopravvivere e remunerare i suoi finanziatori.
+
+Per trasformare questi flussi futuri in un valore odierno, usiamo il \textbf{tasso di attualizzazione}, ovvero il \textbf{costo opportunità del capitale}. Questo rappresenta la soglia minima di rendimento che un investitore si aspetta per rinunciare a investimenti alternativi con lo stesso grado di rischio.
+
+\subsection*{Il Valore tra Funzionamento, Liquidazione e Avviamento}
+
+Dobbiamo anche distinguere tra il valore dell'impresa "viva" e quello "morta". Il \textbf{Valore di Funzionamento} considera l'impresa come un sistema coordinato capace di produrre ricchezza, mentre il \textbf{Valore di Liquidazione} è ciò che si ottiene vendendola "a pezzi". La differenza tra questi due è l'\textbf{avviamento} (Goodwill), che rappresenta il valore intangibile (reputazione, know-how, marchi) che rende il tutto superiore alla somma delle singole parti.
+
+\subsection*{Modelli di Calcolo: DDM e DCF}
+
+Per calcolare il valore economico, abbiamo due strade principali:
+
+\begin{enumerate}
+\item \textbf{Dividend Discount Model (DDM):} vede il valore dell'azione come il valore attuale dei dividendi futuri attesi. Se immaginiamo di detenere l'azione all'infinito, i guadagni in conto capitale (capital gains) spariscono dalla formula perché proiettati troppo lontano. Una formula celebre è quella di \textbf{Gordon}, che ipotizza una crescita costante ($g$) dei dividendi all'infinito: $P_0 = Div_1 / (r - g)$.
+
+\item \textbf{Discounted Cash Flow (DCF):} è l'evoluzione del DDM usata nella pratica aziendale. Invece di stimare i dividendi (che l'azienda potrebbe decidere di non distribuire), stimiamo i \textbf{flussi di cassa disponibili} generati dall'attività operativa.
+
+\end{enumerate}
+
+Abbiamo capito che il profitto contabile è un'illusione manovrabile; la realtà è il valore economico, e per calcolarlo la finanza ci offre due modelli fondamentali che ora analizzeremo nel dettaglio.
+
+\subsection*{Il Dividend Discount Model (DDM): L'illusione dei Capital Gains}
+
+Il DDM è il punto di partenza teorico. Immaginiamo di possedere un'azione: da dove arriva il nostro guadagno? Da due fonti: il \textbf{dividendo} (la cedola annuale) e il \textbf{capital gain} (l'aumento di prezzo del titolo). 
+Il rendimento percentuale atteso ($r$) si esprime così:
+\[ r = \frac{Div_1 + (P_1 - P_0)}{P_0} \]
+Se invertiamo la formula per trovare il prezzo oggi ($P_0$), scopriamo che il valore di un'azione è il valore attuale del dividendo dell'anno prossimo più il prezzo a cui pensiamo di rivenderla:
+\[ P_0 = \frac{Div_1}{1+r} + \frac{P_1}{1+r} \]
+Ma cosa determina $P_1$? Lo stesso ragionamento: i dividendi dell'anno 2 e il prezzo $P_2$. Se proseguiamo questo processo all'infinito ($H \rightarrow \infty$), il prezzo finale $P_H$ tende a zero nel calcolo del valore attuale, e i capital gains "spariscono" dalla formula. Il valore dell'azione oggi è semplicemente la sommatoria di tutti i dividendi futuri attualizzati. 
+
+Per rendere questo calcolo pratico, usiamo il \textbf{Modello di Gordon}, che ipotizza una crescita costante ($g$) dei dividendi all'infinito:
+\[ P_0 = \frac{Div_1}{r - g} \]
+Qui capiamo un concetto logico fondamentale: un'azienda vale di più se distribuisce dividendi alti ($Div_1$), se cresce molto ($g$), o se è poco rischiosa (basso $r$).
+
+\subsection*{Dal DDM al Discounted Cash Flow (DCF): La centralità della Cassa}
+
+Nella pratica aziendale, il DDM ha un limite: molte aziende non distribuiscono dividendi pur creando valore (pensa a Google o alle startup). L'evoluzione è il \textbf{Discounted Cash Flow (DCF)}, che sostituisce i dividendi con i \textbf{Flussi di Cassa Disponibili (Free Cash Flows)}. Il principio è: il dividendo è solo una scelta di distribuzione, ma il valore è generato dalla capacità dell'impresa di produrre "soldo" reale.
+
+\subsection*{Discounted Cash Flow Model (DCFM)}
+Il Discounted Cash Flow Model (DCFM) è una evoluzione del DDM che considera i flussi di casssa \textit{unlevered} generati dall'attività dell'azienda come una migliore stima del valore dell'azienda rispetto ai soli dividendi.
+\subsubsection*{Flusso di cassa unlevered (UCF)}
+Nella valutazione non si sottraggono gli interessi passivi dalle entrate, perché gli interessi sono un costo di finanziamento, non un costo operativo. 
+Si usa un tasso di attualizzazione, il WACC, che include il costo del debito (e quindi degli interessi) per riflettere il costo totale del capitale.
+\subsubsection*{Esempio di calcolo di flussi di cassa unlevered}
+Nota che è strettamente correlato alla costruzione del prospetto dei flussi di cassa differenziali.
+\begin{table}[H]
+    \adjustbox{max width=\textwidth,center}{
+        \begin{tabular}{|l|V{0.25\textwidth}|c|c|c|c|c|c|}
+            \rowcolor{myblue}
+            \multicolumn{8}{|c|}{\color{white}\textbf{Prospetto del Flusso di Cassa Unlevered (5 anni)}} \\
+            \hline
+            \textbf{Voce} & \textbf{Note} & \textbf{Anno 0} & \textbf{Anno 1} & \textbf{Anno 2} & \textbf{Anno 3} & \textbf{Anno 4} & \textbf{Anno 5} \\
+            \hline
+
+            \textbf{Ricavi (g=8\%)} &
+            \tiny Valore delle vendite generate dalle attività core. Spesso ipotizzato in crescita con tasso $g$. & 1.000 & 1.080 & 1.166 & 1.260 & 1.360 & 1.469 \\
+            \hline
+
+            \textbf{EBITDA(36\%)} &
+            \tiny Reddito operativo lordo: misura la capacità operativa prima di ammortamenti e accantonamenti. &
+             & 389 & 420 & 453 & 490 & 529 \\
+            \hline
+
+            \textbf{$-$ Ammortamenti e accantonamenti} &
+            \tiny Quote non monetarie di consumo del capitale fisso (non influiscono sul cash flow). &
+             & (60) & (60) & (60) & (60) & (60) \\
+
+            \textbf{$=$ EBIT} &
+            \tiny Risultato operativo netto di competenza prima delle imposte e degli oneri finanziari. &
+             & 329 & 360 & 393 & 430 & 469 \\
+            \hline
+
+            \textbf{$-$ Imposte sul reddito} &
+            \tiny Imposte calcolate sull’EBIT, al netto del tax rate operativo (es. 28\%). &
+             & (92) & (101) & (110) & (120) & (131) \\
+
+            \textbf{$=$ NOPAT (Net Operating Profit After Taxes)} &
+            \tiny Net Operating Profit After Taxes: utile operativo dopo le imposte, base del UCF. &
+             & 237 & 259 & 283 & 309 & 338 \\
+            \hline
+
+            \textbf{$-$ CAPEX (Capital Expenditure)} &
+            \tiny Spese per investimenti in attività immobilizzate di natura operativa. &
+             & (57) & (62) & (67) & (72) & (78) \\
+
+
+            \textbf{$\pm \Delta$ CCN (Capitale Circolante Netto)} &
+            \tiny Variazioni operative in crediti, debiti e scorte (assorbimento o rilascio di cassa). &
+             & (16) & (17) & (19) & (20) & (22) \\
+
+
+            \textbf{$+$ Ammortamenti} &
+            \tiny Riaggiunti poiché non rappresentano uscite di cassa. &
+             & 60 & 60 & 60 & 60 & 60 \\
+
+
+            \textbf{$=$ Flusso di cassa unlevered disponibile(UCF)} &
+            \tiny Flusso di cassa operativo \textbf{unlevered}, non considera le variazioni di cassa derivanti da accensioni di debiti. &
+             & 224 & 240 & 258 & 279 & 298 \\
+            \hline
+
+            \rowcolor{myblue}
+            \multicolumn{8}{|l|}{\color{white}\textbf{Valutazione e terminal value}} \\
+            \hline
+
+            \textbf{Valore terminale (TV)} &
+            \tiny Calcolato come $\text{TV} = \dfrac{\text{UCF}_{5}(1+g)}{\text{WACC} - g}$, rappresenta il \textbf{valore all'anno 5} dei flussi oltre l’anno 5. & & & & & & $6.335$  \\
+            \hline
+
+            \textbf{VA Flusso di cassa disponibile (WACC = 6{,}8\%)} &
+            \tiny Valore attuale dei flussi scontati al WACC. & 
+             & 209 & 211 & 212 & 214 & 4.774 \\
+            \hline
+
+            \textbf{Enterprise Value} &
+            \tiny Somma dei valori attuali dei UCF e del TV: misura del valore economico complessivo dell’impresa. & \multicolumn{6}{c|}{ $ \frac{224}{(1+0.068)^{1}} + \frac{240}{(1+0.068)^{2}} + \frac{258}{(1+0.068)^{3}} +  \frac{279}{(1+0.068)^{4}} + \frac{(298+6.335)}{(1+0.068)^{5}} = 5.620 $}\\
+            \hline
+        \end{tabular}
+    }
+    \caption{Prospetto del flusso di cassa unlevered (UCF) — Valutazione su 5 anni}
+\end{table}
+\subsubsection*{Terminal Value (TV)}
+Il Terminal Value (TV) rappresenta il valore all'ultimo anno di previsione dei flussi di cassa futuri oltre il periodo di previsione esplicita, è come una rendita perpetua scontata al costo medio ponderato del capitale (WACC) sottratto il tasso di crescita perpetua ($g$).
+Andrà poi attualizzato al momento presente.
+\[\text{TV} = \frac{\text{UCF}_{5}(1+g)}{\text{WACC} - g}\]
+
+\subsubsection*{Valore attuale del flusso di cassa disponibile (VA)}
+Il valore attuale del flusso di cassa disponibile (VA) si ottiene attualizzando i flussi di cassa futuri al costo medio ponderato del capitale (WACC).
+\[\text{VA} = \sum_{t=1}^{n} \frac{\text{UCF}_t}{(1 + \text{WACC})^t}\]
+\subsubsection*{Enterprise Value (EV)}
+L'Enterprise Value (EV) rappresenta il valore dell'attivo caratteristico dell'impresa, ossia capitale azionario (equity) più il debito, con cui si finanzia per sostenere la sua operatività. 
+\[\text{EV} = \text{VA} + \frac{\text{TV}}{(1+\text{WACC})^n} \]
+
+\textit{Osservazioni}: Il DCFM utilizza il flusso di cassa unlevered (UCF) \textbf{perché poi si sconta al WACC} (Weighted Average Cost of Capital), che riflette il costo complessivo del capitale (sia equity che debito). 
+\subsubsection*{Capitale Azionario (Equity)}
+\begin{table}[H]
+    \setlength{\extrarowheight}{12pt} 
+    \adjustbox{max width=\textwidth,center}{ 
+        \begin{tabular}{|l|c|V{0.25\textwidth}|}
+            \rowcolor{myblue}
+            \multicolumn{3}{|c|}{\color{white}\textbf{Discounted Cash Flow}} \\
+            \hline
+            \textbf{Voce}                & \textbf{Formula}                           & \textbf{Note} \\
+            \hline
+            \textbf{Enterprise Value}    & $\text{EV}= \text{VA} + \displaystyle \frac{\text{TV}}{(1+\text{WACC})^n}$       & \tiny Valore dell'attivo caratteristico dell'impresa, attualizzando i flussi \textit{unlevered} al WACC  \\
+            \textbf{Posizione finanziara netta (PFN)} & $\text{PFN} = \text{Debiti} - \text{Liquidità} $ & \tiny Somma algebrica di debiti e attività finanziarie prontamente liquidabili \\
+            \textbf{Surplus asset}       & $\text{Surplus asset} $ & \tiny  asset che non sono necessari per la gestione caratteristica, vengono valorizzati al loro valore di mercato \\
+            \hline
+            \textbf{Capitale Azionario}   & $\text{Equity} = \text{EV}  \pm \text{PFN} + \text{Surplus asset}$ & \tiny Calcolo del capitale azionario (Equity) \\
+            \hline
+        \end{tabular}
+    }
+    \caption{Calcolo del capitale azionario (Equity) con DCFM }
+\end{table}
+
+\subsection*{Il Caso Lusso SpA: Mettere i numeri a sistema}
+
+L'esempio della \textbf{Lusso SpA} ci mostra come si valuta un'azienda "viva". Il processo avviene in due stadi:
+\begin{enumerate}
+    \item \textbf{Primo stadio (Previsione esplicita):} Per 5 anni stimiamo i flussi anno per anno. Notiamo che se il fatturato cresce (ipotesi 8\%), dobbiamo investire in \textbf{CAPEX} (macchinari) e \textbf{CCN} (crediti e scorte). Più l'azienda cresce velocemente, più cassa "mangia" nel breve termine.
+    \item \textbf{Secondo stadio (Valore Finale - TV):} Poiché non possiamo prevedere il dettaglio per sempre, ipotizziamo che dal sesto anno l'azienda cresca a un tasso stabile (es. 2\%). Calcoliamo il \textbf{Terminal Value} attualizzando questa rendita perpetua:
+    \[ TV_5 = \frac{FCF_5(1+g)}{WACC - g} \]
+    \item \textbf{Terzo stadio (Attualizzazione):} Attualizziamo i flussi dei primi 5 anni e il Terminal Value al costo del capitale (\textbf{WACC} 6.8\%) ottenendo l'\textbf{Enterprise Value}:
+    \[ EV = \sum_{t=1}^{5} \frac{FCF_t}{(1+WACC)^t} + \frac{TV_5}{(1+WACC)^5} \]
+\end{enumerate}
+Attualizzando i flussi dei primi 5 anni e il Terminal Value al costo del capitale (\textbf{WACC} 6.8\%), otteniamo l'\textbf{Enterprise Value} di 5.620.
+
+\subsection*{Enterprise Value e la Formula Finale del Valore}
+
+Attenzione alla distinzione cruciale: quello che abbiamo calcolato finora è l'\textbf{Enterprise Value (EV)}, ovvero il valore di tutte le attività operative (il core business). Ma noi vogliamo sapere quanto valgono le azioni (\textbf{Equity}).
+L'azionista è un \textbf{soggetto residuale}: prende quello che resta dopo aver pagato i debiti.
+
+La formula per la \textbf{Valutazione del valore economico dell'azienda (Equity Value)} è:
+\[
+\textbf{Valore Equity} = \textbf{Enterprise Value} \pm \textbf{Posizione Finanziaria Netta (PFN)} + \textbf{Surplus Assets}
+\]
+
+\begin{itemize}
+    \item \textbf{PFN (Posizione Finanziaria Netta):} È la differenza tra i debiti finanziari e la liquidità (cassa e titoli). Se l'azienda ha più debiti che cassa, la PFN si sottrae all'EV.
+    \item \textbf{Surplus Assets:} Sono attività non necessarie alla gestione operativa (es. un quadro di valore, un terreno non usato). Vengono aggiunti al valore perché potrebbero essere venduti senza danneggiare il core business.
+\end{itemize}
+
+In conclusione, caro studente, ricorda la logica: partiamo dai flussi di cassa operativi, li attualizziamo per trovare il valore del "motore" dell'azienda (Enterprise Value), e poi aggiungiamo la benzina avanzata (cassa) e sottraiamo i debiti per capire quanto resta in tasca all'azionista. 
+
+
+
+\subsection*{Shareholder o Stakeholder? Per chi creiamo valore?}
+
+Il dibattito è storico. \textbf{Milton Friedman} sosteneva che l'unico obiettivo fosse il valore per gli azionisti (\textit{shareholders}). \textbf{Edward Freeman}, invece, ha introdotto la teoria degli \textit{stakeholders}, sostenendo che l'impresa deve creare valore per tutti i portatori d'interesse (dipendenti, fornitori, comunità, ambiente).
+
+Oggi la sintesi è chiara: l'obiettivo è la creazione di valore per l'azionista nel \textbf{lungo termine}, ma questo è possibile solo se si soddisfano le aspettative degli altri stakeholders. Se tradisci i dipendenti o inquini l'ambiente, distruggi il \textbf{capitale reputazionale}, e questo farà crollare il valore economico per l'azionista stesso. Il diritto dell'azionista è un \textbf{diritto residuale}: riceve ciò che resta solo dopo aver pagato tutti gli altri.
+
+In sintesi, il tuo compito come futuro manager sarà agire sulle leve di lungo termine per accrescere il valore economico, assicurando che il rendimento dei tuoi investimenti sia sempre superiore al costo del capitale.
+
+Ti è tutto chiaro su questo primo mattone logico? Se sì, siamo pronti a passare ai "fondamentali" del valore!
+\section*{02 Il Valore delle imprese}
+
+Outline completa dei contenuti della lezione:
+{\small
+\begin{enumerate}
+\item I fondamentali del valore
+\item Redditività del capitale investito e costo del capitale
+\item Redditività del capitale investito (ROI)
+\item Redditività del capitale investito – Le 2 variabili chiave: la redditività delle vendite (ROS) e la rotazione del capitale investito (AT)
+\item Il costo del capitale
+\item WACC - Weighted Average Cost of Capital (Costo medio ponderato del capitale)
+\item Calcolo del WACC – Impresa Lusso SpA
+\item WACC (1) - Capital Asset Pricing Model (CAPM)
+\item WACC (2) - Capital Asset Pricing Model (CAPM): Dati per Lusso SpA
+\item WACC (3): Struttura finanziaria di settore
+\item WACC (4): Calcolo finale per Lusso SpA
+\item Il value based management (VBM)
+\item Flussi di cassa e valore
+\item Creazione di valore: relazione tra redditività del capitale investito, investimenti e flussi di cassa
+\item Analisi comparativa: Impresa 1 (Crescita 5\%, ROI 20\%)
+\item Analisi comparativa: Impresa 2 (Crescita 5\%, ROI 10\%)
+\item Analisi comparativa: Impresa 3 (Crescita 8\%, ROI 20\%)
+\end{enumerate}
+}
+\hrule
+\vspace{0.5cm}
+
+Ben ritrovato! Dopo aver definito nella prima lezione cosa sia il valore, oggi entriamo nel "motore" dell'impresa per analizzarne i \textbf{fondamentali}. Non basta generare cassa: per capire se un'azienda sta davvero prosperando, dobbiamo mettere in relazione quanto rende il capitale investito con quanto costa quel capitale agli investitori.
+
+\subsection*{La Sfida Centrale: Redditività vs Costo del Capitale}
+
+Il concetto cardine della gestione aziendale moderna è la sfida tra due percentuali: la \textbf{redditività del capitale investito} e il \textbf{costo del capitale}.
+\begin{itemize}
+    \item \textbf{Generazione di valore:} si verifica se l'azienda genera una redditività superiore al costo del capitale, portando a un Valore Attuale Netto (VAN) maggiore di zero.
+    \item \textbf{Distruzione di valore:} avviene se la redditività è inferiore al costo del capitale. In questo caso, anche se l'azienda produce utili contabili, sta "mangiando" la ricchezza degli investitori perché non remunera adeguatamente il rischio (VAN < 0).
+\end{itemize}
+
+\subsection*{Misurare la Redditività: Il Modello DuPont}
+
+Per misurare la redditività del capitale investito utilizziamo il \textbf{ROI (Return On Investment)}, calcolato come rapporto tra Reddito Operativo (Ebit) e Capitale Investito (Attività). Per capire come migliorare questo indice, facciamo ricorso al celebre \textbf{Modello DuPont}, che scompone il ROI in due variabili operative:
+
+\begin{table}[H]
+\setlength{\extrarowheight}{10pt}
+\adjustbox{max width=\textwidth,center}{
+\centering
+\begin{tabular}{|l|c|V{0.45\textwidth}|}
+\hline
+\rowcolor{myblue}
+\textbf{Variabile} & \textbf{Formula} & \textbf{Significato Manageriale} \\
+\hline
+\textbf{ROS (Return On Sales)} &  $\displaystyle \frac{RO}{S}$ & Misura la redditività delle vendite, ovvero quanto margine resta per ogni euro di fatturato. \\
+\hline
+\textbf{AT (Asset Turnover)} &  $\displaystyle \frac{S}{A}$ & Misura la rotazione del capitale, ovvero l'efficienza con cui l'impresa usa le proprie attività per generare vendite. \\
+\hline
+\end{tabular}
+}
+\caption{Scomposizione del ROI secondo il sistema DuPont}
+\end{table}
+
+Secondo questa logica, un'impresa può essere redditizia puntando su margini elevati (strategia di differenziazione) o su un'elevata velocità di rotazione del capitale (strategia di leadership di costo).
+
+\subsection*{Il Costo del Capitale: L'Asticella del Valore}
+
+Il costo del capitale rappresenta la \textbf{soglia minima di rendimento} attesa dagli investitori (azionisti e creditori) per le risorse fornite. È un \textbf{costo opportunità}: l'investitore rinuncia a investimenti alternativi con lo stesso grado di rischio per scommettere sulla tua impresa.
+
+Per quantificare questa soglia utilizziamo il \textbf{WACC (Weighted Average Cost of Capital)}, che è la media ponderata tra il costo del Capitale Proprio ($r_e$) e il costo del Debito ($r_d$), quest'ultimo calcolato al netto delle imposte ($T_c$) poiché gli interessi passivi sono deducibili.
+\[ WACC = r_e \frac{E}{D+E} + r_d (1 - T_c) \frac{D}{D+E} \]
+Questo tasso (WACC) serve ad attualizzare i flussi di cassa operativi per determinare il valore dell'impresa.
+\begin{itemize}
+    \item $r_e$: Misura il rendimento minimo che i soci pretendono per restare investiti nell'impresa senza vendere i propri titoli. 
+    \item \textbf{$r_d$:} Misura il "prezzo" del denaro prestato (reso più economico dallo scudo fiscale).
+    \item \textbf{E (Equity):} Rappresenta il \textbf{Capitale Netto} o Capitale Proprio, costituito dai mezzi forniti dai soci (capitale versato e utili reinvestiti). Ai fini del WACC, $E$ deve essere considerato al suo \textbf{valore di mercato} (capitalizzazione di borsa) e non al valore contabile, perché riflette quanto gli investitori oggi pagherebbero per la proprietà.
+    \item \textbf{D (Debito):} Si riferisce esclusivamente alle \textbf{passività finanziarie} (debiti bancari, obbligazioni) che richiedono un pagamento esplicito di interessi. È importante non confonderle con le passività operative (come i debiti verso fornitori), che non sono incluse in $D$ perché nascono "automaticamente" dalla gestione e vengono sottratte dalle attività per calcolare il capitale investito netto.
+\end{itemize}
+
+\subsection*{Il Capital Asset Pricing Model (CAPM): Logica ed Esempio Numerico}
+
+Per stimare quanto costi il capitale proprio ($r_e$), usiamo il \textbf{CAPM}, un modello che lega il rendimento atteso al rischio sistematico dell'investimento. 
+
+\textbf{La formula è:} \[ r_e = r_f + \beta (r_m - r_f) \]
+
+\begin{itemize}
+    \item \textbf{$r_f$ (Risk-free rate):} Il rendimento di un'attività priva di rischio, solitamente i titoli di Stato decennali.
+    \item \textbf{$\beta$ (Beta):} Misura la il rischio sistematico del settore nel quale si investe; un $\beta > 1$ indica un settore rischioso che amplifica le oscillazioni del mercato.
+    \item \textbf{($r_m - r_f$):} Il premio per il rischio di mercato. È l'extra-rendimento che gli investitori richiedono per spostare i propri soldi dai sicuri titoli di Stato verso il rischioso mercato azionario.
+    \item \textbf{$r_m$(Expected Market Return):} È il rendimento atteso del \textbf{portafoglio di mercato}. Rappresenta il rendimento medio che un investitore otterrebbe detenendo un portafoglio perfettamente diversificato. 
+\end{itemize}
+
+\subsubsection*{Esempio Numerico: Calcolo per Lusso SpA}
+Prendiamo il caso dell'impresa \textbf{Lusso SpA} (dati maggio 2022):
+\begin{enumerate}
+    \item \textbf{Tasso Risk-free ($r_f$):} 2,76\% (rendimento BTP decennale).
+    \item \textbf{Beta ($\beta$):} 0,99 (stimato su un campione di aziende del settore lusso).
+    \item \textbf{Premio per il rischio ($r_m - r_f$):} 6,5\% (media storica del mercato italiano).
+\end{enumerate}
+
+\textbf{Calcolo:} 
+\[ r_e = 2,76\% + 0,99 \times (6,5\%) = 2,76\% + 6,435\% = \mathbf{9,195\%} \approx \mathbf{9,2\%} \]
+
+In questo esempio, gli azionisti di Lusso SpA richiedono un rendimento del 9,2\% per finanziare l'impresa con capitale di rischio.
+
+\subsection*{Scudo Fiscale e Flusso di Cassa Unlevered}
+
+Perché nella formula del WACC moltiplichiamo il costo del debito per $(1 - T_c)$? Questo ci porta al cuore della valutazione aziendale.
+
+\begin{enumerate}
+    \item \textbf{Lo Scudo Fiscale (Tax Shield):} Gli interessi passivi sono costi fiscalmente deducibili. Se l'impresa paga 100€ di interessi e l'aliquota è del 24\%, l'esborso reale è di soli 76€, perché i restanti 24€ sono "risparmiati" dalle tasse che altrimenti avrebbe pagato allo Stato. Il termine $r_d(1-T_c)$ cattura esattamente questo vantaggio fiscale del debito.
+    \item \textbf{Perché Flussi "Unlevered"?} Nella valutazione tramite DCF, utilizziamo flussi di cassa \textbf{unlevered} (o operativi), calcolati \textbf{al lordo degli oneri finanziari}. Questo significa che nel calcolo del flusso (EBITDA $\rightarrow$ NOPAT $\rightarrow$ FCF) \textbf{non sottraiamo mai gli interessi}.
+    \item \textbf{La Logica Manageriale:} Non sottraiamo gli interessi dal flusso di cassa perché il loro "costo" (e il relativo vantaggio fiscale) è già inserito nel \textbf{denominatore} (il WACC). Se togliessimo gli interessi anche dal numeratore, staremmo contando il costo del debito due volte, penalizzando ingiustamente l'investimento.
+\end{enumerate}
+\subsection*{Il Valore della Crescita: Analisi di Tre Imprese}
+
+Una delle lezioni più importanti riguarda il legame tra crescita, investimenti e valore. Analizziamo tre imprese con lo stesso reddito iniziale (100) e lo stesso costo del capitale (10\%):
+
+\begin{itemize}
+    \item \textbf{Impresa 1 (ROI 20\%, Crescita 5\%):} Investe il 25\% del reddito. Avendo una redditività superiore al costo del capitale, il suo valore economico (1.500) supera quello contabile (1.000). \textbf{Crea valore}.
+    \item \textbf{Impresa 2 (ROI 10\%, Crescita 5\%):} Investe il 50\% del reddito. Nonostante investa il doppio della prima, il suo ROI è uguale al costo del capitale. Il valore dell'impresa resta identico a quello contabile (1.000). \textbf{Investire senza efficienza non serve a nulla}.
+    \item \textbf{Impresa 3 (ROI 20\%, Crescita 8\%):} Investe il 40\% del reddito. Rinuncia a flussi di cassa nel breve termine per finanziare una crescita maggiore (8\%) con investimenti efficaci. Il suo valore esplode a \textbf{3.000}.
+\end{itemize}
+
+\subsection*{Value Based Management (VBM)}
+
+Spesso le imprese trascurano il calcolo del costo del capitale perché non è richiesto dai bilanci obbligatori. Tuttavia, ignorarlo è pericoloso: si rischia di identificare il costo del capitale con il solo costo del debito (che è sempre inferiore) o di finanziare progetti che distruggono ricchezza. Il \textbf{Value Based Management} consiste nell'introdurre strumenti che monitorino costantemente la creazione di valore economico, assicurando che ogni decisione operativa sia volta all'incremento del valore nel lungo periodo.
+
+La creazione di valore non è una conseguenza automatica della crescita, ma dipende dalla relazione tra redditività e costo del capitale.
+
+\begin{itemize}
+    \item \textbf{Il Ruolo degli Investimenti (CAPEX e CCN):} Per crescere, l'azienda deve investire in attività fisse (\textbf{CAPEX}) e capitale circolante netto (\textbf{CCN}). Questi investimenti assorbono cassa nel breve periodo con l'obiettivo di generare maggiori flussi futuri.
+    \item \textbf{Crescita e Valore:} Se un'azienda ha un $ROI > WACC$, la crescita ($g$) agisce come un moltiplicatore: più investe, più valore crea (come nell'\textbf{Impresa 3} dell'esempio, che con una crescita dell'8\% raddoppia il valore rispetto all'\textbf{Impresa 1}). Se invece $ROI = WACC$, investire non serve a nulla: il valore economico resta uguale a quello contabile (caso dell'\textbf{Impresa 2}).
+    \item \textbf{Value Based Management (VBM):} È l'approccio che sposta il focus dagli utili contabili alla misurazione della ricchezza economica reale. Senza il VBM, si corre il rischio di identificare erroneamente il costo del capitale con il solo costo del debito, che è sempre inferiore, portando a finanziare progetti che in realtà distruggono valore.
+\end{itemize}
+
+Ti è chiaro come l'efficacia degli investimenti pesi molto più della loro semplice entità numerica? Se sei pronto, nella prossima lezione vedremo come il management agisce operativamente per massimizzare questi fondamentali!
+\section*{03 Il Valore delle imprese: Priorità Manageriali e Struttura Finanziaria}
+
+Outline completa dei contenuti della lezione:
+{\small
+\begin{enumerate}
+\item Le priorità manageriali per la creazione del valore
+\item Rafforzamento del core business e disinvestimento degli asset non strategici
+\item Management Buy-out e Spin-off
+\item Società di investimento: Private Equity e Venture Capital
+\item Il mercato tecnologico: NASDAQ
+\item La Teoria dell'Agenzia: relazioni tra proprietà e controllo
+\item Sistemi di incentivo: Stock Options e relativi rischi
+\item Soluzioni ai costi di agenzia (Corporate Governance e controlli)
+\item Uso della leva finanziaria: il teorema di Modigliani-Miller
+\item Scelta tra debito ed equity: benefici fiscali e flessibilità
+\end{enumerate}
+}
+\hrule
+\vspace{0.5cm}
+
+Bentornato! Se nelle scorse lezioni abbiamo analizzato i numeri (ROI, WACC e flussi di cassa), oggi ci spostiamo su un piano più strategico e comportamentale. Una volta capito come si misura il valore, dobbiamo chiederci: cosa deve fare concretamente il manager per "muovere" quei numeri e far crescere l'azienda?. In questa lezione analizzeremo le leve operative e finanziarie che la direzione deve azionare per non tradire il suo mandato: la creazione di valore nel lungo termine.
+
+\subsection*{Le Priorità Manageriali: Focalizzazione e Pulizia del Portafoglio}
+
+Il primo compito della direzione è favorire processi decisionali che accrescano il valore economico agendo su leve di lungo periodo. Le priorità fondamentali includono:
+\begin{itemize}
+    \item \textbf{Efficienza e Innovazione:} Focalizzarsi sul miglioramento dei processi e sulla capacità di rinnovare l'offerta.
+    \item \textbf{Rafforzamento del Core Business:} Concentrare le risorse sulle attività in cui l'impresa ha un vantaggio competitivo distintivo.
+    \item \textbf{Disinvestimento di Asset non Strategici:} Spesso creare valore non significa aggiungere, ma togliere. È necessario dismettere rami d'azienda, divisioni o sedi estere che hanno perso rilevanza strategica.
+\end{itemize}
+
+Per attuare questi disinvestimenti, si ricorre spesso a due strumenti tecnici:
+\begin{enumerate}
+    \item \textbf{Management Buy-out (MBO):} Operazione in cui il management dell'azienda stessa, spesso supportato da fondi di private equity, acquista l'impresa o una sua parte per gestirla in autonomia.
+    \item \textbf{Spin-off:} Una divisione o unità organizzativa viene scorporata dalla società madre e resa un'entità indipendente. In ambito accademico, gli spin-off sono essenziali per trasformare la ricerca tecnologica in realtà produttive.
+\end{enumerate}
+
+\subsection*{Il Ruolo dei Capitali Esterni: Private Equity e NASDAQ}
+
+Per sostenere la crescita, le imprese ricorrono a società di investimento specializzate nel forniere capitale di rischio:
+\begin{itemize}
+    \item \textbf{Private Equity:} Investitori che entrano nel capitale di aziende già formate per ristrutturarle e migliorarne la performance.
+    \item \textbf{Venture Capital:} Fondi destinati a imprese appena nate (startup) ad alto rischio ma con potenziale tecnologico elevato.
+\end{itemize}
+
+Il luogo d'elezione per queste realtà tecnologiche è spesso il \textbf{NASDAQ}, il primo mercato al mondo esclusivamente elettronico, che ospita migliaia di società con elevati tassi di innovazione.
+
+\subsection*{La Teoria dell'Agenzia: Allineare Manager e Azionisti}
+
+Uno dei problemi più complessi della gestione aziendale è il conflitto tra chi possiede l'azienda (\textbf{principals}, gli azionisti) e chi la gestisce (\textbf{agents}, i manager). Spesso i manager hanno obiettivi propri (come la crescita della dimensione aziendale per aumentare il proprio potere) che divergono dalla massimizzazione della ricchezza degli azionisti.
+
+Per ridurre questi "costi di agenzia", le imprese strutturano sistemi premianti:
+\begin{table}[H]
+\setlength{\extrarowheight}{10pt}
+\adjustbox{max width=\textwidth,center}{
+\centering
+\begin{tabular}{|l|V{0.35\textwidth}|V{0.35\textwidth}|}
+\hline
+\rowcolor{myblue}
+\textbf{Strumento} & \textbf{Meccanismo} & \textbf{Rischi Potenziali} \\
+\hline
+\textbf{Stock Options} & Diritto di acquistare azioni a un prezzo fisso (striking price). Se il valore dell'azienda sale, il manager guadagna. & \small Ricerca eccessiva del rischio, comportamenti fraudolenti (manipolazione bilanci) o premi basati sul mercato generale invece che sulla bravura reale. \\
+\hline
+\textbf{Controlli Interni} & Il Consiglio di Amministrazione (CdA) e i codici di autodisciplina vigilano sull'operato manageriale. & \small Bassa indipendenza dei consiglieri o asimmetria informativa tra manager e CdA. \\
+\hline
+\textbf{Mercato del Controllo} & La minaccia di "scalate ostili" (takeover) da parte di predatori costringe i manager a essere efficienti. & \small Possibile focus eccessivo sul breve termine per evitare cali di borsa. \\
+\hline
+\end{tabular}
+}
+\caption{Incentivi e monitoraggio nella Corporate Governance}
+\end{table}
+
+\subsection*{La Leva Finanziaria: Debito vs Equity}
+
+L'ultimo driver fondamentale è la struttura finanziaria. Secondo gli studi di \textbf{Modigliani e Miller}, in un mondo ideale il mix tra debito ed equity non influenzerebbe il valore dell'impresa. Tuttavia, nella realtà esistono i \textbf{benefici fiscali}: gli interessi sul debito sono deducibili, rendendo l'indebitamento conveniente sotto il profilo fiscale.
+
+Dobbiamo però scegliere con prudenza tra debito ed equity in base alla natura dell'impresa:
+\begin{itemize}
+    \item \textbf{Debito:} Consigliato per aziende con flussi di cassa stabili, in settori maturi e con bassa incertezza (es. immobiliari).
+    \item \textbf{Equity:} Necessario per aziende con elevata incertezza tecnologica o mercati non consolidati (startup), dove serve flessibilità finanziaria che il debito, per sua natura rigido, non può dare.
+\end{itemize}
+
+In sintesi, caro studente, ricorda che il manager deve agire come se l'azienda fosse propria, ma con la consapevolezza che il suo diritto è \textbf{residuale}. Solo se soddisfa le aspettative degli stakeholder (clienti, dipendenti, fornitori) riuscirà a creare quel capitale reputazionale che genera valore reale per l'azionista nel lungo termine.
+
+\end{document}

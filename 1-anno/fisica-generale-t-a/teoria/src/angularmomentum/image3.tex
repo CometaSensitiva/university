@@ -1,0 +1,82 @@
+% Author: Izaak Neutelings (September 2020)
+\documentclass[border=3pt,tikz]{standalone}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage[outline]{contour} % glow around text
+\usetikzlibrary{angles,quotes} % for pic
+\usetikzlibrary{calc}
+\contourlength{1.3pt}
+
+\tikzset{>=latex} % for LaTeX arrow head
+\usepackage{xcolor}
+\colorlet{veccol}{green!70!black}
+\colorlet{pathcol}{blue!40!black}
+\colorlet{xcol}{blue!70!black}
+\colorlet{vcol}{green!70!black}
+\colorlet{acol}{red!50!blue!80!black!80}
+\colorlet{omcol}{vcol!60!black}
+\colorlet{myblue}{blue!70!black}
+\colorlet{myred}{red!70!black}
+\tikzstyle{vector}=[->,very thick,xcol,line cap=round]
+\tikzstyle{mydashed}=[dash pattern=on 2pt off 2pt]
+\tikzstyle{mass}=[line width=0.6,red!30!black,fill=red!40!black!10,rounded corners=1,
+                  top color=red!40!black!20,bottom color=red!40!black!10,shading angle=20]
+\newcommand\rightAngle[4]{
+  \pgfmathanglebetweenpoints{\pgfpointanchor{#2}{center}}{\pgfpointanchor{#3}{center}}
+  \coordinate (tmpRA) at ($(#2)+(\pgfmathresult+45:#4)$);
+  \draw[white,line width=0.6] ($(#2)!(tmpRA)!(#1)$) -- (tmpRA) -- ($(#2)!(tmpRA)!(#3)$);
+  \draw[] ($(#2)!(tmpRA)!(#1)$) -- (tmpRA) -- ($(#2)!(tmpRA)!(#3)$);
+}
+
+
+\begin{document}
+% CURVED PATH
+\begin{tikzpicture}
+    \def\ul{0.6}
+    \def\Ra{1.4}
+    \def\Rb{0.8}
+    \def\anga{80}
+    \def\angb{-58}
+    \coordinate (O1) at (0,0);
+    \coordinate (O2) at (3.2,-0.3);
+    \coordinate (A) at (\anga+60:1.4*\Ra);
+    \coordinate (B) at ($(O1)+(\anga:\Ra)$);
+    \coordinate (C) at ($(O1)!0.6!(O2)$);
+    \coordinate (D) at ($(O2)+(\angb:\Rb)$);
+    \coordinate (E) at ($(O2)+(\angb+70:1.4*\Rb)$);
+    \coordinate (F) at ($(B) + (\anga-90:1.3)$);
+    \coordinate (G) at ($(B) + (\anga+30:0.8)$);
+    \coordinate (H) at ($(B) + (\anga:1)$);
+
+    \draw[dashed] (O1) circle (\Ra);
+    \draw[pathcol,thick]
+    (A) to[out=0,in=\anga+90]
+    (B) to[out=\anga-90,in=130]
+    (C) to[out=-50,in=\angb-90]
+    (D) to[out=\angb+90,in=\angb-60]
+    (E) to[out=\angb+120,in=-140]++ (50:1.4);
+
+    % POSITION
+    \node[font=\tiny] at (O1) {$\bullet$};
+    \draw[dashed] (O1) --++  (H)  node[midway, left] {$\vb{r}$};
+    \node[below] at (O1) {$\vb{O}$};
+    \draw[vector,omcol] (O1) --++  (B)  node[midway, left] {$\vb{r}$};%node[midway,fill=white,inner sep=1] {$r$}; % vector %
+
+    % FORCE
+    \draw[vector,xcol] (B) --++ (\anga+30:0.8) node[above=2,left=0] {$\vb{F}$};
+    % VELOCITY
+    \draw[vector,vcol] (B) --++ (\anga-90:0.6) node[above=-1] {$\vb{v}$};
+    \draw[vector,acol] (B) --++ (\anga-90:1.3) node[right=-1] {$\vb{p}$};
+
+    \pic [draw, ->,thick, angle radius=0.8cm, angle eccentricity=2.1] {angle = F--B--H};
+    \node [above=21] at (B) {$\vb{\alpha}$};
+    \pic [draw, ->,thick, angle radius=0.5cm, angle eccentricity=1.5] {angle = H--B--G};
+    \node [above=20, right=20] at (B) {$\vb{\beta}$};
+
+
+\end{tikzpicture}
+
+
+\end{document}

@@ -1,0 +1,51 @@
+/*1) In quali tipi di progetti lavora Giovanni*/
+SELECT PROG.TIPO
+FROM IMPIEGATO AS IMP, ASSEGNAMENTO AS ASS, PROGETTO AS PROG
+WHERE   IMP.MATR = ASS.MATR AND
+        ASS.NUM_PROG = PROG.NUM_PROG AND
+        IMP.NOME='Giovanni'
+/*2) Chi è il manager di Piero?*/
+SELECT MAN.NOME
+FROM IMPIEGATO AS IMP, IMPIEGATO AS MAN
+WHERE   IMP.MATR_MGR = MAN.MATR AND
+        IMP.NOME='Piero'
+        
+/*3) In quali progetti lavora Piero?*/
+SELECT PROG.TITOLO
+FROM IMPIEGATO AS IMP, ASSEGNAMENTO AS ASS, PROGETTO AS PROG
+WHERE   IMP.MATR = ASS.MATR AND
+        ASS.NUM_PROG = PROG.NUM_PROG AND
+        IMP.NOME='Piero'
+        
+/*4) Quali impiegati lavorano nel progetto Idea?*/
+SELECT IMP.MATR, IMP.NOME
+FROM IMPIEGATO AS IMP, ASSEGNAMENTO AS ASS, PROGETTO AS PROG
+WHERE   PROG.TITOLO='Idea' AND
+        PROG.NUM_PROG=ASS.NUM_PROG AND
+        IMP.MATR=ASS.MATR
+
+/*5) Quali impiegati lavorano al 100% del loro tempo nel progetto Wide?*/
+SELECT IMP.MATR, IMP.NOME
+FROM IMPIEGATO AS IMP, ASSEGNAMENTO AS ASS, PROGETTO AS PROG
+WHERE   PROG.TITOLO='Wide' AND
+        PROG.NUM_PROG=ASS.NUM_PROG AND
+        ASS.PERC=100 AND
+        IMP.MATR=ASS.MATR
+        
+/*6 Inserire la tupla <4, Luca, 1997-01-01, 2M, 1> */
+INSERT INTO IMPIEGATO(MATR, NOME, DATA_ASS, SALARIO, MATR_MGR)
+VALUES (4, 'Luca', '1997-01-01', 2000, 1)
+
+/*7 Modificare il salario di Piero in 4M */
+UPDATE IMPIEGATO
+SET SALARIO = 4000
+WHERE   NOME='Piero'
+
+/*8 Aumentare il salario di Giorgio del 5% */
+UPDATE  IMPIEGATO
+SET     SALARIO = SALARIO*1.05
+WHERE   NOME='Giorgio'
+
+/*9 Cancellare i dati di Giovanni*/
+DELETE FROM IMPIEGATO
+WHERE   NOME='Giovanni'

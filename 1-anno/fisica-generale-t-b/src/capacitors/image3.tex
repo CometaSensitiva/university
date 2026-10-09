@@ -1,0 +1,39 @@
+\documentclass[border=3pt,tikz]{standalone}
+\usepackage{amsmath} % for \dfrac
+\usepackage{physics}
+\usepackage{tikz,pgfplots}
+\usepackage{circuitikz}
+\pgfplotsset{compat=1.18}
+\usepackage{xcolor}
+
+
+
+\begin{document}
+\begin{figure}[!ht]
+    \centering
+    \resizebox{1\textwidth}{!}{%
+        \begin{circuitikz}
+            \tikzstyle{every node}=[font=\LARGE]
+            \draw (5.5,10.5) to[C] (5.5,9.25);
+            \draw[, line width=1.2pt] (7.5,10.25) to[short] (6.25,10.25);
+            \draw (7.75,10.25) to[short] (6.25,10.25);
+            \draw [, line width=1.2pt](8.75,10.25) to[short] (10,10.25);
+            \draw [, line width=1.2pt](10,10.25) to[short] (10,7.75);
+            \draw [, line width=1.2pt](6.25,10.25) to[short] (6.25,7.75);
+            \draw [line width=1.2pt](7.5,10.25) to[C,l={ \large $C$}] (8.75,10.25);
+            \draw [line width=1.2pt](10,7.75) to (10.5,7.75) node[ground]{};
+            \draw (7.5,7.75) to[battery1,l=$\Delta V$] (8.75,7.75);
+            \draw (8.25,7.5) to[battery1] (8,7.5);
+            \draw (6.25,7.75) to[short, -*] (6.25,7.75);
+            \draw (6.25,10.25) to[short, -*] (6.25,10.25);
+            \draw (10,10.25) to[short, -*] (10,10.25);
+            \draw (10,7.75) to[short, -*] (10,7.75);
+            \draw [, line width=1.2pt](6.25,7.75) to[short] (7.5,7.75);
+            \draw [, line width=1.2pt](8.75,7.75) to[short] (10,7.75);
+            \node [font=\large, color={rgb,255:red,255; green,0; blue,0}] at (7.75,7.5) {+};
+            \node [font=\large, color={rgb,255:red,0; green,8; blue,255}] at (8.5,7.5) {-};
+        \end{circuitikz}
+    }%
+    \label{fig:my_label}
+\end{figure}
+\end{document}

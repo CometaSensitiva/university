@@ -1,0 +1,942 @@
+\documentclass{book}
+
+\title{Analisi Matematica T-A}
+\author{Michele Mazza}
+\date{November 2023}
+
+
+% Pacchetti di Codifica e Lingua
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+
+% Pacchetti Grafici e Diagrammi
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{angles,quotes,arrows.meta, positioning}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% Pacchetti Matematici
+\usepackage{amsmath, amssymb, amsthm}
+
+% Pacchetti per Tabelle e Unità di Misura
+\usepackage{geometry}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{colortbl}
+
+% Pacchetti per Layout e Formattazione
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{microtype}
+
+% Altri Pacchetti Utili
+\usepackage{mdframed}
+\usepackage{animate}
+
+% Pacchetto enumitem
+\usepackage{enumitem}
+
+% Definizioni dei Colori
+\definecolor{lightblue}{HTML}{9cd8fc}
+\definecolor{myblue}{HTML}{139FE9}
+
+% Definizione del comando \norm
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+%\font\nullfont=cmr10 
+
+% Ambienti Personalizzati
+\newmdtheoremenv[
+    backgroundcolor=orange!10,
+    linecolor=myblue,
+    linewidth=0pt,
+    leftmargin=0pt,
+    rightmargin=0pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+    innertopmargin=10pt,
+    innerbottommargin=10pt,
+    nobreak
+]{curiosity}{Curiosità}
+
+\newmdtheoremenv[
+    font=\normalfont\small,
+    linewidth=0pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+]{example}{Esempio}
+
+\newmdtheoremenv[
+  backgroundcolor=lightblue,
+  linecolor=myblue,
+  linewidth=1.5pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt,
+  nobreak
+]{theorem}{Teorema}
+
+\newmdtheoremenv[
+  backgroundcolor=gray!10,
+  linewidth=0pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt,
+  nobreak
+]{definition}{Definizione}
+
+\newmdtheoremenv[
+  backgroundcolor=gray!10,
+  linecolor=myblue,
+  linewidth=1.5pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt,
+  nobreak
+]{proposition}{Proposizione}
+
+% Configurazioni di fancyhdr
+\pagestyle{fancy}
+\fancyhf{} % Pulisce tutti i campi
+\fancyhead[LE,RO]{\thepage} % Numero di pagina
+\fancyhead[RE]{\nouppercase{\leftmark}} % Titolo del capitolo
+\fancyhead[LO]{\nouppercase{\rightmark}} % Titolo della sezione
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\geometry{a4paper, left=20mm, right=20mm, top=20mm, bottom=20mm}
+
+% Pacchetto Hyperref (inserito per ultimo)
+\usepackage{hyperref}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+\tableofcontents
+\mainmatter
+
+\chapter{Limiti e continuità}
+
+\section{Intorni}
+Nel definire i concetti di limite e di continuità, siamo condotti a considerare
+numeri reali 'vicini' a un certo numero reale fissato, o, con linguaggio geometrico
+equivalente, punti della retta 'vicini' a un punto fissato. Pertanto, iniziamo con
+il precisare il concetto matematico di intorno di un punto.
+\begin{definition}[\textbf{Intorno di un punto}]
+    Sia $x_0 \in \mathbb{R}$ e sia $r > 0$. Si chiama \textbf{intorno} di $a$ di raggio $r$ l'insieme
+    \begin{equation*}
+        I_{r}(x_0) = \{x \in \mathbb{R} : |x - x_0| < r\}
+    \end{equation*}
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \draw[-latex] (-1, 0) -- (5, 0);
+        \filldraw [myblue] (2, 0) circle (2pt);
+        \draw[myblue, thick] (0,0) -- (4, 0);
+        \draw (0, -0.1) -- (0, 0.1);
+        \draw (4, -0.1) -- (4, 0.1);
+        \node [below] at (0, 0) {$x_0 - r$};
+        \node [below] at (4, 0) {$x_0 + r$};
+        \node [below] at (2, 0) {$x_0$};
+        \node [above, myblue] at (2, 0.2) {$I_r$};
+    \end{tikzpicture}
+    \caption{Intorno di un punto}
+    \label{fig:intorno}
+\end{figure}
+\begin{definition}[\textbf{Intorno di \(\pm\infty\)}]
+    Sia $r > 0$. Si chiama \textbf{intorno} di $+\infty$ di \textbf{estremo inferiore} $r$ l'insieme
+    \begin{equation*}
+        I_{r}(+\infty) = \{x \in \mathbb{R} : x > r\}
+    \end{equation*}
+    e si chiama \textbf{intorno} di $-\infty$ di \textbf{estremo superiore} $-r$ l'insieme
+    \begin{equation*}
+        I_{r}(-\infty) = \{x \in \mathbb{R} : x < -r\}
+    \end{equation*}
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \draw[-latex] (-1, 0) -- (5, 0);
+        \filldraw (2, 0) circle (2pt);
+        \draw[myblue, thick] (0,0) -- (-1, 0);
+        \draw[myblue, thick] (4,0) -- (5, 0);
+        \draw (0, -0.1) -- (0, 0.1);
+        \draw (4, -0.1) -- (4, 0.1);
+        \node [below] at (0, 0) {$-r$};
+        \node [myblue, above] at (-0.5, 0.1) {$I_{r}(-\infty)$};
+        \node [myblue, above] at (4.5, 0.1) {$I_{r}(+\infty)$};
+        \node [below] at (-1, 0) {$-\infty$};
+        \node [below] at (5, 0) {$+\infty$};
+        \node [below] at (4, 0) {$r$};
+        \node [below] at (2, 0) {$0$};
+    \end{tikzpicture}
+    \caption{Intorno di \(\pm\infty\)}
+    \label{fig:intornoinfinito}
+\end{figure}
+\begin{definition}[\textbf{Punto di accumulazione di un insieme}]
+    Sia $A \subseteq \mathbb{R}$ e sia $x_0 \in \mathbb{R}$. Si dice che $x_0$ è un \textbf{punto di accumulazione} per $A$ se ogni intorno di $x_0$ contiene almeno un punto di $A$ diverso da $x_0$. In simboli: \[\forall r > 0, I_r(x_0) \cap (A \setminus \{x_0\}) \neq \emptyset\]
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \draw[-latex] (-1, 0) -- (5, 0);
+        \draw[ultra thick,darkgray] (0,0) -- (2, 0);
+        \node [ultra thick, darkgray] at (0, 0) {[};
+        \node [ultra thick, darkgray] at (2, 0) {)};
+        \node [above, darkgray] at (1, 0.2) {$A$};
+        \draw [myblue] (2, 0) circle (2pt);
+        \node [above, myblue] at (2, 0.2) {$I_r$};
+        \node [below, myblue] at (2, -0.1) {$x_0$};
+        \node [ultra thick, myblue] at (1.5, 0) {(};
+        \node [ultra thick, myblue] at (2.5, 0) {)};
+    \end{tikzpicture}
+    \caption{Punto di accumulazione}
+    \label{fig:accumulazione}
+\end{figure}
+\begin{example}[\textbf{Punto di accumulazione for dummies}]
+    Immagina una folla di persone che si radunano intorno a un famoso musicista in un parco. Il musicista è come un punto di accumulazione: non importa quanto ti avvicini, ci saranno sempre persone (punti) che si raccolgono intorno a lui, sempre più vicine. Ora, il bello è che il musicista potrebbe o non potrebbe essere parte di quella folla (l'insieme di persone): è possibile che sia al centro dell'attenzione, oppure che non sia neanche lì, magari è solo il posto dove si è esibito poco fa. In entrambi i casi, lui è il punto verso cui tutti si stanno avvicinando.
+\end{example}
+\noindent\begin{minipage}{\textwidth}
+    \begin{definition}[\textbf{Derivato}]
+        Si dice \textbf{derivato} di un un insieme \(A\), l'insieme dei punti di accumulazione di \(A\). In simboli:
+        \[D(A) = \{x \in \mathbb{R} : x \text{ è un punto di accumulazione di } A\}\]
+    \end{definition}
+\end{minipage}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \filldraw [darkgray, opacity=0.1] (0,0) circle (2cm);
+        \draw [dashed, myblue] (0,0) circle (2cm);
+        \draw [dashed, myblue] (2,0) circle (0.5cm);
+        \draw [myblue, opacity=0.1] (2,0) circle (0.5cm);
+        \node [darkgray, above] at (0,2) {\textbf{A}=\{\( x,y \in \mathbb{R} : x^2+y^2<4\)\}};
+        \node at (0,0) {\small\textbullet};
+        \draw [myblue] (2,0)  circle (2pt);
+        \node [right] at (0,0) {C};
+        \node [myblue, right] at (2,0) {\(x_0\)};
+        \node [myblue, right] at (2.5,0) {\(I_r\)};
+        \node [myblue, below] at (0,-2) {\(D(A)=\{ x,y \in \mathbb{R} : x^2+y^2=4\}\)};
+    \end{tikzpicture}
+    \caption{Derivato di un insieme}
+\end{figure}
+\begin{theorem}[\textbf{Teorema di Bolzano - Weierstrass}]
+    Sia \(A \subseteq \mathbb{R}\) finito e illimitato, allora \(A\) ha almeno un punto di accumulazione, ossia \(D(A) \neq \varnothing\)
+\end{theorem}
+
+\begin{definition}[\textbf{Punto isolato}]
+    Sia $A \subseteq \mathbb{R}$ e sia $x_0 \in A$. Si dice che $x_0$ è un \textbf{punto isolato} per $A$ se esiste un intorno di $x_0$ che non contiene altri punti di $A$. In simboli: \[\exists r > 0 : I_r(x_0) \cap (A \setminus \{x_0\}) = \emptyset\]
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \draw[-latex] (-1, 0) -- (5, 0);
+        \draw[ultra thick,darkgray] (0,0) -- (2, 0);
+        \node [ultra thick, darkgray] at (0, 0) {[};
+        \node [ultra thick, darkgray] at (2, 0) {)};
+        \node [above, darkgray] at (1, 0.2) {$A$};
+        \draw [myblue] (3, 0) circle (2pt);
+        \node [above, myblue] at (3, 0.2) {$I_{r_1}$};
+        \node [below, myblue] at (3, -0.1) {$x_0$};
+        \node [ultra thick, myblue] at (2.5, 0) {(};
+        \node [ultra thick, myblue] at (3.5, 0) {)};
+        \node [ultra thick] at (1.5, 0) {(};
+        \node [ultra thick] at (4.5, 0) {)};
+        \node [above] at (3, 0.6) {$I_{r_2}$};
+    \end{tikzpicture}
+    \caption{Punto isolato}
+    \begin{minipage}{0.8\textwidth}
+        \small
+        Anche se \(I_{r_2}\) soddisfa la definizione di punto di accumulazione, \(x_0\) non è un punto isolato perché \(I_{r_1}\) non contiene altri punti di \(A\) oltre a \(x_0\).
+    \end{minipage}
+    \label{fig:isolato}
+\end{figure}
+
+\begin{definition}[\textbf{Punto aderente}]
+    Dato un insieme $A \subseteq \mathbb{R}$, si dice che $x_0 \in \mathbb{R}$ è un \textbf{punto aderente} per $A$ se ogni intorno di $x_0$ contiene almeno un punto di $A$. In simboli: \[\forall r > 0, I_r(x_0) \cap A \neq \emptyset\]
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \draw[-latex] (-1, 0) -- (5, 0);
+        \draw[ultra thick,darkgray] (0,0) -- (2, 0);
+        \node [ultra thick, darkgray] at (0, 0) {[};
+        \node [ultra thick, darkgray] at (2, 0) {]};
+        \node [above, darkgray] at (1, 0.2) {$A$};
+        \filldraw [myblue] (2, 0) circle (1pt);
+        \node [above, myblue] at (2, 0.2) {$I_r$};
+        \node [below, myblue] at (2, -0.1) {$x_0$};
+        \node [ultra thick, myblue] at (1.5, 0) {(};
+        \node [ultra thick, myblue] at (2.5, 0) {)};
+    \end{tikzpicture}
+    \begin{tikzpicture}
+        \draw[-latex] (-1, 0) -- (5, 0);
+        \draw[ultra thick,darkgray] (0,0) -- (2, 0);
+        \node [ultra thick, darkgray] at (0, 0) {[};
+        \node [ultra thick, darkgray] at (2, 0) {]};
+        \node [above, darkgray] at (1, 0.2) {$A$};
+        \filldraw [myblue] (1.5, 0) circle (1pt);
+        \node [above, myblue] at (1.5, 0.2) {$I_r$};
+        \node [below, myblue] at (1.5, -0.1) {$x_0$};
+        \node [ultra thick, myblue] at (1.1, 0) {(};
+        \node [ultra thick, myblue] at (1.9, 0) {)};
+    \end{tikzpicture}
+    \caption{Punto aderente}
+    \label{fig:aderente}
+\end{figure}
+
+\begin{curiosity}[Punto di accumulazione vs punto aderente]
+    Vi è una differenza tra punto di accumulazione e punto aderente: il primo deve contenere almeno un punto di $A$ diverso da $x_0$, mentre il secondo può contenere anche $x_0$.
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \draw[-latex] (-1, 0) -- (5, 0);
+            \draw[ultra thick,darkgray] (0,0) -- (2, 0);
+            \node [ultra thick, darkgray] at (0, 0) {[};
+            \node [ultra thick, darkgray] at (2, 0) {)};
+            \node [above, darkgray] at (1, 0.2) {$A$};
+            \draw [myblue] (2, 0) circle (2pt);
+            \node [above, myblue] at (2, 0.2) {$I_r$};
+            \node [below, myblue] at (2, -0.1) {$x_0$};
+            \node [ultra thick, myblue] at (1.5, 0) {(};
+            \node [ultra thick, myblue] at (2.5, 0) {)};
+        \end{tikzpicture}
+        \begin{tikzpicture}
+            \draw[-latex] (-1, 0) -- (5, 0);
+            \draw[ultra thick,darkgray] (0,0) -- (2, 0);
+            \node [ultra thick, darkgray] at (0, 0) {[};
+            \node [ultra thick, darkgray] at (2, 0) {]};
+            \node [above, darkgray] at (1, 0.2) {$A$};
+            \filldraw [myblue] (2, 0) circle (1pt);
+            \node [above, myblue] at (2, 0.2) {$I_r$};
+            \node [below, myblue] at (2, -0.1) {$x_0$};
+            \node [ultra thick, myblue] at (1.5, 0) {(};
+            \node [ultra thick, myblue] at (2.5, 0) {)};
+        \end{tikzpicture}
+        \caption{Punto di accumulazione vs punto aderente}
+        \label{fig:accumulazionevsaderente}
+    \end{figure}
+\end{curiosity}
+
+\begin{definition}[\textbf{Chiusura}]
+    Si dice \textbf{chiusura} di un insieme $A \subseteq \mathbb{R}$ l'insieme dei punti aderenti ad $A$. In simboli: \[\overline{A} = \{x \in \mathbb{R} : x \text{ è un punto aderente di } A\} = A \cup D(A)\]
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \filldraw [myblue, opacity=0.1] (0,0) circle (2cm);
+        \draw [myblue] (0,0) circle (2cm);
+        \draw [dashed, myblue] (2,0) circle (0.5cm);
+        \draw [dashed, myblue] (0,1) circle (0.5cm);
+        \filldraw [myblue] (0,1)  circle (2pt);
+        \node [myblue, right] at (0,1) {\(x_0\)};
+        \node [myblue, right] at (0.5,1) {\(I_r\)};
+        \draw [myblue, opacity=0.1] (2,0) circle (0.5cm);
+        \node [darkgray, above] at (0,2) {\textbf{A}=\{\( x,y \in \mathbb{R} : x^2+y^2<4\)\}};
+        \node at (0,0) {\small\textbullet};
+        \filldraw [myblue] (2,0)  circle (2pt);
+        \node [right] at (0,0) {C};
+        \node [myblue, right] at (2,0) {\(x_0\)};
+        \node [myblue, right] at (2.5,0) {\(I_r\)};
+        \node [myblue, below] at (0,-2) {\(\overline{A}=\{ x,y \in \mathbb{R} : x^2+y^2\leq 4\}\)};
+    \end{tikzpicture}
+    \caption{Chiusura di un insieme}
+    \label{fig:chiusura}
+\end{figure}
+\noindent\begin{minipage}{\textwidth}
+    \begin{curiosity}[Derivato vs chiusura]
+        Vi è una differenza tra derivato e chiusura: il primo è l'insieme dei punti di accumulazione, mentre il secondo è l'insieme dei punti aderenti.
+        \begin{figure}[H]
+            \centering
+            \begin{tikzpicture}
+                \filldraw [darkgray, opacity=0.1] (0,0) circle (2cm);
+                \draw [dashed, darkgray] (0,0) circle (2cm);
+                \draw [dashed, myblue] (0,0) circle (2cm);
+                \draw [dashed, myblue] (2,0) circle (0.5cm);
+                \draw [myblue, opacity=0.1] (2,0) circle (0.5cm);
+                \node [darkgray, above] at (0,2) {\textbf{A}=\{\( x,y \in \mathbb{R} : x^2+y^2<4\)\}};
+                \node at (0,0) {\small\textbullet};
+                \draw [myblue] (2,0)  circle (2pt);
+                \node [right] at (0,0) {C};
+                \node [myblue, right] at (2,0) {\(x_0\)};
+                \node [myblue, right] at (2.5,0) {\(I_r\)};
+                \node [myblue, below] at (0,-2) {\(D(A)=\{ x,y \in \mathbb{R} : x^2+y^2=4\}\)};
+            \end{tikzpicture}
+            \begin{tikzpicture}
+                \filldraw [myblue, opacity=0.1] (0,0) circle (2cm);
+                \draw [myblue] (0,0) circle (2cm);
+                \draw [dashed, myblue] (2,0) circle (0.5cm);
+                \draw [dashed, myblue] (0,1) circle (0.5cm);
+                \filldraw [myblue] (0,1)  circle (2pt);
+                \node [myblue, right] at (0,1) {\(x_0\)};
+                \node [myblue, right] at (0.5,1) {\(I_r\)};
+                \draw [myblue, opacity=0.1] (2,0) circle (0.5cm);
+                \node [darkgray, above] at (0,2) {\textbf{A}=\{\( x,y \in \mathbb{R} : x^2+y^2<4\)\}};
+                \node at (0,0) {\small\textbullet};
+                \filldraw [myblue] (2,0)  circle (2pt);
+                \node [right] at (0,0) {C};
+                \node [myblue, right] at (2,0) {\(x_0\)};
+                \node [myblue, right] at (2.5,0) {\(I_r\)};
+                \node [myblue, below] at (0,-2) {\(\overline{A}=\{ x,y \in \mathbb{R} : x^2+y^2\leq 4\}\)};
+            \end{tikzpicture}
+            \caption{Derivato vs chiusura}
+            \label{fig:derivatovschiusura}
+        \end{figure}
+    \end{curiosity}
+\end{minipage}
+\noindent\begin{minipage}{\textwidth}
+    \begin{definition}[\textbf{Punto di frontiera}]
+        Sia $A \subseteq \mathbb{R}$ e sia $x_0 \in \mathbb{R}$. Si dice che $x_0$ è un \textbf{punto di frontiera} per $A$ se ogni intorno di $x_0$ contiene almeno un punto di $A$ e almeno un punto di $\mathbb{R} \setminus A$. In simboli: \[ \forall r > 0, I_r(x_0) \cap A \neq \emptyset \land I_r(x_0) \cap (\mathbb{R} \setminus A) \neq \emptyset\]
+    \end{definition}
+\end{minipage}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \draw[-latex] (-1, 0) -- (5, 0);
+        \draw[ultra thick, darkgray] (0,0) -- (2, 0);
+        \node [ultra thick, darkgray] at (0, 0) {[};
+        \node [ultra thick, darkgray] at (2, 0) {]};
+        \node [above, darkgray] at (1, 0.2) {$A$};
+        \filldraw [myblue] (2, 0) circle (1pt);
+        \filldraw [myblue] (0, 0) circle (1pt);
+        \node [below, myblue] at (0, -0.1) {$x_0$};
+        \node [above, myblue] at (0, 0.2) {$I_r$};
+        \node [ultra thick, myblue] at (-0.5, 0) {(};
+        \node [ultra thick, myblue] at (0.5, 0) {)};
+        \node [above, myblue] at (2, 0.2) {$I_r$};
+        \node [below, myblue] at (2, -0.1) {$x_0$};
+        \node [ultra thick, myblue] at (1.5, 0) {(};
+        \node [ultra thick, myblue] at (2.5, 0) {)};
+    \end{tikzpicture}
+    \caption{Punto di frontiera}
+    \label{fig:frontiera}
+\end{figure}
+\begin{definition}[\textbf{Frontiera}]
+    Si dice \textbf{frontiera} di un insieme $A \subseteq \mathbb{R}$ l'insieme dei punti di frontiera di $A$. In simboli: \[FrA = \partial A = \{x \in \mathbb{R} : x \text{ è un punto di frontiera di } A\}\]
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \filldraw [darkgray, opacity=0.1] (0,0) circle (2cm);
+        \draw [myblue] (0,0) circle (2cm);
+        \draw [dashed, myblue] (2,0) circle (0.5cm);
+        \draw [myblue, opacity=0.1] (2,0) circle (0.5cm);
+        \node [darkgray, above] at (0,2) {\textbf{A}=\{\( x,y \in \mathbb{R} : x^2+y^2<4\)\}};
+        \node at (0,0) {\small\textbullet};
+        \filldraw [myblue] (2,0)  circle (2pt);
+        \node [right] at (0,0) {C};
+        \node [myblue, right] at (2,0) {\(x_0\)};
+        \node [myblue, right] at (2.5,0) {\(I_r\)};
+        \node [myblue, below] at (0,-2) {\(FrA = \partial A =\{ x,y \in \mathbb{R} : x^2+y^2\ = 4\}\)};
+    \end{tikzpicture}
+    \caption{Frontiera di un insieme}
+\end{figure}
+\section{Limiti di successioni}
+\noindent\begin{minipage}{\textwidth}
+    \begin{definition}[\textbf{Successione}]
+        Si dice \textbf{successione} una funzione $f : \mathbb{N} \rightarrow \mathbb{R}$, ossia una funzione che associa ad ogni numero naturale un numero reale. In simboli: \[f : \mathbb{N} \rightarrow \mathbb{R} \quad \text{oppure} \quad \{a_n\}_{n \in \mathbb{N}} \quad \text{oppure} \quad a : n \mapsto a_n\]
+    \end{definition}
+\end{minipage}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+                xlabel={\( x \)},
+                ylabel={\( f(x) \)},
+                xmin=0, xmax=5,
+                ymin=0, ymax=3,
+                grid=both,
+                axis lines=middle,
+                axis line style=->,
+                grid style={line width=.1pt, draw=gray!10},
+                major grid style={line width=.2pt,draw=gray!50},
+                minor tick num=5,
+                enlargelimits={abs=0.5},
+                ticklabel style={font=\small},
+                xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+                ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+                domain=0:5,
+                samples=1000,
+                unbounded coords=jump, % Gestisce i punti non definiti
+                legend pos=south east
+            ]
+            \addplot [myblue,only marks] coordinates {(0,1) (1,2) (2,2.25) (3,2.37) (4,2.44) (5,2.49)};
+            \addplot [dashed, domain=0:6] {3};
+            \addplot [dashed, domain=0:6] {2};
+            \addplot [dashed,myblue, domain=0:6] {e};
+            \node [left, myblue] at (axis cs: 0,e) {\( e \)};
+            \legend{\(a_n=(1+\frac{1}{n})^n\)}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Successione}
+    \label{fig:successione}
+\end{figure}
+\begin{definition}[\textbf{Limite convergente di una successione}]
+    Si dice che la successione \( a : n \mapsto a_n \) \textbf{tende al limite} \(l \in \mathbb{R}\) (oppure \textbf{converge} a \(l\), oppure \textbf{ha limite} \(l\)), e si scrive
+    \[\lim_{n \to +\infty} a_n = l\]
+    se
+    \[
+        \begin{cases}
+            \forall \varepsilon > 0, \text{esiste un intero } n_\varepsilon \text{ tale che} \\
+            \forall n \geq n_0, \quad n>n_\varepsilon \implies |a_n - l| < \varepsilon       \\
+        \end{cases}
+    \]
+    in simboli:
+    \[
+        \forall \varepsilon > 0, \exists n_\varepsilon \in \mathbb{N} : \forall n \geq n_\varepsilon, n > n_\varepsilon \implies |a_n - l| < \varepsilon
+    \]
+\end{definition}
+\begin{curiosity}[Estensione a \(\pm\infty\)]
+    Con la terminologia degli intorni la condizione precedente si può scrivere come \(n \in I_\varepsilon(+\infty)\), mentre \(|a_n - l| < \varepsilon\) equivale a \(a_n \in I_\varepsilon(l)\).
+    Pertanto, la definizione di limite può essere riscritta come
+    \[
+        \forall I_\varepsilon(l), \exists I_{n_\varepsilon}(+\infty) : \forall n \geq n_\varepsilon, n \in I_\varepsilon(+\infty) \implies a_n \in I_\varepsilon(l)
+    \]
+\end{curiosity}
+\begin{definition}[\textbf{Limite divergente di una successione}]
+    Si dice che la successione \( a : n \mapsto a_n \) \textbf{tende al limite} \(+\infty\) (oppure \textbf{diverge a \(+\infty\)}), e si scrive
+    \[\lim_{n \to +\infty} a_n = +\infty\]
+    se
+    \[
+        \begin{cases}
+            \forall \text{ numero reale } A > 0, \text{esiste un intero } n_A \text{ tale che} \\
+            \forall n \geq n_0, \quad n>n_A \implies a_n > A                                   \\
+        \end{cases}
+    \]
+    in simboli:
+    \[
+        \forall I_A(l), \exists I_{n_A}(+\infty) : \forall n \geq n_0, n \in I_A(+\infty) \implies a_n \in I_A(l)
+    \]
+\end{definition}
+\begin{proposition}
+    Una successione può essere \textbf{convergente} o \textbf{divergente} a \(\pm\infty\), se non è né convergente né divergente allora è \textbf{indeterminata} o \textbf{oscillante}.
+\end{proposition}
+
+\begin{theorem}[\textbf{Condizione sufficiente per escludere il comportamento indeterminato di una successione è la monotonia}]
+    Sia \(a_n\) una successione monotona. Allora essa è convergente oppure divergente a \(\pm\infty\). Precisamente, nel caso in cui la successione sia crescente si ha:
+    \begin{itemize}
+        \item se \(a_n\) è limitata superiormente, allora converge al \(\sup a_n \)
+        \item se \(a_n\) non è limitata superiormente, allora diverge a \(+\infty\)
+    \end{itemize}
+    Se invece la successione è decrescente la definizione si modifica in modo ovvio.
+\end{theorem}
+\subsection{\textbf{Il numero di Nepero o Eulero e}}
+\noindent\begin{minipage}{\textwidth}
+    \begin{theorem}[\(a_n\) è crescente e limitata superiormente]
+        Sia \(a_n=(1+\frac{1}{n})^n\). Allora:
+        \begin{enumerate}
+            \item \(a_n\) è crescente
+            \item \(a_n\) è limitata superiormente
+        \end{enumerate}
+        \textbf{Dimostrazione}
+        Per verificare che la successione \(a_n=(1+\frac{1}{n})^n\) sia crescente e limitata bisogna prima introdurre:
+        \begin{itemize}
+            \item  il \textbf{binomio di Newton}:
+                  \begin{equation*}
+                      (a+b)^n = \sum_{k=0}^{n} \binom{n}{k} a^{n-k}b^k
+                  \end{equation*}
+            \item il \textbf{coefficiente binomiale}:
+                  \begin{equation*}
+                      \binom{n}{k} = \frac{n!}{k!(n-k)!}
+                  \end{equation*}
+            \item la \textbf{Disuguaglianza di Bernoulli}:
+                  \begin{equation*}
+                      (1+x)^n \geq 1+nx \quad \forall x \geq -1
+                  \end{equation*}
+        \end{itemize}
+        \begin{enumerate}
+            \item Per dimostrare che \(a_n\) è monotona strettamente crescente, dobbiamo mostrare che \(a_n < a_{n+1}\) per ogni \(n\), è però più conveniente dimostrare che \(a_{n-1} < a_n\) che è la stessa cosa.
+            \item Per poi dimostrare che \(a_n\) è limitata superiormente, dobbiamo mostrare che \(a_n < 3\) per ogni \(n\).
+        \end{enumerate}
+    \end{theorem}
+\end{minipage}
+
+\section{Limiti di funzioni}
+
+\subsection{Limiti finiti}
+
+\subsubsection{\texorpdfstring{Caso \(x_0 \in \mathbb{R}\), \(L \in \mathbb{R}\)}{Caso x_0 in R, L in R}}
+
+\begin{definition}[Caso \(x_0 \in \mathbb{R}\), \(l \in \mathbb{R}\)]
+    \[
+        \lim_{x \to x_0} f(x) = l
+    \]
+    se
+    \[
+        \forall \varepsilon > 0, \, \exists \delta > 0 \ : \ |f(x) - l| < \varepsilon, \forall x \in (x_0 - \delta, x_0 + \delta) \setminus \{x_0\}
+    \]
+    \textbf{Osservazioni}
+    \begin{itemize}
+        \item \(x_0\) è un punto di accumulazione per \(domf\), dunque \(x_0\) non è necessariamente in \(domf\).
+    \end{itemize}
+\end{definition}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        % grid and Axis
+        \draw[help lines, color=gray!30, dashed] (-3 , -3) grid (5 , 4);
+        \draw[->] (-3 , 0) -- (5 , 0) node[right]{$x$};
+        \draw[->] (0 , -3) -- (0, 4) node[above]{$y$};
+        % Bounds and function value
+        \draw[dashed] (3.5, 0) node[below right] {$\scriptstyle x_0+\delta$} -- (3.5 , 3.1) -- (0 , 3.1) node[left] {$\scriptstyle l+\varepsilon$}; %Upper
+        \draw[dashed,] (3  , 0) node[below = 1.5 mm] {$\scriptstyle x_0$} -- (3 , 2.55) -- (0 , 2.55) node[left] {$\scriptstyle l$}; % l
+        \draw[dashed] (2.5 ,  0) node[below left] {$\scriptstyle x_0-\delta$} -- (2.5 , 2.0) -- (0 , 2.0) node[left] {$\scriptstyle l-\varepsilon$}; % Lower
+        \draw[thick,myblue,domain=-1.8 : 2.25 , samples = 20] {} plot ((\x + 2 , {exp(\x + 1.5)/(2 +  exp(\x)}); % f(x)
+        % Annotations
+        \draw [|-|, thick, myblue ] (2.5 , 0) -- (3.5 , 0) node[midway, below = 3mm]{$\scriptstyle I(x_0)$};
+        \draw [<-> , thin] (0.25 , 2.55) -- (0.25 , 3.1) node[midway, right] {$\scriptstyle \varepsilon$}; % Upper Arrow
+        \draw [<-> , thin] (0.25 , 2) -- (0.25 , 2.55)  node[midway, right] {$\scriptstyle \varepsilon$}; % Lower Arrow    
+        \filldraw [white] (3 , 2.55) circle (1.5pt);
+        \draw [black] (3 , 2.55) circle (1.5pt) node[above right] {$\scriptstyle (x_0,l)$};
+    \end{tikzpicture}
+    \caption{Limite finito per \(x\) che tende a \(x_0\)}
+    \label{fig:limitefinito}
+\end{figure}
+
+\subsubsection{\texorpdfstring{Caso \(x_0 = \pm\infty\), \(L \in \mathbb{R}\)}{Caso x_0 = pm infinito, L in R}}
+
+\begin{definition}[Caso \(x_0 = \pm\infty\), \(l \in \mathbb{R}\)]
+    \[
+        \lim_{x \to \pm\infty} f(x) = l
+    \]
+    se
+    \[
+        \forall \varepsilon > 0, \, \exists M > 0 \ : \ |f(x) - l| < \varepsilon, \forall x > M \ (\text{per } x_0 = +\infty) \ \text{o} \ \forall x < -M \ (\text{per } x_0 = -\infty)
+    \]
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+            declare function={
+                    F(\x) = 1/(\x);
+                }]
+        \begin{axis}
+            [
+                xlabel={\( x \)},
+                ylabel={\( f(x) \)},
+                xmin=-5, xmax=5,
+                ymin=-5, ymax=5,
+                grid=both,
+                axis lines=middle,
+                axis line style=->,
+                grid style={line width=.1pt, draw=gray!10},
+                major grid style={line width=.2pt,draw=gray!50},
+                minor tick num=5,
+                enlargelimits={abs=0.5},
+                xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+                ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+                samples=100,
+                unbounded coords=jump, % Gestisce i punti non definiti
+                legend pos=south east
+            ]
+            \addplot[very thick,myblue,domain=-5:-0.01]{F(x)};
+            \addplot[very thick,myblue,domain=0.01:5]{F(x)};
+            \legend{{\(f(x)=\frac{1}{x}\)}}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Limite finito per \(x\) che tende a \(+\infty\)}
+    \label{fig:limitefinitoinfinito}
+\end{figure}
+In questo caso \ref{fig:limitefinitoinfinito} \(\lim_{x \to +\infty} f(x) = 0 \).
+
+\noindent\begin{minipage}{\textwidth}
+    \begin{curiosity}
+        In generale, il fatto che una funzione abbia limite finito in un punto \(x_0\) non implica che la funzione sia definita in \(x_0\).
+        Sono possibili i seguenti casi:
+        \begin{itemize}
+            \item \(\exists \quad \lim_{x \to x_0} f(x) = l \quad e \quad l = f(x_0)\)
+            \item \(\exists \quad \lim_{x \to x_0} f(x) = l \quad e \quad l \neq f(x_0)\)
+            \item \(\exists \quad \lim_{x \to x_0} f(x) = l \quad e \quad \nexists \quad f(x_0)\)
+        \end{itemize}
+    \end{curiosity}
+\end{minipage}
+\subsection{Limiti infiniti}
+
+\subsubsection{\texorpdfstring{Caso \(x_0 \in \mathbb{R}\), \(L = \pm \infty\)}{Caso x_0 in R, L = pm infinito}}
+
+\begin{definition}[Caso \(x_0 \in \mathbb{R} \), \(L = \pm \infty\)]
+    \[
+        \lim_{x \to x_0} f(x) = L
+    \]
+    se
+    \[
+        \forall A > 0, \, \exists \delta > 0 \ : \ (\text{se } L = +\infty, \ f(x) > A \ \text{o se } L = -\infty, \ f(x) < -A), \forall x \in (x_0 - \delta, x_0 + \delta) \setminus \{x_0\}
+    \]
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+            declare function={
+                    F(\x) = 1/(\x);
+                }]
+        \begin{axis}
+            [
+                xlabel={\( x \)},
+                ylabel={\( f(x) \)},
+                xmin=-5, xmax=5,
+                ymin=-5, ymax=5,
+                grid=both,
+                axis lines=middle,
+                axis line style=->,
+                grid style={line width=.1pt, draw=gray!10},
+                major grid style={line width=.2pt,draw=gray!50},
+                minor tick num=5,
+                enlargelimits={abs=0.5},
+                xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+                ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+                samples=100,
+                unbounded coords=jump, % Gestisce i punti non definiti
+                legend pos=south east
+            ]
+            \addplot[very thick,myblue,domain=-5:-0.01]{-F(x)};
+            \addplot[very thick,myblue,domain=0.01:5]{F(x)};
+            \legend{{\(f(x)=\left|\frac{1}{x}\right|\)}}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Limite infinito per \(x\) che tende a \(x_0\)}
+    \label{fig:limiteinfinito}
+\end{figure}
+In questo caso \ref{fig:limiteinfinito} \(\lim_{x \to 0} f(x) = +\infty\), ma \(f(0)\) non è definita.
+
+\subsubsection{\texorpdfstring{Caso \(x_0 = \pm \infty \), \(L = \pm \infty\)}{Caso x_0 = pm infinito, L = pm infinito}}
+
+\begin{definition}[Caso \(x_0 = \pm \infty \), \(L = \pm \infty\)]
+    \[
+        \lim_{x \to \pm \infty} f(x) = L
+    \]
+    se
+    \[
+        \forall A > 0, \, \exists M > 0 \ : \ (\text{se } L = +\infty, \ f(x) > A \ \text{o se } L = -\infty, \ f(x) < -A), \forall x \ : \ |x| > M
+    \]
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+            declare function={
+                    F(\x) = \x^3;
+                }]
+        \begin{axis}
+            [
+                xlabel={\( x \)},
+                ylabel={\( f(x) \)},
+                xmin=-5, xmax=5,
+                ymin=-5, ymax=5,
+                grid=both,
+                axis lines=middle,
+                axis line style=->,
+                grid style={line width=.1pt, draw=gray!10},
+                major grid style={line width=.2pt,draw=gray!50},
+                minor tick num=5,
+                enlargelimits={abs=0.5},
+                xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+                ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+                samples=100,
+                unbounded coords=jump, % Gestisce i punti non definiti
+                legend pos=south east
+            ]
+            \addplot[very thick,myblue,domain=-5:-0.01]{F(x)};
+            \addplot[very thick,myblue,domain=0.01:5]{F(x)};
+            \legend{{\(f(x)=x^3\)}}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Limite infinito per \(x\) che tende a \(\pm\infty\)}
+    \label{fig:limiteinfinitoinfinito}
+\end{figure}
+In questo caso \ref{fig:limiteinfinitoinfinito} \(\lim_{x \to +\infty} f(x) = +\infty\).
+
+\section{Continuità di una funzione}
+\begin{definition}[\textbf{Funzione continua in \(x_0\)}]
+    Una f(x) è \textbf{continua} in \(x_0\) se
+    \[\lim_{x \to x_0} f(x) = f(x_0)\]
+    ovvero
+    \[\lim_{x \to x_{0^-}} f(x) = \lim_{x \to x_{0^+}} f(x) = f(x_0)\]
+\end{definition}
+\begin{definition}
+    [\textbf{Funzione continua in un intervallo}]
+    Una funzione \(f(x)\) è \textbf{continua} in un intervallo \([a,b]\) se è continua in ogni punto di \([a,b]\).
+\end{definition}
+\begin{proposition}
+    Tutte le \textbf{funzioni elementari} (polinomi e funzioni razionali,
+    funzioni elevamento a potenza, funzioni trigonometriche, funzioni
+    esponenziali e le loro funzioni inverse) \textbf{sono continue} in tutto il loro
+    dominio.
+\end{proposition}
+\subsection{Tipologie di discontinuità}
+\begin{definition}[\textbf{Discontinuità di prima specie}]
+    Sia \(f(x)\) definita in un intorno di \(x_0\). Allora \(f(x)\) è \textbf{discontinua di prima specie} in \(x_0\) se
+    \[\lim_{x \to x_{0^-}} f(x) \neq \lim_{x \to x_{0^+}} f(x)\]
+    Tale discontinuità è detta anche \textbf{a salto}, la lunghezza di tale salto è:
+    \[
+        s = |l-m|
+    \]
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+            declare function={
+                    sigma(\x)=1/(1+exp(-\x));
+                    F(\x) = 0.5 * sigma(\x);
+                }]
+        \begin{axis}
+            [
+                xlabel={\( x \)},
+                ylabel={\( f(x) \)},
+                xmin=0, xmax=2,
+                ymin=0, ymax=2,
+                grid=both,
+                axis lines=middle,
+                axis line style=->,
+                grid style={line width=.1pt, draw=gray!10},
+                major grid style={line width=.2pt,draw=gray!50},
+                minor tick num=5,
+                enlargelimits={abs=0.5},
+                xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+                ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+                samples=100,
+                unbounded coords=jump, % Gestisce i punti non definiti
+                legend pos=south east
+            ]
+            \draw [gray, dashed] (1,0.36) -- (0,0.36) node [left] {\(l\)};
+            \draw [gray, dashed] (1,0.86) -- (0,0.86) node [left] {\(m\)};
+            \addplot[very thick,myblue,domain=-1:1]   {F(x)};
+            \addplot[very thick,myblue,domain=1:3]    {F(x)+0.5};
+            \draw [dashed,black!50] (1,{F(1)}) -- (1,{F(1)+0.5});
+            \filldraw [myblue] (1,0.36) circle (2pt);
+            \filldraw [white] (1,0.86) circle (2pt);
+            \draw [myblue] (1,0.86) circle (2pt);
+            \node [myblue, below] at (1,0.36) {\(x_0\)};
+
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Discontinuità di prima specie}
+    \label{fig:discontinuitaprimaspecie}
+\end{figure}
+\noindent\begin{minipage}{\textwidth}
+    \begin{definition}
+        [\textbf{Discontinuità di seconda specie}]
+        Sia \(f(x)\) definita in un intorno di \(x_0\). Allora \(f(x)\) è \textbf{discontinua di seconda specie} in \(x_0\) se
+        \[\lim_{x \to x_{0^-}} f(x) = \pm \infty\ \lor\ \nexists \quad \lor \quad \lim_{x \to x_{0^+}} f(x) = \pm \infty\ \lor\ \nexists\]
+    \end{definition}
+\end{minipage}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+            declare function={
+                    F(\x) = 1/(\x);
+                }]
+        \begin{axis}
+            [
+                xlabel={\( x \)},
+                ylabel={\( f(x) \)},
+                xmin=-5, xmax=5,
+                ymin=-5, ymax=5,
+                grid=both,
+                axis lines=middle,
+                axis line style=->,
+                grid style={line width=.1pt, draw=gray!10},
+                major grid style={line width=.2pt,draw=gray!50},
+                minor tick num=5,
+                enlargelimits={abs=0.5},
+                xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+                ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+                samples=100,
+                unbounded coords=jump, % Gestisce i punti non definiti
+                legend pos=south east
+            ]
+            \addplot[very thick,myblue,domain=-5:-0.01]{F(x)};
+            \addplot[very thick,myblue,domain=0.01:5]{F(x)};
+            \filldraw [myblue] (0,0) circle (2pt) node[below left] {\(x_0\)};
+            \node[draw, align=center, fill=white, scale= 0.8] (legend) at (3.1,-3.9) {
+                \(f(x) = \begin{cases}
+                    \frac{1}{x} & \text{se } x \neq 0 \\
+                    0           & \text{se } x = 0
+                \end{cases}\)
+            };
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Discontinuità di seconda specie}
+    \label{fig:discontinuitasecondaspecie}
+\end{figure}
+\begin{definition}
+    [\textbf{Discontinuità di terza specie}]
+    Sia \(f(x)\) definita in un intorno di \(x_0\). Allora \(f(x)\) è \textbf{discontinua di terza specie} in \(x_0\) se
+    \[\lim_{x \to x_{0}} f(x) = l \quad f(x_0) \neq l\]
+    Tale discontinuità è anche detta \textbf{eliminabile}.
+\end{definition}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+            declare function={
+                    F(\x) = x;
+                }]
+        \begin{axis}
+            [
+                xlabel={\( x \)},
+                ylabel={\( f(x) \)},
+                xmin=-2, xmax=2,
+                ymin=-2, ymax=2,
+                grid=both,
+                axis lines=middle,
+                axis line style=->,
+                grid style={line width=.1pt, draw=gray!10},
+                major grid style={line width=.2pt,draw=gray!50},
+                minor tick num=5,
+                enlargelimits={abs=0.5},
+                xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+                ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+                samples=100,
+                unbounded coords=jump, % Gestisce i punti non definiti
+                legend pos=south east
+            ]
+            \addplot[very thick,myblue,domain=-2:2]{F(x)};
+            \draw [gray, dashed] (1,1) -- (1,0);
+            \filldraw [myblue] (1,0) circle (2pt) node[above right] {\(x_0\)};
+            \filldraw [white] (1,1) circle (2pt);
+            \draw [myblue] (1,1) circle (2pt);
+            \node[draw, align=center, fill=white, scale= 0.8] (legend) at (1.4,-1.9) {
+                \(f(x) = \begin{cases}
+                    x & \text{se } x \neq 1 \\
+                    0 & \text{se } x = 1
+                \end{cases}\)
+            };
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Discontinuità di terza specie}
+    \label{fig:discontinuitaterzaspecie}
+\end{figure}
+
+\subsection{Teoremi sulle funzioni continue}
+
+\begin{theorem}[\textbf{Teorema dei valori intermedi}]
+    Sia \(f(x)\) continua in \([a,b]\). Allora \(f(x)\) assume tutti i valori compresi tra \(f(a)\) e \(f(b)\).
+\end{theorem}
+
+\begin{theorem}[\textbf{Teorema della composizione di funzioni continue}]
+    Siano \(f(x)\) continua in \(x_0\) e \(g(x)\) continua in \(f(x_0)\). Allora \(g \circ f\) è continua in \(x_0\).
+\end{theorem}
+
+\begin{theorem}[\textbf{Teorema della somma di funzioni continue}]
+    Siano \(f(x)\) e \(g(x)\) continue in \(x_0\). Allora \(f(x) + g(x)\) è continua in \(x_0\).
+\end{theorem}
+
+\begin{theorem}[\textbf{Teorema del prodotto di funzioni continue}]
+    Siano \(f(x)\) e \(g(x)\) continue in \(x_0\). Allora \(f(x) \cdot g(x)\) è continua in \(x_0\).
+\end{theorem}
+
+\begin{theorem}[\textbf{Teorema di Weierstrass}]
+    Sia \(f(x)\) continua in \([a,b]\). Allora \(f(x)\) è limitata e ammette massimo e minimo in \([a,b]\).
+\end{theorem}
+
+\begin{theorem}[\textbf{Teorema di Bolzano-Weierstrass}]
+    Sia \(f(x)\) continua in \([a,b]\). Allora \(f(x)\) assume il massimo e il minimo in \([a,b]\).
+\end{theorem}
+\end{document}

@@ -1,0 +1,41 @@
+\documentclass{article}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{math}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{0.125pt}
+%
+% File name: linear-approximation-2d.tex
+% Description: 
+% The linear approximation for a function of one variable $y = f(x)$ is shown.
+% 
+% Date of creation: March, 7th, 2021.
+% Date of last modification: October, 9th, 2022.
+% Author: Efra�n Soto Apolinar.
+% https://www.aprendematematicas.org.mx/author/efrain-soto-apolinar/instructing-courses/
+% Source: page 15 of the 
+% Glosario Ilustrado de Matem\'aticas Escolares.
+% https://tinyurl.com/5udm2ufy
+%
+% Terms of use:
+% According to TikZ.net
+% https://creativecommons.org/licenses/by-nc-sa/4.0/
+% Your commitment to the terms of use is greatly appreciated.
+\begin{document}
+
+\begin{tikzpicture}
+    \pgfmathsetmacro{\xi}{2.5}
+    \pgfmathsetmacro{\step}{1.0}
+    \pgfmathsetmacro{\xf}{\xi+\step}
+    \pgfmathsetmacro{\yi}{exp(0.35*\xi)}
+    \pgfmathsetmacro{\yf}{exp(0.35*\xf)}
+    \pgfmathsetmacro{\yfa}{0.35*exp(0.35*\xi)*(\xf-\xi)+\yi}
+    \pgfmathsetmacro{\ym}{0.5*(\yi+\yfa)}
+    % Coordinate axis
+    \draw[thick,->] (-0.125,0) -- (5,0) node [right]{$x$};
+    \draw[thick,->] (0,-0.125) -- (0,4.5) node [above]{$y$};
+    % Graph of the function $y = y(x)$
+    \draw[blue,very thick] plot[domain=0:4.25] (\x,{exp(0.35*\x)}) node[right]{\footnotesize$f(x) = y = e^x$};
+\end{tikzpicture}
+\end{document}

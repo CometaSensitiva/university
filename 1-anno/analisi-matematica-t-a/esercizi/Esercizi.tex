@@ -1,0 +1,310 @@
+\documentclass{book}
+
+% Pacchetti di Codifica e Lingua
+\usepackage[utf8]{inputenc}   % Codifica dei caratteri
+\usepackage[T1]{fontenc}      % Codifica dei font
+\usepackage[italian]{babel}   % Lingua italiana
+
+% Pacchetti Grafici e Diagrammi
+\usepackage{graphicx}         % Inserimento immagini
+\usepackage{tikz}             % Rappresentazioni grafiche
+\usetikzlibrary{angles,quotes,arrows.meta, positioning} % Librerie TikZ
+\usepackage{pgfplots}         % Grafici avanzati
+\pgfplotsset{compat=1.18}     % Impostazioni per pgfplots
+
+% Pacchetti Matematici
+\usepackage{amsmath, amssymb, amsthm} % Formule matematiche e teoremi
+
+% Pacchetti per Tabelle e Unità di Misura
+\usepackage{geometry}         % Margini della pagina
+\usepackage{siunitx}          % Formattazione unità di misura
+\usepackage{booktabs}         % Formattazione tabelle
+\usepackage{tabularx}         % Tabelle avanzate
+\usepackage{colortbl}         % Tabelle colorate
+
+% Pacchetti per Layout e Formattazione
+\usepackage{fancyhdr}         % Intestazione dei capitoli
+\usepackage{float}            % Posizionamento di figure e tabelle
+\usepackage{microtype}        % Migliora riempimento del testo
+
+% Altri Pacchetti Utili
+\usepackage{mdframed}         % Cornici
+\usepackage{xcolor}           % Colore
+\usepackage{animate}          % Animazioni
+
+% Hyperref (da includere per ultimo)
+\usepackage{hyperref}         % Link cliccabili
+
+
+\definecolor{lightblue}{HTML}{9cd8fc} % Esempio di blu chiaro
+% Definizione dei colori
+\definecolor{myblue}{HTML}{139FE9}
+
+\newmdenv[
+    backgroundcolor=orange!10, % Scegli il colore e l'opacità dello sfondo
+    linecolor=myblue,
+    linewidth=0pt,
+    leftmargin=0pt,
+    rightmargin=0pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+    innertopmargin=10pt,
+    innerbottommargin=10pt
+]{curiosita}
+
+% Definizione dell'ambiente per i teoremi
+\newmdtheoremenv[
+  backgroundcolor=lightblue,
+  linecolor=myblue,
+  linewidth=1.5pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt
+]{theorem}{Teorema}
+
+% Definizione dell'ambiente per le definizioni
+\newmdtheoremenv[
+  backgroundcolor=gray!10,
+  linewidth=0pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt
+]{definition}{Definizione}
+
+% Definizione dell'ambiente per le proposizioni
+\newmdtheoremenv[
+  backgroundcolor=gray!10,
+  linecolor=myblue,
+  linewidth=1.5pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerrightmargin=10pt,
+  innerleftmargin=10pt
+]{proposition}{Proposizione}
+
+% Configurazioni di fancyhdr
+\pagestyle{fancy}
+\fancyhf{} % Pulisce tutti i campi
+\fancyhead[LE,RO]{\thepage} % Numero di pagina
+\fancyhead[RE]{\nouppercase{\leftmark}} % Titolo del capitolo
+\fancyhead[LO]{\nouppercase{\rightmark}} % Titolo della sezione
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\geometry{a4paper, left=20mm, right=20mm, top=20mm, bottom=20mm}
+
+\title{Esercizi Analisi Matematica T-A}
+\author{Michele Mazza}
+\date{November 2023}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+\tableofcontents
+
+\chapter*{Prefazione}
+Il presente libro rappresenta una raccolta degli esercizi proposti nel corso di Analisi Matematica T-A tenuto dal Prof.re Cataldo Grammatico presso l'Università di Bologna. Rivolto agli studenti del corso di laurea in Ingegneria Gestionale (codice laurea 0925, Tipo di laurea L-9, Codice corso 28622).
+
+\mainmatter
+\chapter{Limiti}
+\section{Limiti Base}
+
+\subsection{Esercizio 01}
+
+Dato il limite:
+
+\[
+    \lim_{{x \to -2}} \frac{{x^2 + x - 2}}{{x^2 + 5x + 6}}
+\]
+
+e l'equazione:
+
+\[
+    \lim_{{x \to -2}} \frac{{x^2 + x - 2}}{{x^2 + 5x + 6}} = -3
+\]
+
+Trova il seguente limite:
+
+\[
+    \lim_{{x \to -2}} \frac{{x^2 + x - 2}}{{x^2 + 5x + 6}}
+\]
+
+L'equazione si semplifica come segue:
+
+\[
+    \frac{{x^2 + x - 2}}{{x^2 + 5x + 6}} = \frac{{(x - 1)(x + 2)}}{{(x + 2)(x + 3)}}
+\]
+
+Quindi, il limite diventa:
+
+\[
+    \lim_{{x \to -2}} \frac{{(x - 1)(x + 2)}}{{(x + 2)(x + 3)}}
+\]
+
+Semplificando ulteriormente:
+
+\[
+    \frac{{(x - 1)(x + 2)}}{{(x + 2)(x + 3)}} = \frac{{x - 1}}{{x + 3}}
+\]
+
+Quindi, il limite diventa:
+
+\[
+    \lim_{{x \to -2}} \frac{{x - 1}}{{x + 3}}
+\]
+
+Poiché \(x - 1/x + 3\) è continuo in \(x = -2\), il limite diventa il valore di \(x - 1/x + 3\) in \(x = -2\).
+
+Risposta:
+
+\[
+    \begin{aligned}
+        \lim_{{x \to -2}} \frac{{x - 1}}{{x + 3}} & = -3
+    \end{aligned}
+\]
+\subsection{Esercizio 02}
+
+Dato il limite:
+
+\[
+    \lim_{{x \to a}} \frac{{\frac{1}{x} - \frac{1}{a}}}{{x - a}}
+\]
+
+e l'equazione:
+
+\[
+    \lim_{{x \to a}} \frac{{\frac{1}{x} - \frac{1}{a}}}{{x - a}} = -\frac{1}{a^2}
+\]
+
+Possibili passaggi intermedi:
+
+Trova il seguente limite:
+
+\[
+    \lim_{{x \to a}} \frac{\frac{1}{x} - \frac{1}{a}}{x - a}
+\]
+
+L'equazione si semplifica come segue:
+
+\[
+    \frac{\frac{1}{x} - \frac{1}{a}}{x - a} = \frac{1}{x} - \frac{1}{a} \cdot \frac{1}{x - a}
+\]
+
+Quindi, il limite diventa:
+
+\[
+    \lim_{{x \to a}} \frac{1}{x} - \frac{1}{a} \cdot \frac{1}{x - a}
+\]
+
+Semplificando ulteriormente:
+
+\[
+    \frac{1}{x} - \frac{1}{a} \cdot \frac{1}{x - a} = \frac{1}{x} - \frac{1}{a} \cdot \frac{-a x}{1 - \frac{a}{x}}
+\]
+
+Quindi, il limite diventa:
+
+\[
+    \lim_{{x \to a}} \frac{1}{x} - \frac{1}{a} \cdot \frac{-a x}{1 - \frac{a}{x}}
+\]
+
+Semplificando ulteriormente:
+
+\[
+    \frac{1}{x} - \frac{1}{a} \cdot \frac{-a x}{1 - \frac{a}{x}} = -\frac{1}{a x}
+\]
+
+Quindi, il limite diventa:
+
+\[
+    \lim_{{x \to a}} -\frac{1}{a x}
+\]
+
+Poiché \(-\frac{1}{a x}\) è continuo in \(x = a\), il limite diventa il valore di \(-\frac{1}{a x}\) in \(x = a\).
+
+Risposta:
+
+\[
+    \begin{aligned}
+        \lim_{{x \to a}} -\frac{1}{a x} & = -\frac{1}{a^2}
+    \end{aligned}
+\]
+
+\subsection{Esercizio 03}
+
+Dato il limite:
+
+\[
+    \lim_{{x \to 4}} \frac{{\sqrt{x} - 2}}{{x^2 - 16}}
+\]
+
+e l'equazione:
+
+\[
+    \lim_{{x \to 4}} \frac{{\sqrt{x} - 2}}{{x^2 - 16}} = \frac{1}{32}
+\]
+
+Possibili passaggi intermedi:
+
+Trova il seguente limite:
+
+\[
+    \lim_{{x \to 4}} \frac{{\sqrt{x} - 2}}{{x^2 - 16}}
+\]
+
+L'equazione si semplifica come segue:
+
+\[
+    \frac{{\sqrt{x} - 2}}{{x^2 - 16}} = \frac{{(\sqrt{x} - 2)(\sqrt{x} + 2)}}{{(x^2 - 16)(\sqrt{x} + 2)}} = \frac{1}{{(\sqrt{x} + 4)(\sqrt{x} + 2)}}
+\]
+
+Quindi, il limite diventa:
+
+\[
+    \lim_{{x \to 4}} \frac{1}{{(\sqrt{x} + 4)(\sqrt{x} + 2)}}
+\]
+\begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[
+                xlabel={$x$},
+                ylabel={$y$},
+                title={Grafico di $\frac{\sqrt{x} - 2}{x^2 - 16}$},
+                xmin=0, xmax=4,
+                ymin=0, ymax=0.25,
+                grid=both,
+                axis lines=middle,
+                axis line style=->,
+                grid style={line width=.1pt, draw=gray!10},
+                major grid style={line width=.2pt,draw=gray!50},
+                minor tick num=5,
+                enlargelimits={abs=0.5},
+                ticklabel style={font=\small},
+                xlabel style={at={(ticklabel* cs:1)}, anchor=north west},
+                ylabel style={at={(ticklabel* cs:1)}, anchor=south west},
+                domain=(0:6),
+                unbounded coords=jump, % Gestisce i punti non definiti
+                samples=100, % Numero di campioni per la curva
+                legend pos=south east
+            ]
+            \addplot[myblue, thick, smooth, mark=none] {1/((sqrt(x) + 4)*(sqrt(x) + 2))};
+            \addplot[red, mark=*] coordinates{(4, 1/32)}; % Punto f(4) in rosso
+            \draw[dashed] (4, 0) -- (4, 0.03); % Linea verticale in x=4
+            \legend{{$\frac{\sqrt{x} - 2}{x^2 - 16}$}}
+        \end{axis}
+    \end{tikzpicture}
+\end{center}
+
+Poiché $\frac{1}{{(\sqrt{x} + 4)(\sqrt{x} + 2)}}$ è continua in $x = 4$, il limite diventa il valore di $\frac{1}{{(\sqrt{x} + 4)(\sqrt{x} + 2)}}$ in $x = 4$.
+
+Risposta:
+
+\[
+    \begin{aligned}
+        \lim_{{x \to 4}} \frac{1}{{(\sqrt{x} + 4)(\sqrt{x} + 2)}} & = \frac{1}{32}
+    \end{aligned}
+\]
+
+\end{document}

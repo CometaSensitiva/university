@@ -1,0 +1,49 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{calc,intersections}
+
+\newcommand{\vN}[3]{{#1,#2,#3}}
+\newcommand{\vectprod}[2]{{#1}x{#2}}
+\newcommand{\vNlen}[1]{\pgfmathparse{veclen(#1)}\pgfmathresult}
+
+\begin{document}
+
+\begin{tikzpicture}[scale=1.5]
+
+    % Definisci i coefficienti normali e il punto di intersezione
+    \def\nA{1}
+    \def\nB{2}
+    \def\d{3}
+    \def\P{-1,2,0}
+
+    % Calcola il vettore normale
+    \def\vN{\nA,\nB,\d}
+
+    % Calcola il prodotto scalare tra il vettore normale e il punto di intersezione
+    \pgfmathparse{\nA*(-1) + \nB*2 + \d*0}
+    \let\h=\pgfmathresult
+
+    % Calcola la distanza tra i piani
+    \pgfmathparse{abs(\h)/\vNlen{\vN}}
+    \let\distanza=\pgfmathresult
+
+    % Disegna i piani
+    \filldraw[fill=blue!20,draw=blue]
+    ($ (\P) + 0.5*(\nA,\nB,\d) $) --
+    ($ (\P) - 0.5*(\nA,\nB,\d) + (\nA,\nB,0) $) --
+    ($ (\P) - 0.5*(\nA,\nB,\d) - (\nA,\nB,0) $) --
+    cycle;
+
+    \filldraw[fill=red!20,draw=red]
+    ($ (\P) + 0.5*(\nB,-\nA,\d) $) --
+    ($ (\P) - 0.5*(\nB,-\nA,\d) + (0,\nB,\d) $) --
+    ($ (\P) - 0.5*(\nB,-\nA,\d) - (0,\nB,\d) $) --
+    cycle;
+
+    % Aggiungi le etichette
+    \node at (\P) [above right] {$P$};
+    \node at ($ (\P) + 0.5*(\nA,\nB,\d) + 0.5*(\nB,-\nA,\d) $) [above right] {$d = \distanza$};
+
+\end{tikzpicture}
+
+\end{document}
