@@ -41,7 +41,7 @@ I started using LaTeX in my first semester of Management Engineering. [Analisi M
 | Fondamenti di Chimica | [Notes](1-anno/fondamenti-di-chimica/Fondamenti%20di%20Chimica.pdf) | 5 | draft |
 | Economia e Organizzazione Aziendale | [Formula sheet, first version](1-anno/economia-aziendale/formulario-2023/Formulario.pdf) | 19 | complete |
 | | [Financial statements and ratios](1-anno/economia-aziendale/il-bilancio/Il%20bilancio.pdf) | 15 | complete |
-| | [Management control systems](1-anno/economia-aziendale/sistemi-di-controllo/Sistemi%20di%20Controllo(lm).pdf) | 19 | complete |
+| | [Management control systems](1-anno/economia-aziendale/sistemi-di-controllo/Sistemi%20di%20Controllo%28lm%29.pdf) | 19 | complete |
 
 </details>
 
