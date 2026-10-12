@@ -1,0 +1,18 @@
+\documentclass{standalone}
+\usepackage{circuitikz}
+\begin{document}
+\begin{circuitikz}
+    % Generatore di tensione
+    \draw (0,0) to[battery1, v=$30\,\mathrm{V}$, invert] (0,6);
+    \draw(0,6) -- (6,6);
+    \draw(6,6) to [short, i>^=$i$] (6,4.5);
+    \draw(3,4.5) -- (9,4.5);
+    \draw(3,1.5) to[voltmeter, l=$\Delta V_{R1}$] (3,4.5);
+    \draw(4.5,4.5) to[american resistor, l_=$R_1$, i>^=$i_{1}$] (4.5,1.5);
+    \draw(7.5,4.5) to[american resistor, l_=$R_2$, i>^=$i_{2}$] (7.5,1.5);
+    \draw(9,4.5) to[voltmeter,l=$\Delta V_{R2}$] (9,1.5);
+    \draw(3,1.5) -- (9,1.5);
+    \draw(6,0) -- (6,1.5);
+    \draw(0,0) -- (6,0);
+\end{circuitikz}
+\end{document}

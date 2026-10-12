@@ -1,0 +1,20 @@
+\documentclass{standalone}
+\usepackage[siunitx, american]{circuitikz}
+\usepackage{tikz}
+\begin{document}
+    \begin{tikzpicture}[>=latex, scale = 3]
+        \draw[style=help lines] (0,0) (3,2);
+
+        %S
+        \coordinate (vec1) at (14:0.3566); 
+        %P
+        \coordinate (vec7) at (0:0.3459);
+        
+        \draw [red, thick ] (0.1,0) arc (0:14:0.1cm) node [midway, right] {$\varphi$};         
+
+        \draw[->,thick, blue] (0.3566,0) -- (0.3566,0.1) node[midway, right] {$\mathrm{Q}=\SI{9}{\mathrm{VAr}}$};
+
+        \draw[->,thick,black] (0,0) -- (0.3566,0.1) node[above left] {$\mathrm{S}=\SI{35.66}{\volt\ampere}$};
+        \draw[->,thick,black] (0,0) -- (vec7) node[midway, below] {$\mathrm{P}=\SI{34.59}{\watt}$};
+    \end{tikzpicture}
+\end{document}

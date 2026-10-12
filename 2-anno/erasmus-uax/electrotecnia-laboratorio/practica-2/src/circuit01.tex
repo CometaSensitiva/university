@@ -1,0 +1,28 @@
+\documentclass{standalone}
+\usepackage[siunitx, american]{circuitikz}
+\begin{document}
+\begin{circuitikz}
+      \draw (0,3)
+          to[vsourcesin, v_=$\mathrm{\Delta V_{rms}}$, invert] (0,0);
+      \draw (0,3)     
+          to[ammeter] (3,3) 
+          to[american resistor, l=$R$] (6,3) 
+          to[inductor, l=$L$] (9,3) 
+          to[capacitor, l=$C$] (12,3)
+          to[short] (12,0)
+          -- (0,0);
+      \draw (0,0) -- (-3,0); 
+      \draw (-3,0) to[voltmeter] (-3,3);
+      \draw (-3,3) -- (0,3);
+      \draw (6,6) to[voltmeter] (9,6);
+      \draw (6,3) -- (6,6);
+      \draw (9,3) -- (9,6);
+      \draw (12,3) -- (12,6);
+      \draw (9,6) to[voltmeter] (12,6);
+      \draw[dashed] (4,2) -- (11,2);
+      \draw[dashed] (4,4) -- (11,4);
+      \draw[dashed] (4,2) -- (4,4);
+      \draw[dashed] (11,2) -- (11,4);
+      \node at (7.5,1.5) {$\mathrm{Z_{carga}}$};
+\end{circuitikz}
+\end{document}

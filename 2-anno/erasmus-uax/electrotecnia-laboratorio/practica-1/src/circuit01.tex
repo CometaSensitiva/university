@@ -1,0 +1,12 @@
+\documentclass{standalone}
+\usepackage{circuitikz}
+\begin{document}
+\begin{circuitikz}
+    \draw (0,0) 
+          to[battery1, v=$30\,\mathrm{V}$, invert] (0,3)
+          to[ammeter, i_=$i$] (3,3) % Amperometro
+          to[american resistor, l_=$R_2$] (6,3) % Resistenza R2
+          to[american resistor, l_=$R_1$] (6,0) % Resistenza R1
+          -- (0,0);
+\end{circuitikz}
+\end{document}

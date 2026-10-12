@@ -54,6 +54,8 @@ I started using LaTeX in my first semester of Management Engineering. [Analisi M
 | --- | --- | ---: | --- |
 | Investigación Operativa (UAX) | [Ferrari distribution network optimization](https://github.com/CometaSensitiva/ferrari-distribution-optimization) — separate repository | | complete |
 | Dirección Estratégica (UAX) | [Strategic communication analysis](2-anno/erasmus-uax/strategic-communication-analysis.md) — group project, summary only | | complete |
+| Electrotecnia y Máquinas Eléctricas (UAX) | [Lab report, Práctica 1: DC circuits](2-anno/erasmus-uax/electrotecnia-laboratorio/practica-1/Practica%2001.pdf) — with Juan Repiso | 4 | complete |
+| | [Lab report, Práctica 2: power factor in AC circuits](2-anno/erasmus-uax/electrotecnia-laboratorio/practica-2/Practica%2002.pdf) — with Juan Repiso | 7 | complete |
 | Controlli Automatici | [Formula sheet](2-anno/controlli-automatici/Formulario.pdf) | 4 | complete |
 | Gestione Aziendale | [Business economics, combined notes](2-anno/gestione-aziendale/Economia%20e%20Organizzazione%20Aziendale/Economia.pdf) | 59 | partial |
 | | [The firm](2-anno/gestione-aziendale/L'impresa/L'impresa.pdf) | 9 | partial |

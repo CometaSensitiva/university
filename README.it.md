@@ -54,6 +54,8 @@ Ho iniziato a usare LaTeX nel primo semestre di Ingegneria Gestionale. [Analisi 
 | --- | --- | ---: | --- |
 | Investigación Operativa (UAX) | [Ottimizzazione della rete distributiva Ferrari](https://github.com/CometaSensitiva/ferrari-distribution-optimization), repository separato | | complete |
 | Dirección Estratégica (UAX) | [Analisi della comunicazione strategica](2-anno/erasmus-uax/strategic-communication-analysis.md), progetto di gruppo, solo riepilogo | | complete |
+| Electrotecnia y Máquinas Eléctricas (UAX) | [Relazione di laboratorio, Práctica 1: circuiti in corrente continua](2-anno/erasmus-uax/electrotecnia-laboratorio/practica-1/Practica%2001.pdf), con Juan Repiso | 4 | complete |
+| | [Relazione di laboratorio, Práctica 2: fattore di potenza in corrente alternata](2-anno/erasmus-uax/electrotecnia-laboratorio/practica-2/Practica%2002.pdf), con Juan Repiso | 7 | complete |
 | Controlli Automatici | [Formulario](2-anno/controlli-automatici/Formulario.pdf) | 4 | complete |
 | Gestione Aziendale | [Economia aziendale, appunti unificati](2-anno/gestione-aziendale/Economia%20e%20Organizzazione%20Aziendale/Economia.pdf) | 59 | partial |
 | | [L’impresa](2-anno/gestione-aziendale/L'impresa/L'impresa.pdf) | 9 | partial |
