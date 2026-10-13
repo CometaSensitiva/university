@@ -1,0 +1,39 @@
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}[schema base]
+\node[schema etichetta,text width=14.5cm] at (7.5,1.35)
+  {\textbf{Tre domande distinte, non una scala di avanzamento}};
+\pic[scale=0.86] at (1.15,0) {checklist};
+\node[schema etichetta,anchor=west,align=left,text width=4.35cm] (tecnica) at (2.35,0)
+  {\textbf{Conformità tecnica}\\Gli artefatti rispettano il contratto?};
+\path[schema icona,fill=white]
+  (8.6,-0.82) -- (14.8,-0.82) -- (14.8,0.47) -- (14.45,0.82) -- (8.6,0.82) -- cycle;
+\draw[schema icona] (14.45,0.82) -- (14.45,0.47) -- (14.8,0.47);
+\node[schema etichetta,text width=5.5cm] (report) at (11.7,0)
+  {\textbf{Report} \texttt{passed}\\Tutti i controlli previsti superati};
+\draw[schema freccia] (tecnica.east) -- (8.55,0);
+\draw[schemaGrigio!45,dash pattern=on 3pt off 4pt,line width=0.65pt] (0,-1.4) -- (15,-1.4);
+\pic[scale=0.72] at (1.15,-2.8) {fascicolo};
+\node[schema etichetta,anchor=west,align=left,text width=4.35cm] (politica) at (2.35,-2.8)
+  {\textbf{Promozione}\\La run soddisfa la politica?};
+\node[schema blocco,draw=schemaVerde,fill=schemaCartaVerde,text width=3.5cm,minimum height=0.7cm,inner sep=5pt] (validated) at (12.1,-2.25)
+  {\texttt{validated}};
+\node[schema esterno,text width=3.5cm,minimum height=0.7cm,inner sep=5pt] (experimental) at (12.1,-3.35)
+  {\texttt{experimental}};
+\draw[schemaInchiostro,line cap=round] (politica.east) -- (8.25,-2.8);
+\draw[schema freccia] (8.25,-2.8) |- node[pos=0.75,above,schema nota] {Sì} (validated.west);
+\draw[schema freccia] (8.25,-2.8) |- node[pos=0.75,above,schema nota] {No} (experimental.west);
+\draw[schemaGrigio!45,dash pattern=on 3pt off 4pt,line width=0.65pt] (0,-4.25) -- (15,-4.25);
+\pic[scale=0.62] at (0.65,-5.7) {pagina};
+\pic[scale=0.7] at (1.55,-5.85) {testo};
+\draw[schemaBlu,line width=1.15pt] (1.2,-5.65) circle (0.3);
+\draw[schemaBlu,line width=1.8pt,line cap=round] (1.42,-5.87) -- (1.78,-6.23);
+\node[schema etichetta,anchor=west,align=left,text width=4.35cm] (semantica) at (2.35,-5.7)
+  {\textbf{Correttezza semantica}\\Contenuti e associazioni sono fedeli?};
+\node[schema etichetta,text width=6.2cm] (fonte) at (11.7,-5.7)
+  {\textbf{Confronto documentale con la fonte}\\Non deducibile dagli stati automatici};
+\draw[schema freccia] (semantica.east) -- (fonte.west);
+\end{tikzpicture}
+\caption{Tre domande distinte, non tre tappe equivalenti. La checklist riguarda i controlli tecnici, il fascicolo lo stato della run e la lente il confronto con la fonte. Un report \texttt{passed} è compatibile con una run \texttt{experimental}; nessuno dei due stati dimostra la correttezza semantica.}
+\label{fig:livelli-verifica}
+\end{figure}

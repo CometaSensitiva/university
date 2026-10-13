@@ -1,0 +1,92 @@
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}[
+  schema base,
+  schema asse/.style={schema blocco,minimum width=4.65cm,minimum height=4.9cm,inner sep=8pt},
+  schema unita/.style={schema blocco,fill=white,minimum width=1.5cm,minimum height=0.58cm,inner sep=3pt,font=\schemafont\footnotesize},
+  schema numero/.style={circle,text=white,font=\schemafont\footnotesize\bfseries,minimum size=7mm,inner sep=0pt},
+  schema corpo/.style={font=\schemafont\scriptsize,align=left,text=schemaInchiostro},
+  schema rq/.style={circle,draw=schemaBlu,fill=schemaCartaBlu,font=\schemafont\footnotesize\bfseries,minimum size=8mm,inner sep=1pt}
+]
+\node[schema titolo] at (0,0.45) {Metodo di valutazione: un fondamento comune e tre assi di analisi};
+
+% Fondamento trasversale: definisce che cosa viene contato e dove resta la prova.
+\node[schema pannello,minimum width=15cm,minimum height=1.9cm] (fondamento) at (7.5,-0.8) {};
+\node[schema numero,fill=schemaBlu] at (0.55,-0.25) {0};
+\node[schema titolo] at (0.95,-0.25) {Unità di analisi e registrazioni trasversali};
+\node[schema unita] (documento) at (1.25,-1.12) {Documento};
+\node[schema unita] (run) at (3.05,-1.12) {Run};
+\node[schema unita] (voce) at (4.85,-1.12) {Voce};
+\node[schema unita] (elemento) at (6.65,-1.12) {Elemento};
+\draw[schema freccia] (documento.east) -- (run.west);
+\draw[schema freccia] (run.east) -- (voce.west);
+\draw[schema freccia] (voce.east) -- (elemento.west);
+\node[schema corpo,anchor=west] at (8.25,-1.02) {%
+  \textbf{Tracce conservate}\\
+  \texttt{run.json}, snapshot, eventi e asset\\
+  richieste e risposte in \texttt{evidence}};
+
+% Tre assi che raggruppano le restanti sottosezioni.
+\node[schema asse,draw=schemaVerde,fill=schemaCartaVerde!45] (pipeline) at (2.35,-4.95) {};
+\node[schema numero,fill=schemaVerde] at (0.55,-2.95) {1};
+\node[schema etichetta,text width=3.6cm] at (2.65,-3.05) {\textbf{Pipeline e struttura}};
+\draw[schema tratto,draw=schemaVerde!55] (0.35,-3.55) -- (4.35,-3.55);
+\node[schema corpo,anchor=north west] at (0.65,-3.85) {%
+  \textbf{Verifica software}\\
+  Test e prove di accettazione\\[7pt]
+  \textbf{Rappresentazione comune}\\
+  Confronto tra struttura,\\
+  output e fonte};
+
+\node[schema asse,draw=schemaBlu,fill=schemaCartaBlu!55] (studio) at (7.5,-4.95) {};
+\node[schema numero,fill=schemaBlu] at (5.7,-2.95) {2};
+\node[schema etichetta,text width=3.6cm] at (7.8,-3.05) {\textbf{Studio V4 sull'enrichment}};
+\draw[schema tratto,draw=schemaBlu!55] (5.5,-3.55) -- (9.5,-3.55);
+\node[schema corpo,anchor=north west] at (5.8,-3.85) {%
+  \textbf{Disegno V4}\\
+  Selezione mirata e campione\\[5pt]
+  \textbf{Confronto descrittivo}\\
+  Baseline, output e giudizio\\[5pt]
+  \textbf{Misure operative}\\
+  Esclusioni e denominatori\\
+  Durate registrate};
+
+\node[schema asse,draw=schemaOcra,fill=schemaCartaGialla!55] (audit) at (12.65,-4.95) {};
+\node[schema numero,fill=schemaOcra] at (10.85,-2.95) {3};
+\node[schema etichetta,text width=3.6cm] at (12.95,-3.05) {\textbf{Audit e riproducibilità}};
+\draw[schema tratto,draw=schemaOcra!65] (10.65,-3.55) -- (14.65,-3.55);
+\node[schema corpo,anchor=north west] at (10.95,-3.85) {%
+  \textbf{Catena verificata}\\
+  Asset e richiesta\\
+  Risposta e documento finale\\[7pt]
+  \textbf{Integrità e identità}\\
+  Hash, fingerprint e sorgenti\\[7pt]
+  \textbf{Riproducibilità}\\
+  Revisione eseguita\\
+  non riproducibile integralmente};
+
+% Il fondamento comune alimenta tutti gli assi; ciascun asse sostiene una RQ.
+\coordinate (dorsale-sinistra) at (2.35,-2.08);
+\coordinate (dorsale-centro) at (7.5,-2.08);
+\coordinate (dorsale-destra) at (12.65,-2.08);
+\draw[schema tratto,draw=schemaInchiostro,line width=0.8pt]
+  (fondamento.south) -- (dorsale-centro);
+\draw[schema tratto,draw=schemaInchiostro,line width=0.8pt]
+  (dorsale-sinistra) -- (dorsale-destra);
+\fill[schemaInchiostro] (dorsale-sinistra) circle (1.15pt);
+\fill[schemaInchiostro] (dorsale-centro) circle (1.15pt);
+\fill[schemaInchiostro] (dorsale-destra) circle (1.15pt);
+\draw[schema freccia] (dorsale-sinistra) -- (pipeline.north);
+\draw[schema freccia] (dorsale-centro) -- (studio.north);
+\draw[schema freccia] (dorsale-destra) -- (audit.north);
+
+\node[schema rq] (rqone) at (2.35,-8.1) {RQ1};
+\node[schema rq] (rqtwo) at (7.5,-8.1) {RQ2};
+\node[schema rq] (rqthree) at (12.65,-8.1) {RQ3};
+\draw[schema freccia] (pipeline.south) -- (rqone.north);
+\draw[schema freccia] (studio.south) -- (rqtwo.north);
+\draw[schema freccia] (audit.south) -- (rqthree.north);
+\end{tikzpicture}
+\caption{Organizzazione del metodo di valutazione. Le unità e le registrazioni sono trasversali; le altre sottosezioni confluiscono in tre assi complementari, rispettivamente collegati alla rappresentazione comune, all'enrichment V4 e alla verificabilità degli artefatti.}
+\label{fig:metodo-valutazione}
+\end{figure}

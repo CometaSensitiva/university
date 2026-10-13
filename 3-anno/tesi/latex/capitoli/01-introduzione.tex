@@ -1,0 +1,98 @@
+\chapter{Introduzione}
+\label{cap:introduzione}
+
+Questa tesi nasce nel filone di ricerca di Pasquale Di Nardo sull'impiego di assistenti basati su intelligenza artificiale nelle attività industriali. Le criticità osservate nell'uso di un assistente per una macchina per elettroerosione hanno orientato il lavoro verso la preparazione della conoscenza documentale. Il contributo sviluppato è una pipeline di ingestion integrata nell'esecuzione e modulare nella progettazione: a partire da manuali PDF eterogenei, organizza testo, immagini e tabelle in una rappresentazione gerarchica comune, sulla quale operano le successive fasi di arricchimento e verifica.
+
+\section{Assistenza industriale e origine del lavoro}
+\label{sec:assistenza-cognitiva}
+\label{sec:progetto-quadro}
+
+Le attività di conduzione e manutenzione, indicate nel seguito come \emph{operation e maintenance} (O\&M), richiedono di collegare informazioni tecniche e azioni operative. Interpretare un allarme, individuare un componente o eseguire una procedura significa consultare conoscenze distribuite tra manuali, istruzioni ed esperienza del personale. La complessità dei macchinari rende quindi rilevante non soltanto la disponibilità della documentazione, ma anche la possibilità di utilizzarla durante il lavoro \parencite{ludwig2025ontology}.
+
+Gli assistenti digitali offrono un accesso conversazionale a questa conoscenza. Il valore del supporto dipende però dalla sua utilizzabilità nel compito: una spiegazione corretta in termini generali può non bastare a eseguire un'operazione. Per questo la valutazione degli assistenti industriali considera sia il comportamento del sistema sia l'interazione con l'utente \parencite{colabianchi2024assessment}.
+
+In questo contesto si colloca il progetto di ricerca di Di Nardo. Nei primi colloqui di supervisione, il progetto è stato presentato a partire da un assistente basato su modelli linguistici e recupero della conoscenza dai manuali, destinato alle attività di O\&M di una macchina per elettroerosione. Il sistema è eseguito \emph{on-premise}, all'interno dell'organizzazione, senza inviare la documentazione industriale a servizi esterni. Impiega un'architettura \emph{Retrieval-Augmented Generation} (RAG), introdotta nella Sezione~\ref{sec:llm-rag}.
+
+Nella configurazione utilizzata per l'esperimento, il generatore era Qwen3-4B, un modello \emph{text-only} della famiglia Qwen3 \parencite{qwen2025release}. Riceveva la domanda e i passaggi testuali recuperati, non le immagini del manuale. Questa configurazione costituisce il punto di partenza del lavoro, non una dimostrazione di superiorità rispetto alle alternative multimodali.
+
+La campagna sperimentale del progetto si è evoluta da quesiti a risposta multipla all'interazione con un Digital Twin: un ambiente che riproduce l'interfaccia della macchina e permette ai partecipanti di affrontare compiti operativi in simulazione. Il confronto tra uso dell'assistente e consultazione del manuale considera tempi, accuratezza, usabilità mediante System Usability Scale (SUS), carico di lavoro percepito mediante NASA-TLX e situazioni classificate come \emph{critical failures}, rilevanti per la sicurezza o la qualità del prodotto. La Figura~\ref{fig:esperimento-dinardo} riassume le condizioni di supporto e le dimensioni osservate.
+
+\input{figure/esperimento-dinardo}
+
+La prova dell'assistente in laboratorio ha offerto un'occasione concreta per discutere il passaggio dalla spiegazione all'azione. Il sistema poteva fornire indicazioni generali senza aiutare a localizzare un tasto nell'interfaccia o a identificarlo rispetto ai comandi vicini. Nel dialogo con il supervisore, questa distanza è stata riassunta nell'immagine del modello come \enquote{gran teorico}. È emersa così una risorsa non utilizzata: le immagini del manuale, nelle quali una posizione può essere visibile senza essere descritta nel testo.
+
+L'osservazione ha orientato la scelta di approfondire la componente tecnica anziché riprogettare l'esperimento sugli operatori, individuando un limite sul quale intervenire senza attribuire tutti gli errori all'assenza delle immagini. Il successivo confronto ha ampliato il problema: acquisire le figure non basta, se si perdono la gerarchia del manuale e i rapporti tra contenuti. La direzione multimodale ha quindi dato origine a un lavoro di ingestion e strutturazione documentale, nel quale l'enrichment è uno stadio e non l'intero sistema.
+
+\section{LLM e sistemi RAG}
+\label{sec:llm-rag}
+
+I \emph{Large Language Models} (LLM) sono modelli linguistici addestrati su grandi quantità di dati. Nei modelli generativi autoregressivi, il testo viene prodotto progressivamente sulla base della sequenza disponibile, che può includere la richiesta dell'utente e informazioni aggiuntive. La conoscenza appresa nei parametri non coincide però con un archivio aggiornato dei documenti di un'organizzazione: per rispondere su un manuale specifico è utile fornire al modello le fonti pertinenti \parencite{lewis2020rag}. La Figura~\ref{fig:llm-autoregressivo} illustra il ciclo di generazione.
+
+\input{figure/llm-autoregressivo}
+
+Il paradigma RAG combina generazione linguistica e recupero da una base informativa esterna. Durante la preparazione, i documenti vengono elaborati, suddivisi in unità dette \emph{chunk} e indicizzati. Nel recupero vettoriale, gli \emph{embedding} sono rappresentazioni numeriche che permettono di confrontare domanda e contenuti. Quando arriva una richiesta, il sistema recupera le unità pertinenti e le inserisce nel contesto del generatore \parencite{lewis2020rag,amugongo2025review}. La Figura~\ref{fig:architettura-rag} distingue preparazione e interrogazione e colloca il contributo della tesi prima del chunking.
+
+\input{figure/architettura-rag}
+
+L'accesso a fonti esterne non garantisce la correttezza dell'output. Il recupero può selezionare contenuti non pertinenti e il generatore può interpretarli erroneamente. Inoltre, un errore può precedere entrambe le fasi: se un'informazione è stata persa nella preparazione del documento, non sarà disponibile nell'indice \parencite{amugongo2025review}.
+
+In questa tesi, \emph{ingestion documentale} indica l'acquisizione e la trasformazione dei manuali fino alla produzione di una rappresentazione strutturata, corredata da provenienza e controlli. Il confine precede il chunking e permette di valutarne gli esiti senza assumere una specifica strategia di recupero o generazione. Anche un futuro assistente multimodale richiederebbe fonti acquisite e contestualizzate: cambiare il generatore non elimina il problema documentale.
+
+\section{Ingestion di manuali eterogenei e rappresentazione comune}
+\label{sec:rappresentazione-manuali}
+
+Un manuale tecnico non è una semplice sequenza di frasi. Capitoli e sottocapitoli delimitano l'ambito delle istruzioni; figure e tabelle completano descrizioni che, isolate, possono risultare insufficienti. La rappresentazione deve quindi conservare sia i contenuti sia le relazioni che ne permettono l'interpretazione \parencite{auer2024docling}.
+
+Occorre distinguere due perdite possibili. Un trattamento text-only esclude l'informazione disponibile soltanto nelle immagini; una rappresentazione piatta può conservare le parole ma indebolirne i collegamenti con sezioni e altri elementi. Includere le figure non ricostruisce automaticamente la gerarchia, così come riconoscere i capitoli non rende accessibile il significato di un diagramma. Il \emph{document understanding} affronta il riconoscimento degli elementi e della loro organizzazione: OCR, analisi del layout e riconoscimento tabellare svolgono compiti distinti all'interno di questa trasformazione \parencite{auer2024docling}.
+
+Per elaborare un PDF occorre sia acquisirne i contenuti sia individuare la struttura di capitoli e sottocapitoli. La pipeline riconosce le caratteristiche del file (\emph{detection}) e seleziona il percorso adatto (\emph{routing}). Il profilo \texttt{digital\_outline} usa l'indice strutturato incorporato nel PDF, detto \emph{outline}. Il profilo \texttt{digital\_reconstructed} lavora invece su un PDF digitale privo di outline e ne ricostruisce l'indice gerarchico (TOC) a partire dai segnali presenti nel documento. Il profilo \texttt{scanned\_ocr} acquisisce i contenuti mediante OCR; per la gerarchia usa l'outline, se disponibile, oppure la ricostruisce. Acquisire i contenuti tramite OCR e ricostruire la struttura restano quindi due compiti distinti.
+
+I tre percorsi fanno parte dello stesso workflow e producono un documento organizzato secondo il modello comune \texttt{ManualDocument}. In questo modello, testo, immagini e tabelle sono collegati alle pagine e alle sezioni di appartenenza: acquisire o ricostruire la TOC serve a costruire e conservare tali relazioni. Le fasi successive, tra cui l'arricchimento delle immagini e la serializzazione delle tabelle, lavorano sullo stesso modello, qualunque sia il profilo utilizzato. Solo dopo queste lavorazioni il documento viene salvato nel bundle come \texttt{manual.json}. I dettagli implementativi sono descritti nel Capitolo~\ref{cap:metodi}.
+
+\section{Contenuti multimodali e arricchimento documentale}
+\label{sec:multimodalita}
+
+Le immagini possono indicare dove si trova un componente, come sono collegati due elementi o quale aspetto presenta una schermata. Le tabelle dipendono dalle associazioni tra righe, colonne e intestazioni: conservare i valori senza queste relazioni può alterarne il significato. Acquisizione, organizzazione e contestualizzazione degli asset sono pertanto necessarie anche prima di applicare un modello generativo \parencite{auer2024docling,charan2026fmea}.
+
+L'enrichment aggiunge un livello interpretativo alla rappresentazione. I \emph{Vision-Language Models} (VLM) elaborano immagini e testo e possono produrre descrizioni linguistiche del contenuto visuale, anche utilizzandone il contesto documentale. Il \emph{captioning} permette così di rendere parte di tale informazione utilizzabile attraverso strumenti di ricerca testuale \parencite{riedler2024beyond}.
+
+Nel sistema sviluppato, l'enrichment è un modulo separato dall'acquisizione e dall'assemblaggio, che opera sul documento canonico tramite un'interfaccia di caption provider. Il provider concreto utilizzato nello studio impiega un modello locale per descrivere le immagini. La serializzazione delle tabelle ha invece una responsabilità distinta: organizza i dati già estratti secondo regole fisse, senza un modello generativo. Il captioning può essere disattivato per controllare gli altri passaggi; queste esecuzioni diagnostiche non verificano però il processo completo e vanno distinte da quelle con captioning attivo.
+
+Una descrizione generata può rendere esplicite informazioni utili presenti nell'immagine, ma può anche omettere dettagli o interpretarli in modo errato. Non deve quindi sostituire la fonte originale: occorre conservare entrambe e mantenere il collegamento con la pagina e la sezione del manuale da cui provengono. La valutazione della pipeline deve perciò verificare non solo la struttura del documento e i collegamenti tra i suoi elementi, ma anche la correttezza e l'utilità delle descrizioni aggiunte.
+
+\section{Stato dell'arte}
+\label{sec:stato-arte}
+
+Questa rassegna esamina alcuni lavori utili a capire come preparare i contenuti dei manuali per un assistente industriale. Il confronto segue quattro aspetti: quali operazioni di acquisizione sono automatiche, come viene conservata la struttura del documento, come sono trattati immagini e tabelle e che cosa viene valutato. L'obiettivo è collocare il lavoro della tesi rispetto agli studi selezionati, non fornire una revisione sistematica dell'intera letteratura.
+
+Un primo gruppo di studi riguarda l'impiego degli assistenti nelle attività industriali. \textcite{colabianchi2024assessment} valutano l'interazione con l'assistente e le prestazioni nelle attività di assemblaggio. \textcite{ludwig2025ontology} studiano invece un assistente per la manutenzione, concentrandosi sul recupero di informazioni da un'ontologia e sulla qualità delle risposte. Altri lavori affrontano l'esecuzione locale dei sistemi, sia per l'assistenza alle macchine utensili sia per la consultazione di documenti nel settore energetico \parencite{cho2026onpremise,lee2025security}. Questi studi aiutano a definire il contesto applicativo della tesi. Valutare l'assistente nel suo insieme, però, non permette necessariamente di stabilire quanto i risultati dipendano dalla preparazione dei documenti.
+
+Un secondo gruppo di lavori si concentra sulla struttura dei manuali e sui collegamenti tra i loro contenuti. \textcite{nam2025manual} organizzano la gerarchia del documento e le associazioni tra testo e immagini, ricorrendo anche a interventi manuali. \textcite{knollmeyer2025document} usano invece la struttura documentale per costruire un grafo a supporto del recupero delle informazioni. È quindi importante distinguere due attività: ricostruire e conservare le relazioni tra i contenuti, come avviene nell'ingestion, e usare tali relazioni per cercare informazioni, come avviene in un sistema GraphRAG. Per confrontare questi approcci con la pipeline della tesi, occorre chiarire quali passaggi sono automatici, quali richiedono intervento umano e quali appartengono al successivo recupero delle informazioni.
+
+La qualità dell'estrazione resta un problema anche quando si migliora il recupero. \textcite{krainovskikh2026domain} riportano errori dovuti a tabelle e diagrammi non acquisiti dall'estrazione testuale e a riferimenti distribuiti tra sezioni diverse. Il problema può quindi nascere prima della ricerca: se un contenuto manca o perde il collegamento con il proprio contesto, il sistema dispone di una base informativa incompleta. Per questo la verifica dell'ingestion deve controllare sia i contenuti estratti sia la gerarchia e le associazioni tra gli elementi, non soltanto il formato dell'output.
+
+Per le immagini, \textcite{riedler2024beyond} confrontano due modi di rappresentarne il contenuto ai fini del recupero: embedding multimodali e sintesi testuali. Nelle loro prove i risultati sono simili, con un lieve vantaggio delle sintesi nella maggior parte delle metriche. Le sintesi servono però a trovare le immagini originali, che vengono poi fornite al generatore: il confronto riguarda quindi il recupero delle immagini, non una presunta superiorità dei generatori che ricevono soltanto testo. Anche \textcite{amaram2026assistant} trasformano le figure in descrizioni linguistiche, ma segnalano passaggi di acquisizione ancora manuali. Questi lavori mostrano perché occorre considerare insieme la rappresentazione delle immagini e il processo necessario per ottenerla.
+
+Nel complesso, gli studi esaminati offrono soluzioni per acquisire, organizzare e utilizzare i contenuti dei manuali, ma non sempre valutano separatamente la qualità dei passaggi documentali. La tesi si concentra su questo livello: integra strategie di acquisizione diverse in un'unica pipeline e verifica la rappresentazione prodotta prima del suo impiego in un sistema RAG. Il contributo non consiste nell'introdurre singolarmente gerarchia, multimodalità o esecuzione locale, ma nel combinarle e valutarne il funzionamento sui manuali dello studio.
+
+\section{Contributo, perimetro e domande di ricerca}
+\label{sec:posizionamento}
+\label{sec:obiettivo}
+
+L'obiettivo della tesi è progettare e validare una pipeline che prepari manuali tecnici industriali per un successivo impiego in sistemi RAG. Il contributo consiste nell'integrare il processo dal PDF al bundle finale: riconoscere le caratteristiche del documento, scegliere il percorso di acquisizione e ricostruire o conservare la TOC e la gerarchia. Il contratto documentale comune separa i profili dalle lavorazioni successive, con responsabilità distinte per arricchimento, serializzazione, registrazione della provenienza, controlli e pubblicazione.
+
+L'interfaccia a riga di comando (CLI) riceve il PDF e invoca l'orchestratore del backend, che coordina le fasi di elaborazione. Il nucleo dell'ingestion è separato dalla CLI: questa permette di utilizzarlo, non coincide con la pipeline né costituisce un contributo scientifico autonomo. Il risultato è un \emph{run bundle}, un insieme di file con documento strutturato, asset estratti, metadati ed esiti dei controlli. Le informazioni di indice incluse descrivono e organizzano i contenuti del bundle: non costituiscono l'indice usato da un sistema RAG per cercare le risposte.
+
+Come mostra la Figura~\ref{fig:architettura-rag}, il lavoro si ferma alla preparazione dei documenti. Restano esclusi la suddivisione in chunk, il calcolo degli embedding, l'indicizzazione RAG, il recupero delle informazioni e la generazione delle risposte. Dopo lo sviluppo della pipeline non è stato ripetuto il confronto con gli operatori: non si può quindi affermare che il nuovo trattamento dei manuali migliori le prestazioni dell'assistente. Tempi, accuratezza, SUS, NASA-TLX e critical failures riguardano l'esperimento che ha motivato la tesi, non la validazione qui condotta.
+
+La validazione verifica invece come la pipeline elabora i diversi PDF e quale qualità hanno i documenti prodotti. Vengono esaminati i contenuti acquisiti, la gerarchia, i collegamenti tra gli elementi, le descrizioni aggiunte e la possibilità di risalire alle fonti e agli esiti dei controlli. Si distinguono due aspetti: la conformità tecnica, ossia il rispetto dei requisiti di formato e coerenza dell'output, e la correttezza semantica, cioè la fedeltà dei contenuti e delle loro associazioni al manuale originale. Superare i controlli tecnici non basta a garantire la seconda: anche errori e limiti devono entrare nella valutazione.
+
+\label{sec:rq}
+Il lavoro risponde quindi a tre domande di ricerca:
+\begin{description}
+    \item[RQ1 -- Ingestion integrata.] Come ottenere una rappresentazione gerarchica comune da manuali PDF eterogenei, usando strategie di acquisizione diverse? Quali limiti emergono nel conservare i contenuti e i collegamenti tra gli elementi?
+    \item[RQ2 -- Arricchimento.] Rispetto ai contenuti già estratti, quali informazioni aggiunge l'arricchimento multimodale locale e quali omissioni o errori introduce?
+    \item[RQ3 -- Verificabilità.] Come usare le informazioni di provenienza e i controlli per verificare i risultati della pipeline, distinguendo la conformità tecnica dalla correttezza semantica?
+\end{description}
+
+Le risposte valgono per i documenti e le esecuzioni analizzati nello studio. Il Capitolo~\ref{cap:metodi} descrive la pipeline e il metodo di valutazione; il Capitolo~\ref{cap:risultati} presenta e discute i risultati; il Capitolo~\ref{cap:conclusioni} risponde alle domande di ricerca e distingue i possibili miglioramenti della pipeline dalle future verifiche del suo impiego in un sistema RAG.

@@ -1,0 +1,255 @@
+\chapter{Risultati e discussione}
+\label{cap:risultati}
+
+Il capitolo presenta gli esiti della pipeline distinguendo le prove storiche riportate nella matrice di accettazione dagli artefatti conservati del ciclo V4. Le prime documentano la copertura integrale dei tre profili; sui secondi si basa l'analisi di due esecuzioni selettive, dei loro elementi e delle 17 richieste di captioning. Come introdotto nel Capitolo~\ref{cap:metodi}, la copertura dei manuali completi e l'accettazione delle versioni precedenti restano riferite alle prove storiche, mentre i campioni finali descrivono il nuovo setup.
+
+Per valutare la qualità della rappresentazione, si confrontano puntualmente i ritagli, i testi acquisiti e le risposte conservate. Questa analisi è distinta dalle schede qualitative richiamate nel diario, assenti dall'archivio del progetto, e resta circoscritta agli esempi discussi, senza un'annotazione indipendente dell'intero corpus. Gli esempi rendono verificabili aggiunte informative, errori e limiti dei controlli; la valutazione resta descrittiva, senza un punteggio generale di qualità.
+
+\section{Esiti della pipeline integrata per profilo}
+\label{sec:risultati-struttura}
+
+\subsection{Copertura integrale documentata}
+
+La matrice di accettazione riporta la produzione di una rappresentazione gerarchica per ciascuno dei tre profili. La Tabella~\ref{tab:risultati-storici} sintetizza le prove complete dello schema 1.0, mantenendole separate dai risultati successivi dello schema 1.1.\footnote{\raggedright \path{tesi-di-nardo/docs/acceptance-matrix.md}, sezione ``Evidenza storica per profilo --- schema 1.0''. Per il digitale con outline la run è \path{case1-full-no-enrich-20260712c}; per quello ricostruito \path{case2-full-no-enrich-20260712b}; il caso OCR è documentato mediante esecuzione reale e replay delle risposte dei worker. I relativi bundle integrali non sono inclusi nell'archivio del progetto.}
+
+\begin{table}[!htbp]
+\centering
+\caption{Esiti integrali dello schema 1.0 dalla matrice storica, non da nuove esecuzioni. Le prove senza enrichment, incluso il replay OCR, superano i 29 controlli dello schema ma non il gate dell'enrichment.}
+\label{tab:risultati-storici}
+\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xrrrr@{}}
+\toprule
+Profilo & \shortstack{Pagine\\elaborate/totali} & Capitoli & Elementi & Asset \tabularnewline
+\midrule
+Digitale con outline & 1112/1112 & 963 & 14.047 & 2355 \\
+Digitale ricostruito & 1112/1112 & 958 & 14.047 & 2355 \\
+Scansione OCR & 34/34 & 15 & 350 & 65 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+I due PDF digitali producono lo stesso numero di elementi e asset, ma non la stessa TOC. Questo è coerente con l'uso dello stesso parser dei contenuti e di due strategie strutturali diverse sul medesimo manuale di base. I conteggi indicano che il cambiamento del percorso strutturale ha lasciato invariata la consistenza quantitativa dell'acquisizione riportata; l'identità semantica degli elementi e la correttezza delle associazioni richiedono invece un confronto dei contenuti.
+
+Per il profilo ricostruito la matrice registra 958 voci contro i 963 segnalibri della variante originale. Riporta inoltre un confronto su titoli, pagine, ordine e livelli; tuttavia, l'assenza dell'harness e delle corrispondenze elementari non permette di ricalcolarlo. Anche i riepiloghi dei titoli corrispondenti e di quelli mancanti o extra richiederebbero il dettaglio delle regole di abbinamento per essere riconciliati. Le differenze non vengono quindi trasformate qui in una nuova stima di precision o recall.
+
+Nel caso scansionato, la prova completa documenta un indice individuato a pagina 5, uno scarto di numerazione pari a una pagina e 15 riferimenti risolti su 15. La matrice riferisce anche l'ispezione dei ritagli delle pagine 26 e 33, acquisite con orientamento a 180 gradi. Questi risultati sostengono l'accettazione del percorso sul WM250 considerato, non su qualunque scansione o impaginazione.
+
+\subsection{Esiti delle esecuzioni del ciclo V4}
+
+Le due run V4 del 15 settembre 2026 terminano con codice di uscita zero e pubblicano un bundle. Entrambi i manifest dichiarano \texttt{experimental}, mentre entrambi i report salvati riportano \texttt{passed} con 30 controlli superati. La Tabella~\ref{tab:risultati-v4} riassume la rappresentazione ottenuta.\footnote{Dati ricavati da \path{bundle/run.json}, \path{bundle/manual.json}, \path{bundle/validation.json} e \path{evidence/outcome.json} nei casi \texttt{outline} e \texttt{scanned} di \path{tesi-di-nardo/enrichment-v4-final-20260915}.}
+
+\begin{table}[!htbp]
+\centering
+\caption{Bundle selettivi V4, entrambi sperimentali. I capitoli non rientrano negli elementi: l'outline digitale copre l'intero PDF, la struttura OCR le sole pagine selezionate. Le caption conservate includono quelle da rivedere.}
+\label{tab:risultati-v4}
+\small
+\begin{tabularx}{\textwidth}{@{}Xrr@{}}
+\toprule
+Indicatore & Digitale con outline & Scansione OCR \\
+\midrule
+Pagine elaborate / totali & 6/1112 & 4/34 \\
+Pagine con elementi / elaborate & 6/6 & 4/4 \tabularnewline
+Capitoli e voci TOC disponibili & 963 & 10 \tabularnewline
+Elementi canonici & 70 & 47 \\
+Elementi di testo & 39 & 24 \\
+Elementi titolo & 15 & 14 \\
+Immagini & 16 & 9 \\
+Tabelle & 0 & 0 \\
+Caption conservate nel documento & 8 & 5 \\
+Controlli superati / previsti & 30/30 & 30/30 \tabularnewline
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Nel digitale la presenza di 963 capitoli non significa che tutte le sezioni siano state elaborate: l'outline è acquisito dall'intero PDF, mentre il contenuto è limitato alle sei pagine richieste. Nello scansionato la struttura deriva invece dalle sole quattro pagine selezionate. Poiché l'indice stampato a pagina 5 non è incluso, viene attivato il fallback sui titoli OCR, che produce dieci capitoli. La differenza rispetto alle quindici voci della prova completa è quindi legata anche alla selezione delle pagine e non prova, da sola, un peggioramento del motore.
+
+Le due esecuzioni mostrano la convergenza di parser e strutture differenti sullo stesso contratto \texttt{ManualDocument}. Gli artefatti prodotti confermano la coerenza dei file; la completezza semantica dell'intero manuale resta fuori dall'obiettivo di queste due run.
+
+\subsection{Durate registrate}
+
+Le registrazioni distinguono la durata dell'esecuzione complessiva da quella dell'enrichment. Nel caso digitale sono documentati circa 77,48 secondi per la CLI e 64,79 secondi per l'enrichment; nel caso OCR circa 480,47 e 58,74 secondi, rispettivamente. I valori provengono da \texttt{outcome.json} e dal \texttt{call.json} dello stadio di enrichment, non dalla differenza approssimata tra orari visualizzati.
+
+Il tempo esterno all'enrichment comprende operazioni diverse, tra cui preparazione, parsing, rendering e controlli. Il maggiore tempo totale della selezione OCR non può essere attribuito al captioning, né trasformato in una graduatoria di velocità fra parser: cambiano documento, numero di pagine e lavoro svolto. Si tratta di due osservazioni operative senza repliche, non di misure medie di throughput.
+
+La Figura~\ref{fig:durate-v4} separa visivamente l'enrichment dal resto del tempo CLI, mantenendo una scala comune e indicando i diversi carichi delle due selezioni.
+
+\input{figure/durate-v4}
+
+\section{Qualità della rappresentazione comune}
+\label{sec:risultati-asset}
+
+\subsection{Gerarchia coerente e associazioni non equivalenti}
+
+I report V4 non segnalano identificativi duplicati o incoerenze dei riferimenti padre--figlio. Ciò non esclude associazioni documentali semanticamente troppo deboli. Un caso concreto compare nella pagina 10 del WM250: le tre immagini della pagina sono collocate nel capitolo \enquote{8. Cross Slide Lock}, mentre la prima è richiamata dai paragrafi relativi ai comandi A, B e C della Figura 11 e la seconda dai selettori D ed E della Figura 12.
+
+Per \texttt{paddle-image-0010-0001}, il prompt effettivamente salvato usa i titoli \enquote{Emergency Button ON/OFF Switch}, \enquote{Change-over Switch} e \enquote{Variable Speed Control Switch}. Per \texttt{paddle-image-0010-0002} usa invece \enquote{Feed Direction Selector} e \enquote{Feed Rate Selector}. Il recupero del contesto tramite richiamo alla figura seleziona dunque sezioni più pertinenti rispetto al padre canonico.\footnote{Confronto tra \path{scanned/bundle/manual.json} e le richieste \path{scanned/evidence/captions/0004/call.json} e \path{scanned/evidence/captions/0005/call.json}, sotto l'archivio V4. I testi associati sono conservati anche nella snapshot precedente all'enrichment.}
+
+Questo risultato mostra sia un recupero utile sia un limite: il contesto della richiesta viene corretto localmente, ma il riferimento gerarchico dell'immagine non viene aggiornato. Un utilizzatore del solo albero documentale riceverebbe ancora l'associazione al capitolo finale della pagina. Non si può quindi considerare risolto il problema dell'appartenenza solo perché il prompt usa informazioni pertinenti.
+
+La Figura~\ref{fig:gerarchia-contesto-wm250} affianca il ritaglio originale alle due associazioni documentali, rendendo esplicito che il recupero del contesto non corregge automaticamente l'albero.
+
+\input{figure/gerarchia-contesto-wm250}
+
+Anche le tavole delle pagine 26 e 33 rimangono sotto lo stesso capitolo, conseguenza della struttura parziale ottenuta senza l'indice. Nelle rispettive richieste capitolo e contesto locale sono però dichiarati non disponibili: il modello non riceve come argomento il titolo di una sezione lontana e non pertinente. La precauzione riduce un possibile condizionamento della descrizione, senza ricostruire la struttura mancante.
+
+\subsection{Asset conservati ed effetti del filtro}
+
+Tutte le 25 immagini dei due campioni conservano un riferimento a un asset presente nel bundle. Il confronto fra snapshot prima e dopo l'enrichment non evidenzia modifiche al testo acquisito, ai percorsi delle immagini o alla struttura dei capitoli: le differenze riguardano caption, provenance e campi di traccia associati alle esclusioni. Questa separazione permette di riesaminare l'estrazione senza confonderla con il contenuto generato.
+
+Il filtro geometrico esclude sette immagini digitali e una scansionata. Sei delle sette esclusioni digitali appartengono alla pagina 98, dove il parser conserva sia la tastiera complessiva sia ritagli più piccoli; la settima è a pagina 352. Gli elementi esclusi non vengono eliminati. Il filtro evita così chiamate ripetute su frammenti di una stessa figura, ma non ricompone né deduplica la rappresentazione canonica.
+
+Il caso scansionato rende evidente il costo della regola. Il ritaglio \texttt{paddle-image-0008-0003} occupa circa l'1,76\% della pagina e viene escluso perché inferiore al 2\%. Come mostra la Figura~\ref{fig:crop-escluso-wm250}, contiene tuttavia due manopole e simboli di comando riconoscibili: il filtro geometrico esclude quindi anche un asset con informazione tecnica. Non è stata generata una caption per questo asset e non è possibile attribuirgli un esito del VLM.
+
+\input{figure/filtro-geometrico-wm250}
+
+Il caso mostra il costo informativo della riduzione delle chiamate e l'utilità della conservazione degli scarti per valutarlo. L'effetto complessivo di un'eventuale eliminazione della soglia resta da verificare: la regola funziona come politica operativa, non come classificatore semantico validato.
+
+\subsection{Tabelle: risultati storici e limite del campione finale}
+
+Per lo schema 1.1 la matrice di accettazione riporta, in ciascuno dei due PDF digitali completi, 267 tabelle: 263 con serializzazione \texttt{structured}, quattro \texttt{unavailable} e nessuna in fallback, per 2341 righe serializzate. Le quattro indisponibilità corrispondono agli stessi elementi delle due varianti del manuale, per i quali Docling non aveva prodotto testo tabellare. Il ritaglio rimane disponibile, ma la serializzazione non ricostruisce celle assenti nell'estrazione.
+
+Nel WM250 completo la matrice documenta dieci tabelle, nove strutturate e una indisponibile, per 289 righe. L'indisponibilità riguarda la pagina 32. Le selezioni digitali delle pagine 3 e 1004 documentano inoltre due tabelle strutturate e sei righe, inclusa la tabella degli allarmi EX1100--EX1104. Questi dati provengono dalle prove storiche, non dai due bundle V4.\footnote{\path{tesi-di-nardo/docs/acceptance-matrix.md}, sezione ``Chiusura dello schema 1.1'' e tabella dei run con prefisso \texttt{case1-schema11}, \texttt{case2-schema11} e \texttt{case3-schema11}.}
+
+La distinzione fra output strutturato e testo indisponibile è un risultato utile della rappresentazione: il consumatore non riceve tutti i casi come se fossero tabelle complete. Non è invece dimostrata l'accuratezza di ogni cella o relazione intestazione--valore. Le caption tabellari riportate nelle vecchie selezioni appartengono al setup storico; nel workflow finale le tabelle sono serializzate senza essere inviate al VLM. Poiché le selezioni V4 contengono zero elementi \texttt{table}, non forniscono una nuova misura empirica di qualità tabellare.
+
+\section{Esiti dell'arricchimento multimodale}
+\label{sec:risultati-enrichment}
+
+\subsection{Bilancio delle richieste e delle caption}
+
+Le 17 chiamate finali si distribuiscono in otto esiti \texttt{enriched}, cinque \texttt{review\_required} e quattro \texttt{failed}. Le otto immagini saltate prima della chiamata non appartengono a questo denominatore. La Tabella~\ref{tab:esiti-caption} conserva la distinzione tra filtraggio, generazione e ammissibilità finale.
+
+\begin{table}[!htbp]
+\centering
+\caption{Bilancio V4 da \texttt{diagnostics/enrichment.json} e \texttt{manual.json}. I gruppi descrivono stadi diversi e non vanno sommati tra loro. Tutti i 25 asset restano conservati; l'ammissibilità non misura l'accuratezza semantica.}
+\label{tab:esiti-caption}
+\small
+\begin{tabularx}{\textwidth}{@{}Xrrr@{}}
+\toprule
+Fase e conteggio & Digitale & Scansione & Totale \tabularnewline
+\midrule
+\multicolumn{4}{@{}l}{\textbf{Acquisizione e filtro: 25 immagini}} \tabularnewline
+Immagini acquisite & 16 & 9 & 25 \\
+Escluse dal filtro prima della chiamata & 7 & 1 & 8 \tabularnewline
+Richieste al provider & 9 & 8 & 17 \\
+\midrule
+\multicolumn{4}{@{}l}{\textbf{Generazione: 17 richieste, tre esiti disgiunti}} \tabularnewline
+\texttt{enriched}: ammissibile secondo la politica & 7 & 1 & 8 \tabularnewline
+\texttt{review\_required}: da rivedere & 1 & 4 & 5 \tabularnewline
+\texttt{failed}: risposta fuori contratto & 1 & 3 & 4 \tabularnewline
+\midrule
+\multicolumn{4}{@{}l}{\textbf{Conservazione nel documento finale}} \tabularnewline
+Caption presenti (ammissibili + da rivedere) & 8 & 5 & 13 \tabularnewline
+Di cui con inclusione prevista attiva & 7 & 1 & 8 \tabularnewline
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Il rapporto otto su diciassette descrive le richieste che producono una caption ammissibile secondo la politica implementata. Non è una misura di accuratezza. Delle tredici caption presenti, cinque sono conservate per la revisione ma escluse dall'inclusione prevista; le altre otto sono ammissibili per l'uso successivo secondo la politica.
+
+\subsection{Aggiunte supportate e informazioni già disponibili}
+
+Nell'immagine digitale di pagina 73, \texttt{docling-image-0073-0001}, la caption nomina le fasi U, V e W con le sigle L1, L2 e L3, il riferimento QF1 e la terra di protezione PE. Queste etichette sono visibili nel ritaglio. L'output converte quindi dettagli grafici in testo esplicito, pur essendo marcato per revisione a causa della natura elettrica del contenuto.
+
+Il guadagno informativo non coincide con l'intera descrizione: il testo di contesto già menziona cavo, interruttore QF1 e avvertenza di spegnimento. La presenza di tali informazioni nella caption non è una scoperta visuale. Il contributo osservabile è più circoscritto e riguarda la trascrizione e l'organizzazione di etichette che il contesto fornito non enumerava nello stesso modo. Il caso mostra che una descrizione esclusa per ragioni prudenziali può contenere informazioni supportate; lo stato tecnico non è un giudizio globale sul suo contenuto.
+
+Nella seconda immagine OCR di pagina 10, \texttt{paddle-image-0010-0002}, la caption identifica i selettori D ed E e collega la figura all'avanzamento del carrello. Tuttavia, il prompt contiene già i paragrafi \enquote{Feed Direction Selector} e \enquote{Feed Rate Selector}. Parte della descrizione riformula pertanto la baseline testuale. Il confronto non consente di attribuire al solo canale visuale la comprensione della funzione dei comandi, né dimostra un miglioramento del loro recupero mediante ricerca.
+
+\subsection{Errori presenti anche nelle caption accettate}
+
+Un controesempio diretto alla coincidenza fra formato e correttezza è fornito dall'immagine \texttt{docling-image-0225-0010}. La risposta descrive una barra con \enquote{10 pulsanti quadrati neri}; nel ritaglio sono visibili dodici pulsanti. La stessa risposta coglie correttamente l'evidenziazione del primo mediante un cerchio rosa, ma il conteggio è errato. La caption, lunga 486 caratteri, riceve \texttt{enriched} e l'immagine mantiene l'inclusione prevista attiva.
+
+La Figura~\ref{fig:errore-caption-menu} permette di confrontare il conteggio visibile con l'affermazione generata e con lo stato assegnato.
+
+\input{figure/audit-caption-menu}
+
+La descrizione della schermata digitale di pagina 228, \texttt{docling-image-0228-0013}, introduce invece l'espressione \enquote{posizionamento robotico}. La fonte contestuale riguarda le coordinate e i punti utente della macchina ROBOCUT e non giustifica tale qualificazione. La risposta viene esclusa per lunghezza, non perché il controllo abbia riconosciuto l'interpretazione non supportata. Il motivo tecnico del fallimento e il problema semantico osservato devono quindi essere annotati separatamente.
+
+Questi esempi non permettono di stimare il tasso di errore dell'intero campione. Consentono però di escludere una conclusione più forte ma ingiustificata: nessuno degli stati automatici garantisce che tutti i dettagli della caption siano fedeli. Un testo formalmente corretto può includere errori insieme a osservazioni esatte.
+
+\subsection{Omissioni e comportamento dei controlli di revisione}
+
+Per la tavola esplosa OCR di pagina 26, \texttt{paddle-image-0026-0001}, la risposta si concentra su categorie generiche quali ingranaggi, cuscinetti e trasmissione. Non riproduce le associazioni fra i numerosi riferimenti numerati e le parti; una descrizione così sintetica non sostituisce la tavola quando occorre identificare un componente specifico. Il limite di otto elementi nel prompt è compatibile con questa compressione, ma una sola esecuzione non consente di attribuirgli causalmente tutte le omissioni.
+
+La caption classifica l'immagine come \enquote{schema/diagramma} e menziona un \enquote{motore elettrico}. La diagnostica richiede revisione per schema elettrico. Il comportamento è coerente con la regola lessicale implementata, che cerca termini elettrici nei campi descrittivi di un diagramma; non dimostra però che la tavola sia uno schema di cablaggio. L'asset è una rappresentazione esplosa di un gruppo meccanico. Il caso mostra come un controllo prudenziale possa intercettare un'espressione della risposta senza classificare semanticamente il documento sorgente.
+
+Gli altri tre casi OCR da rivedere sono \texttt{paddle-image-0008-0004}, \texttt{paddle-image-0010-0003} e \texttt{paddle-image-0033-0001}. Il motivo salvato è una contraddizione tra la dichiarazione di assenza di incertezze e una lettura indicata come non possibile. Il controllo opera su formulazioni linguistiche: non verifica autonomamente se il dettaglio sia illeggibile, assente o semplicemente non pertinente. La segnalazione è quindi un invito alla revisione e può essere conservativa; non equivale a una valutazione umana già svolta.
+
+Nel complesso, il ciclo V4 evidenzia aggiunte supportate, ripetizioni della baseline, omissioni e interpretazioni errate. Non fornisce una misura di beneficio netto dell'enrichment. Tale conclusione non nega che alcune caption siano informative: distingue l'esistenza di contributi utili dalla dimostrazione di un miglioramento complessivo e trasferibile.
+
+\section{Esiti dei controlli, fallimenti e tracciabilità}
+\label{sec:errori}
+
+\subsection{Fallimenti delle caption senza perdita del bundle}
+
+Tutti i quattro esiti \texttt{failed} delle richieste V4 sono associati al superamento del limite di 1200 caratteri. Le risposte restano conservate nelle evidenze del provider, ma non vengono pubblicate come caption generate nel documento. Le lunghezze riguardano il testo normalizzato, non i token o i byte HTTP. Le chiamate escluse sono D07 (1207 caratteri; eccedenza 7), S01 (1370; eccedenza 170), S02 (1360; eccedenza 160) e S04 (1210; eccedenza 10): le sigle identificano le registrazioni digitali e OCR usate nel grafico.
+
+La Figura~\ref{fig:lunghezze-caption-v4} colloca le quattro esclusioni rispetto alle altre tredici risposte e alla soglia del contratto. Include anche le risposte non pubblicate come caption, evitando di rappresentare soltanto gli esiti conservati nel documento.
+
+\input{figure/lunghezze-caption-v4}
+
+Le eccedenze di sette e dieci caratteri rendono evidente la natura rigida del contratto: l'esclusione non è proporzionale alla qualità del contenuto. Non ne consegue che sia corretto troncare automaticamente le risposte o aumentare la soglia sulla base di questi soli esempi. Entrambe le modifiche cambierebbero il trattamento dell'output e richiederebbero nuove verifiche, in particolare per non perdere il campo delle incertezze.
+
+Diversamente dall'esito V3 descritto nel diario, nel quale le caption fuori contratto avevano impedito la pubblicazione, le due run V4 mantengono gli altri risultati e pubblicano bundle sperimentali. La documentazione V3 è evidenza storica, non un'esecuzione qui ripetuta; la continuità V4 è invece osservabile negli artefatti. Il miglioramento sostenuto dai dati riguarda la gestione del fallimento locale, non un aumento dimostrato dell'accuratezza delle descrizioni.
+
+\FloatBarrier
+\subsection{Validazione e gate di promozione}
+
+I report salvati superano tutti i 30 controlli dello schema 1.1. Le ragioni che impediscono lo stato \texttt{validated} sono leggibili separatamente nella diagnostica di promozione, riportata nella Tabella~\ref{tab:gate-v4}.
+
+\begin{table}[!htbp]
+\centering
+\caption{Gate di promozione da \texttt{diagnostics/promotion.json}. ``No'' indica un requisito non soddisfatto, non necessariamente incoerenza tecnica. Il requisito sull'enrichment considera anche gli errori delle singole richieste.}
+\label{tab:gate-v4}
+\small
+\begin{tabularx}{\textwidth}{@{}Xcc@{}}
+\toprule
+Requisito di promozione & Digitale & Scansione \tabularnewline
+\midrule
+Documento elaborato integralmente\newline{\footnotesize\texttt{document.full}} & No & No \tabularnewline
+Enrichment configurato e senza errori\newline{\footnotesize\texttt{enrichment.configured}} & No & No \tabularnewline
+Identità delle caption coerente\newline{\footnotesize\texttt{captions.identity}} & Sì & Sì \tabularnewline
+Nessuna caption da rivedere\newline{\footnotesize\texttt{enrichment.review\_free}} & No & No \tabularnewline
+Nessun avviso ostativo\newline{\footnotesize\texttt{warnings.nonconsequential}} & Sì & No \tabularnewline
+Profilo accettato\newline{\footnotesize\texttt{profile.accepted}} & Sì & Sì \tabularnewline
+Strategia strutturale accettata\newline{\footnotesize\texttt{structure.accepted}} & Sì & No \tabularnewline
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Per entrambi i casi pesano la selezione parziale, i fallimenti del captioning e gli elementi da rivedere. Nel digitale gli avvisi su due corrispondenze normalizzate dei titoli non impediscono il superamento del gate sugli avvisi. Nel caso scansionato incidono anche i limiti della struttura parziale e il fallback. Il profilo OCR risulta accettato tramite l'evidenza storica registrata, ma questa accettazione non basta a promuovere una run che ne utilizza un percorso strutturale meno affidabile.
+
+La combinazione fra report passato e stato sperimentale non è contraddittoria. Il report conferma che lo stato e gli artefatti rispettano il contratto e la politica; non afferma che tutti i gate di promozione siano superati. L'errore di conteggio della Figura~\ref{fig:errore-caption-menu} mostra inoltre che neppure il superamento dei controlli della singola caption coincide con la correttezza semantica.
+
+\subsection{Integrità degli artefatti e identificazione della revisione}
+
+L'audit descritto nella Sezione~\ref{sec:audit-metodi} conferma la corrispondenza delle fingerprint dei due bundle con i valori salvati. I digest iniziano rispettivamente con \texttt{395963bbb6ba} e \texttt{b8827d3573df}; i valori completi rimangono nei report. Risultano coerenti anche gli hash degli asset inviati, i prompt salvati e le risposte HTTP rispetto al testo normalizzato conservato nelle evidenze. Le tredici caption presenti nel documento hanno un hash di ingresso ricostruibile dagli asset e dalle richieste.
+
+Questa catena rende controllabili anche gli esiti esclusi: è possibile distinguere un asset mai inviato, una risposta generata ma fuori contratto e una caption conservata soltanto per revisione. I contatori del report possono essere confrontati con le chiamate individuali. L'uguaglianza fra snapshot dopo l'enrichment e documento finale, in questi campioni privi di tabelle, conferma inoltre che il contenuto generativo valutato è quello effettivamente pubblicato.
+
+Resta una limitazione dell'identità software: 32 dei 34 sorgenti registrati per ciascuna run corrispondono ai file conservati nell'archivio del progetto, mentre \texttt{enrichment.py} e \texttt{orchestrator.py} hanno hash diversi. Mancano anche lo script di strumentazione e alcuni materiali del protocollo. L'audit conferma dunque l'integrità dei bundle rispetto alle loro impronte; per la riproduzione esatta delle run occorre invece recuperare la revisione eseguita e i materiali mancanti. La verifica si limita agli artefatti conservati, senza rieseguire la suite di test o la validazione completa del corpus.
+
+\section{Discussione, limiti e trasferibilità}
+\label{sec:limiti}
+
+\subsection{Contributo dell'integrazione}
+
+Il risultato principale è l'organizzazione di percorsi eterogenei in un workflow con contratto comune e stati espliciti. Le prove complete documentate e i bundle selettivi mostrano che struttura, testo, asset, descrizioni e tracce possono essere rappresentati senza imporre ai consumatori il formato nativo di ciascun parser. Il valore dell'integrazione risiede anche nel rendere visibili i limiti degli stadi: una tabella può essere indisponibile, una caption può fallire e una run può restare sperimentale senza essere confusa con un output corrotto.
+
+La convergenza formale non risolve ogni problema documentale. Il caso OCR di pagina 10 dimostra che un riferimento padre valido può essere semanticamente inadeguato. La selezione di un contesto migliore per il prompt è una mitigazione locale, non una correzione dell'intero modello gerarchico. La qualità va quindi verificata anche nelle relazioni, non soltanto nella presenza degli elementi.
+
+\subsection{Compromessi dell'enrichment e dei controlli}
+
+Gli esempi non sostengono né l'accettazione indiscriminata delle descrizioni né il loro rifiuto complessivo. Nel medesimo ciclo si osservano trascrizioni visuali supportate, informazioni già presenti nel contesto, conteggi errati e descrizioni troppo generiche. I controlli intercettano vincoli di formato e segnali linguistici, ma possono lasciare passare errori semantici o inviare a revisione casi che richiedono un'interpretazione più fine della fonte.
+
+Anche le esclusioni hanno un costo. Il ritaglio WM250 sotto soglia contiene comandi riconoscibili; alcune risposte vengono scartate per un'eccedenza minima di lunghezza; le descrizioni elettriche restano escluse pur potendo contenere etichette corrette. La trasparenza di questi esiti consente di valutare il compromesso scelto fra copertura e prudenza, la cui ottimalità resta da verificare.
+
+La separazione finale fra immagini al VLM e tabelle serializzate riduce le occasioni di riscrittura generativa dei dati tabellari. Non rende però automaticamente corrette le celle acquisite. La fedeltà del parser e quella della trasformazione successiva restano due problemi distinti, da valutare con riferimenti appropriati.
+
+\subsection{Validità e generalizzazione}
+
+Il corpus comprende due manuali di base e tre condizioni di ingresso; le due varianti digitali non sono indipendenti. La selezione di 17 immagini deriva dal percorso di sviluppo della pipeline, non da un campione esterno o casuale. Lo studio non comprende repliche delle generazioni o un'annotazione indipendente completa; inoltre, i PDF integrali sono assenti dall'archivio del progetto. Questi limiti impediscono di stimare generalizzazione, variabilità o tassi semantici globali con un significato statistico fondato.
+
+Il confronto tra digitale e scansione è inoltre confuso da differenze di documento, lingua, layout e struttura disponibile. Il maggiore numero di esclusioni successive alla generazione nel caso OCR non isola l'effetto del parser o della qualità dell'immagine. Analogamente, le metriche storiche della TOC e i conteggi delle tabelle non sostituiscono l'analisi diretta delle corrispondenze o delle celle.
+
+Infine, non sono stati misurati retrieval, qualità delle risposte dell'assistente o prestazioni degli operatori dopo l'introduzione di questa pipeline. La presenza di testo visuale aggiuntivo è una condizione che può essere sfruttata a valle, non una prova di efficacia. Le conclusioni sostenute dal lavoro riguardano l'integrazione dell'ingestion, l'ispezionabilità degli esiti e i limiti emersi nella rappresentazione e nell'enrichment.

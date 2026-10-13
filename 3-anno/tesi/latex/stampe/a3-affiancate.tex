@@ -1,0 +1,17 @@
+\documentclass{article}
+
+\usepackage[a3paper,landscape,margin=0pt]{geometry}
+\usepackage{pdfpages}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\includepdf[
+  pages=-,
+  nup=2x1,
+  frame=false,
+  noautoscale=false
+]{build/main.pdf}
+
+\end{document}

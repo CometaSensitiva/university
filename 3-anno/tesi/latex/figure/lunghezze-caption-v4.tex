@@ -1,0 +1,95 @@
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}[schema base,schema nota/.append style={font=\schemafont\footnotesize}]
+\node[schema titolo] at (0,0.7) {Lunghezza delle risposte e stato assegnato};
+\foreach \valore in {0,300,600,900,1200,1500} {
+  \draw[draw=schemaGrigio!20,line width=0.4pt] ({3.4+0.007*\valore},-0.9) -- ({3.4+0.007*\valore},-10.65);
+  \node[schema nota] at ({3.4+0.007*\valore},-11) {\valore};
+}
+\draw[draw=schemaOcra,dash pattern=on 4pt off 3pt,line width=1pt] (11.8,-0.65) -- (11.8,-10.65);
+\node[schema nota,text=schemaOcra] at (11.8,0) {Limite: 1200};
+\node[schema titolo] at (0,-1) {Digitale: 9 risposte};
+\node[schema titolo] at (0,-6) {Scansione: 8 risposte};
+\node[schema etichetta,anchor=east] at (3.1,-1.800) {D01 -- p. 73};
+\draw[draw=schemaOcra!45,line width=0.8pt] (3.4,-1.800) -- (8.2510,-1.800);
+\path[draw=schemaOcra,fill=schemaOcra!25] (8.1760,-1.875) rectangle +(0.15,0.15);
+\node[schema nota,anchor=west] at (8.3810,-1.800) {693};
+\node[schema etichetta,anchor=east] at (3.1,-2.260) {D02 -- p. 93};
+\draw[draw=schemaVerde!45,line width=0.8pt] (3.4,-2.260) -- (9.9310,-2.260);
+\fill[schemaVerde] (9.9310,-2.260) circle (0.075);
+\node[schema nota,anchor=west] at (10.0610,-2.260) {933};
+\node[schema etichetta,anchor=east] at (3.1,-2.720) {D03 -- p. 98};
+\draw[draw=schemaVerde!45,line width=0.8pt] (3.4,-2.720) -- (8.6220,-2.720);
+\fill[schemaVerde] (8.6220,-2.720) circle (0.075);
+\node[schema nota,anchor=west] at (8.7520,-2.720) {746};
+\node[schema etichetta,anchor=east] at (3.1,-3.180) {D04* -- p. 225};
+\draw[draw=schemaVerde!45,line width=0.8pt] (3.4,-3.180) -- (6.8020,-3.180);
+\fill[schemaVerde] (6.8020,-3.180) circle (0.075);
+\node[schema nota,anchor=west] at (6.9320,-3.180) {486};
+\node[schema etichetta,anchor=east] at (3.1,-3.640) {D05 -- p. 225};
+\draw[draw=schemaVerde!45,line width=0.8pt] (3.4,-3.640) -- (9.8960,-3.640);
+\fill[schemaVerde] (9.8960,-3.640) circle (0.075);
+\node[schema nota,anchor=west] at (10.0260,-3.640) {928};
+\node[schema etichetta,anchor=east] at (3.1,-4.100) {D06 -- p. 228};
+\draw[draw=schemaVerde!45,line width=0.8pt] (3.4,-4.100) -- (8.7690,-4.100);
+\fill[schemaVerde] (8.7690,-4.100) circle (0.075);
+\node[schema nota,anchor=west] at (8.8990,-4.100) {767};
+\node[schema etichetta,anchor=east] at (3.1,-4.560) {D07 -- p. 228};
+\draw[draw=schemaGrigio!45,line width=0.8pt] (3.4,-4.560) -- (11.8490,-4.560);
+\draw[draw=schemaGrigio,line width=1.2pt] (11.7740,-4.635) -- ++(0.15,0.15) (11.7740,-4.485) -- ++(0.15,-0.15);
+\node[schema nota,anchor=west] at (11.9790,-4.560) {1207};
+\node[schema etichetta,anchor=east] at (3.1,-5.020) {D08 -- p. 352};
+\draw[draw=schemaVerde!45,line width=0.8pt] (3.4,-5.020) -- (9.8890,-5.020);
+\fill[schemaVerde] (9.8890,-5.020) circle (0.075);
+\node[schema nota,anchor=west] at (10.0190,-5.020) {927};
+\node[schema etichetta,anchor=east] at (3.1,-5.480) {D09 -- p. 352};
+\draw[draw=schemaVerde!45,line width=0.8pt] (3.4,-5.480) -- (10.2040,-5.480);
+\fill[schemaVerde] (10.2040,-5.480) circle (0.075);
+\node[schema nota,anchor=west] at (10.3340,-5.480) {972};
+\node[schema etichetta,anchor=east] at (3.1,-6.800) {S01 -- p. 8};
+\draw[draw=schemaGrigio!45,line width=0.8pt] (3.4,-6.800) -- (12.9900,-6.800);
+\draw[draw=schemaGrigio,line width=1.2pt] (12.9150,-6.875) -- ++(0.15,0.15) (12.9150,-6.725) -- ++(0.15,-0.15);
+\node[schema nota,anchor=west] at (13.1200,-6.800) {1370};
+\node[schema etichetta,anchor=east] at (3.1,-7.260) {S02 -- p. 8};
+\draw[draw=schemaGrigio!45,line width=0.8pt] (3.4,-7.260) -- (12.9200,-7.260);
+\draw[draw=schemaGrigio,line width=1.2pt] (12.8450,-7.335) -- ++(0.15,0.15) (12.8450,-7.185) -- ++(0.15,-0.15);
+\node[schema nota,anchor=west] at (13.0500,-7.260) {1360};
+\node[schema etichetta,anchor=east] at (3.1,-7.720) {S03 -- p. 8};
+\draw[draw=schemaOcra!45,line width=0.8pt] (3.4,-7.720) -- (10.4210,-7.720);
+\path[draw=schemaOcra,fill=schemaOcra!25] (10.3460,-7.795) rectangle +(0.15,0.15);
+\node[schema nota,anchor=west] at (10.5510,-7.720) {1003};
+\node[schema etichetta,anchor=east] at (3.1,-8.180) {S04 -- p. 10};
+\draw[draw=schemaGrigio!45,line width=0.8pt] (3.4,-8.180) -- (11.8700,-8.180);
+\draw[draw=schemaGrigio,line width=1.2pt] (11.7950,-8.255) -- ++(0.15,0.15) (11.7950,-8.105) -- ++(0.15,-0.15);
+\node[schema nota,anchor=west] at (12.0000,-8.180) {1210};
+\node[schema etichetta,anchor=east] at (3.1,-8.640) {S05 -- p. 10};
+\draw[draw=schemaVerde!45,line width=0.8pt] (3.4,-8.640) -- (8.4120,-8.640);
+\fill[schemaVerde] (8.4120,-8.640) circle (0.075);
+\node[schema nota,anchor=west] at (8.5420,-8.640) {716};
+\node[schema etichetta,anchor=east] at (3.1,-9.100) {S06 -- p. 10};
+\draw[draw=schemaOcra!45,line width=0.8pt] (3.4,-9.100) -- (11.0790,-9.100);
+\path[draw=schemaOcra,fill=schemaOcra!25] (11.0040,-9.175) rectangle +(0.15,0.15);
+\node[schema nota,anchor=east,fill=white,inner sep=1.5pt] at (10.9490,-9.100) {1097};
+\node[schema etichetta,anchor=east] at (3.1,-9.560) {S07 -- p. 26};
+\draw[draw=schemaOcra!45,line width=0.8pt] (3.4,-9.560) -- (7.5860,-9.560);
+\path[draw=schemaOcra,fill=schemaOcra!25] (7.5110,-9.635) rectangle +(0.15,0.15);
+\node[schema nota,anchor=west] at (7.7160,-9.560) {598};
+\node[schema etichetta,anchor=east] at (3.1,-10.020) {S08 -- p. 33};
+\draw[draw=schemaOcra!45,line width=0.8pt] (3.4,-10.020) -- (8.5170,-10.020);
+\path[draw=schemaOcra,fill=schemaOcra!25] (8.4420,-10.095) rectangle +(0.15,0.15);
+\node[schema nota,anchor=west] at (8.6470,-10.020) {731};
+\draw[draw=schemaGrigio,line width=0.7pt] (3.4,-10.65) -- (13.9,-10.65);
+\node[schema etichetta] at (8.65,-11.65) {Caratteri del testo normalizzato, non token};
+\fill[schemaVerde] (0.6,-12.5) circle (0.075);
+\node[schema nota,anchor=west] at (0.85,-12.5) {\texttt{enriched}};
+\path[draw=schemaOcra,fill=schemaOcra!25] (5,-12.575) rectangle +(0.15,0.15);
+\node[schema nota,anchor=west] at (5.3,-12.5) {\texttt{review\_required}};
+\draw[draw=schemaGrigio,line width=1.2pt] (11,-12.575) -- ++(0.15,0.15) (11,-12.425) -- ++(0.15,-0.15);
+\node[schema nota,anchor=west] at (11.3,-12.5) {\texttt{failed}};
+\node[schema nota,text width=14.4cm] at (7.5,-13.55)
+  {D/S: digitale/scansione; numero della chiamata; p.: pagina fisica del PDF.\\
+  * D04 contiene il conteggio errato dei pulsanti, pur essendo sotto soglia.};
+\end{tikzpicture}
+\caption{Lunghezza delle 17 risposte V4, dai \protect\path{caption-response.json}, incluse le quattro escluse per lunghezza. Le otto immagini filtrate prima della generazione non compaiono. Il caso D04 è illustrato nella Figura~\ref{fig:errore-caption-menu}.}
+\label{fig:lunghezze-caption-v4}
+\end{figure}

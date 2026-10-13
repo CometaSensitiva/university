@@ -1,0 +1,87 @@
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}[schema base]
+\node[schema titolo] at (0,2.2) {Dal contesto al prossimo token};
+\node[schema etichetta,font=\schemafont\small\bfseries] at (1.9,1.25) {1\quad Contesto};
+\node[schema etichetta,font=\schemafont\small\bfseries] at (7.35,1.25) {2\quad Elaborazione};
+\node[schema etichetta,font=\schemafont\small\bfseries] at (12.5,1.25) {3\quad Predizione};
+\draw[schemaGrigio!20] (-0.05,0.82) -- (3.85,0.82);
+\draw[schemaGrigio!20] (5.1,0.82) -- (9.93,0.82);
+\draw[schemaGrigio!20] (10.55,0.82) -- (14.45,0.82);
+\node[schema blocco, fill=white, text width=3cm, minimum height=0.9cm] (prompt) at (1.9,0)
+  {\textbf{Prompt + testo già generato}};
+\foreach \indice/\posizione in {1/0.55,2/1.45,3/2.35,4/3.25} {
+  \node[draw=schemaBlu,fill=schemaCartaBlu,minimum size=0.65cm,inner sep=2pt] at (\posizione,-1.55) {$x_{\indice}$};
+}
+\draw[schema freccia] (prompt.south) -- (1.9,-1.15);
+\node[schema etichetta] at (1.9,-2.2) {Token della sequenza};
+\foreach \riga in {0,1,2} {
+  \pic at (1.9,{-3.05-0.42*\riga}) {vettore};
+}
+\draw[schema freccia] (1.9,-2.45) -- (1.9,-2.8);
+\node[schema etichetta] at (1.9,-4.35) {Embedding dei token};
+\path[schema pannello,fill=schemaCartaViola!30] (5.43,-5.85) rectangle (9.93,0.47);
+\path[schema pannello,fill=schemaCartaViola!45] (5.27,-6) rectangle (9.77,0.32);
+\path[schema pannello,fill=white] (5.1,-6.15) rectangle (9.6,0.17);
+\node[schema etichetta,font=\schemafont\small\bfseries] at (7.35,-0.3) {Decoder: $N$ blocchi};
+\node[draw=schemaVerde,fill=schemaCartaVerde,minimum width=3.3cm,minimum height=0.55cm] (normfinale) at (7.35,-1.15) {Add \& Norm};
+\node[draw=schemaViola,fill=schemaCartaViola,minimum width=3.3cm,minimum height=1.1cm] (ffn) at (7.35,-2.5) {};
+\node[schema etichetta] at (7.35,-2.12) {Feed-forward};
+\foreach \origine in {-0.23,0.23} {
+  \foreach \destinazione in {-0.25,0,0.25} {
+    \draw[schemaViola!65,line width=0.45pt] (6.55,{-2.64+\origine}) -- (7.35,{-2.64+\destinazione}) -- (8.15,{-2.64+\origine});
+  }
+}
+\foreach \altezza in {-0.23,0.23} {
+  \fill[schemaViola] (6.55,{-2.64+\altezza}) circle (0.055);
+  \fill[schemaViola] (8.15,{-2.64+\altezza}) circle (0.055);
+}
+\foreach \altezza in {-0.25,0,0.25} {\fill[schemaViola] (7.35,{-2.64+\altezza}) circle (0.055);}
+\node[draw=schemaVerde,fill=schemaCartaVerde,minimum width=3.3cm,minimum height=0.55cm] (norm) at (7.35,-3.65) {Add \& Norm};
+\node[draw=schemaBlu,fill=schemaCartaBlu,minimum width=3.3cm,minimum height=1.25cm] (attenzione) at (7.35,-5.02) {};
+\node[schema etichetta] at (7.35,-4.65) {Self-attention causale};
+\foreach \posizione in {6.35,7.35,8.35} {
+  \path[draw=schemaBlu,fill=white] ({\posizione-0.3},-5.4) rectangle ({\posizione+0.3},-5.02);
+  \draw[schemaBlu,line width=0.5pt] ({\posizione-0.2},-5.29) -- ({\posizione+0.15},-5.12);
+}
+\node[schema etichetta] (posizione) at (7.35,-7.1) {Informazione\ posizionale};
+\draw[schema freccia] (1.9,-4.7) -- (1.9,-4.9) -- (4.55,-4.9) |- (posizione.west);
+\draw[schema freccia] (posizione.north) -- (attenzione.south);
+\draw[schema freccia] (attenzione) -- (norm);
+\draw[schema freccia] (norm) -- (ffn);
+\draw[schema freccia] (ffn) -- (normfinale);
+\draw[schema freccia] (7.35,-5.97) -- (9.24,-5.97) |- (norm.east);
+\draw[schema freccia] (7.35,-3.23) -- (9.24,-3.23) |- (normfinale.east);
+\path[schema pannello,fill=schemaCartaBlu!15] (-0.05,-5.35) rectangle (3.85,-8.7);
+\node[schema etichetta] at (1.9,-5.75) {Maschera causale};
+\foreach \riga in {1,2,3,4} {
+  \foreach \colonna in {1,2,3,4} {
+    \ifnum\colonna>\riga
+      \def\colorecella{schemaGrigio!10}
+    \else
+      \def\colorecella{schemaBlu!45}
+    \fi
+    \path[draw=white,fill=\colorecella] ({0.55+0.47*\colonna},{-6-0.47*\riga}) rectangle +(0.44,0.44);
+  }
+}
+\node[schema nota,text width=3.65cm] at (1.9,-8.27) {Blu: posizioni accessibili;\\grigio: token futuri esclusi};
+
+\node[schema blocco,fill=white,text width=2.8cm,minimum height=0.9cm] (softmax) at (12.5,0) {Proiezione lineare\\e softmax};
+\draw[schema freccia] (normfinale.north) -- (7.35,-0.7) -- (10.3,-0.7) |- (softmax.west);
+\draw[schema icona] (10.95,-3.05) -- (14.05,-3.05);
+\foreach \posizione/\altezza/\colore in {11.3/0.55/schemaCartaBlu,12.2/1.55/schemaCartaVerde,13.1/0.95/schemaCartaBlu} {
+  \path[draw=schemaInchiostro,fill=\colore] (\posizione,-3.05) rectangle ++(0.52,\altezza);
+}
+\node[schema etichetta] at (12.5,-3.65) {$p(x_{t+1}\mid x_{1:t})$};
+\draw[schema freccia] (softmax.south) -- (12.5,-1.25);
+\node[schema tesi,text width=2.9cm,minimum height=0.8cm] (scelta) at (12.5,-5.02) {Token selezionato\\$x_{t+1}$};
+\draw[schema freccia] (12.5,-4) -- (scelta.north);
+\node[schema etichetta,text width=3.65cm] (sequenza) at (12.5,-7.1) {$x_1,\ldots,x_t,\boxed{x_{t+1}}$\\Sequenza aggiornata};
+\draw[schema freccia] (scelta) -- (sequenza);
+\draw[schema freccia] (sequenza.south) -- (12.5,-9.55) -- (-0.2,-9.55) |- (prompt.west);
+\node[schema nota,fill=white,inner sep=3pt] at (7.3,-9.55) {Ripeti fino al criterio di arresto};
+\node[schema nota,text width=14.5cm] at (7.2,-10.45) {Matrice, rete e barre sono illustrative; i pesi del modello restano fissi durante l'inferenza.};
+\end{tikzpicture}
+\caption[Generazione autoregressiva e struttura del decoder]{Rielaborazione didattica ispirata alle Figure~1 e~2 di \textcite{vaswani2017attention}: stack di attenzione, connessioni residue e distribuzione del prossimo token. Qui è rappresentato un decoder-only, senza encoder né cross-attention; l'ordine delle normalizzazioni è schematico e non descrive l'implementazione specifica di Qwen.}
+\label{fig:llm-autoregressivo}
+\end{figure}

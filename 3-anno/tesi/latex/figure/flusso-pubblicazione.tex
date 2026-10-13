@@ -1,0 +1,44 @@
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}[schema base]
+\node[schema oggetto,minimum width=2.2cm,minimum height=1.6cm] (inizio) at (1.3,0) {};
+\pic[scale=0.76] at (1.3,0) {fascicolo};
+\node[schema etichetta,align=left,text width=5.8cm] at (5.85,0)
+  {\textbf{Staging: file provvisori}\\Controlli preliminari e detection;\\creazione dello staging\\ed elaborazione};
+\node[schema oggetto,minimum width=2.2cm,minimum height=1.6cm] (bozza) at (1.3,-2.5) {};
+\pic[scale=0.76] at (1.3,-2.5) {controllo-fonte};
+\node[schema etichetta,align=left,text width=5.8cm] (testobozza) at (5.85,-2.5)
+  {\textbf{Verifica della bozza}\\Valutazione della promozione;\\scrittura e validazione della bozza};
+\node[schema oggetto,minimum width=2.2cm,minimum height=1.6cm] (stato) at (1.3,-5) {};
+\pic[scale=0.86] at (1.3,-5) {testo};
+\node[schema etichetta,align=left,text width=5.8cm] at (5.85,-5)
+  {\textbf{Assegnazione dello stato finale}\\Requisiti soddisfatti: \texttt{validated}\\Impedimenti: \texttt{experimental}};
+\node[schema oggetto,minimum width=2.2cm,minimum height=1.6cm] (finale) at (1.3,-7.5) {};
+\pic[scale=0.86] at (1.3,-7.5) {checklist};
+\node[schema etichetta,align=left,text width=5.8cm] (testofinale) at (5.85,-7.5)
+  {\textbf{Controlli finali}\\Manifest finale e report ricalcolato;\\controlli e integrità del sorgente};
+\node[schema oggetto,minimum width=2.2cm,minimum height=1.6cm] (pubblicazione) at (1.3,-10) {};
+\pic[scale=0.76] at (1.3,-10) {fascicolo};
+\path[fill=schemaCartaVerde,draw=schemaVerde] (2.12,-10.42) circle (0.28);
+\draw[schemaVerde,line width=1.25pt] (1.96,-10.43) -- (2.07,-10.53) -- (2.29,-10.3);
+\node[schema etichetta,align=left,text width=5.8cm] at (5.85,-10)
+  {\textbf{Pubblicazione mediante rinomina}\\Bundle \texttt{validated}\\o \texttt{experimental}};
+\draw[schema freccia] (inizio) -- (bozza);
+\draw[schema freccia] (bozza) -- node[right,schema nota] {Bozza valida} (stato);
+\draw[schema freccia] (stato) -- (finale);
+\draw[schema freccia] (finale) -- node[right,schema nota] {Controlli superati} (pubblicazione);
+\node[schema oggetto,minimum height=1.6cm] (errore) at (12.15,-6) {};
+\pic[scale=0.95] at (12.15,-6) {cartella};
+\draw[schemaOcra,line width=1.7pt,line cap=round] (11.65,-6.43) -- (12.65,-5.6) (11.65,-5.6) -- (12.65,-6.43);
+\node[schema etichetta,text width=4.7cm] at (12.15,-7.65)
+  {\textbf{Interruzione}\\Nessun nuovo bundle finale.\\Staging rimosso, se creato.};
+\draw[schema freccia] (testobozza.east) -- node[above,schema nota] {Bozza non valida} (15,-2.5) |- (errore.east);
+\draw[schema freccia] (testofinale.east) -- (9.65,-7.5) |- node[pos=0.8,above,schema nota] {Errore} (errore.west);
+\node[schema nota,text width=4.7cm] at (12.15,-4.2)
+  {Anche altri errori fatali possono interrompere il flusso prima della rinomina.};
+\node[schema nota,text width=4.7cm] at (12.15,-10)
+  {Un errore locale di captioning può essere registrato senza bloccare la pubblicazione.};
+\end{tikzpicture}
+\caption{Pubblicazione secondo \texttt{orchestrator.py} e \texttt{run\_bundle.py}: dal fascicolo provvisorio a quello pubblicato, oppure all'interruzione. Il segno di spunta indica la pubblicazione, non necessariamente lo stato \texttt{validated}. La conformità tecnica permette di pubblicare; la politica di promozione determina lo stato. I file nello staging sono provvisori fino alla rinomina.}
+\label{fig:flusso-pubblicazione}
+\end{figure}

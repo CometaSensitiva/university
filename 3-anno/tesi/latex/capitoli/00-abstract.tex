@@ -1,0 +1,10 @@
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+Nell'assistenza alla conduzione e manutenzione, i sistemi di \emph{Retrieval-Augmented Generation} (RAG) dipendono dalla preparazione dei manuali tecnici, le cui informazioni sono distribuite fra testo, immagini, tabelle e struttura. Nel progetto da cui nasce il lavoro, l'assistente per una macchina per elettroerosione usava un generatore \emph{text-only}: ciò che era visibile solo nelle figure, come la posizione di un comando, restava escluso. La tesi progetta e valida una pipeline multimodale locale che trasforma manuali PDF eterogenei in una rappresentazione gerarchica comune e verificabile.
+
+La pipeline instrada ogni documento verso tre profili: PDF digitale con indice incorporato, PDF digitale con struttura da ricostruire e scansione acquisita con OCR. Un modello visuale locale descrive le immagini, le tabelle sono serializzate con regole deterministiche e provenienza e controlli sono conservati in un fascicolo di esecuzione. Il corpus comprende due manuali, uno digitale in due varianti e uno scansionato; la valutazione combina prove integrali senza captioning e due esecuzioni finali su dieci pagine.
+
+Le prove integrali elaborano 1112 pagine su 1112 per ciascuna variante digitale, con 14.047 elementi, e 34 su 34 per il manuale scansionato. Le esecuzioni finali superano 30 controlli tecnici su 30, restando sperimentali; delle 17 richieste di captioning, otto producono descrizioni ammissibili, cinque richiedono revisione e quattro superano il limite di lunghezza.
+
+Strategie di acquisizione diverse convergono quindi in un output comune e tracciabile. Le descrizioni aggiungono informazioni utili, ma anche errori: una caption accettata conta dieci pulsanti dove l'immagine ne mostra dodici. La conformità tecnica non garantisce la correttezza semantica; l'effetto sul RAG richiede una valutazione distinta.

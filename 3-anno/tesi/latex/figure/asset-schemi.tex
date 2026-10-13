@@ -1,0 +1,183 @@
+\definecolor{schemaViola}{HTML}{6741D9}
+\definecolor{schemaCartaViola}{HTML}{E5DBFF}
+\tikzset{
+  schema icona/.style={schema tratto, draw=schemaInchiostro, line width=0.85pt, decoration={random steps, post length=1.5pt, segment length=5pt, amplitude=0.2pt}},
+  schema pannello/.style={schema tratto, draw=schemaGrigio!65, fill=white, line width=0.8pt},
+  schema etichetta/.style={font=\schemafont\small, align=center, text=schemaInchiostro},
+  pics/pagina/.style={code={
+    \path[schema icona, fill=white] (-0.7,-1) -- (0.7,-1) -- (0.7,0.7) -- (0.4,1) -- (-0.7,1) -- cycle;
+    \draw[schema icona] (0.4,1) -- (0.4,0.7) -- (0.7,0.7);
+    \draw[schemaBlu, line width=2pt] (-0.48,0.7) -- (0.17,0.7);
+    \foreach \riga in {0.46,0.28,0.1} {\draw[schemaGrigio!75] (-0.48,\riga) -- (0.46,\riga);}
+    \path[draw=schemaVerde,fill=schemaCartaVerde] (-0.48,-0.08) rectangle (-0.02,-0.64);
+    \draw[schemaVerde] (-0.45,-0.5) -- (-0.27,-0.24) -- (-0.06,-0.5);
+    \draw[schemaBlu, step=0.18] (0.12,-0.65) grid (0.48,-0.11);
+    \draw[schemaGrigio!75] (-0.48,-0.82) -- (0.46,-0.82);
+  }},
+  pics/testo/.style={code={
+    \path[schema icona, fill=white] (-0.55,-0.7) rectangle (0.55,0.7);
+    \draw[schemaBlu,line width=2pt] (-0.34,0.45) -- (0.3,0.45);
+    \foreach \riga in {0.18,-0.04,-0.26,-0.48} {\draw[schemaGrigio] (-0.34,\riga) -- (0.34,\riga);}
+  }},
+  pics/immagine/.style={code={
+    \path[schema icona, fill=schemaCartaVerde] (-0.7,-0.5) rectangle (0.7,0.5);
+    \draw[schemaVerde,line width=1pt] (-0.58,-0.36) -- (-0.15,0.18) -- (0.1,-0.11) -- (0.33,0.09) -- (0.58,-0.36);
+    \fill[schemaOcra] (0.4,0.3) circle (0.08);
+  }},
+  pics/tabella/.style={code={
+    \path[fill=schemaCartaBlu] (-0.7,0.15) rectangle (0.7,0.5);
+    \draw[schema icona] (-0.7,-0.55) rectangle (0.7,0.5);
+    \foreach \colonna in {-0.24,0.23} {\draw[schemaBlu] (\colonna,-0.55) -- (\colonna,0.5);}
+    \foreach \riga in {-0.2,0.15} {\draw[schemaBlu] (-0.7,\riga) -- (0.7,\riga);}
+  }},
+  pics/vettore/.style={code={
+    \foreach \colonna/\tono in {0/15,1/50,2/85,3/30,4/65} {
+      \path[draw=schemaBlu,fill=schemaBlu!\tono] (0.24*\colonna-0.6,-0.2) rectangle +(0.24,0.4);
+    }
+  }},
+  pics/archivio/.style={code={
+    \path[schema icona,fill=schemaCartaGialla] (-0.8,0.55) -- (-0.8,-0.6) arc[start angle=180,end angle=360,x radius=0.8,y radius=0.24] -- (0.8,0.55) -- cycle;
+    \draw[schema icona] (0,0.55) ellipse (0.8 and 0.24);
+    \draw[schema icona] (-0.8,-0.05) arc[start angle=180,end angle=360,x radius=0.8,y radius=0.24];
+    \draw[schema icona] (-0.8,-0.32) arc[start angle=180,end angle=360,x radius=0.8,y radius=0.24];
+  }},
+  pics/modello/.style={code={
+    \path[schema icona,fill=schemaCartaViola] (-0.75,-0.75) rectangle (0.75,0.75);
+    \foreach \posizione in {-0.5,0,0.5} {
+      \draw[schema icona] (\posizione,0.75) -- (\posizione,0.96);
+      \draw[schema icona] (\posizione,-0.75) -- (\posizione,-0.96);
+      \draw[schema icona] (-0.75,\posizione) -- (-0.96,\posizione);
+      \draw[schema icona] (0.75,\posizione) -- (0.96,\posizione);
+    }
+    \foreach \origine in {-0.36,0.36} {
+      \foreach \destinazione in {-0.42,0,0.42} {
+        \draw[schemaViola!70,line width=0.4pt] (-0.42,\origine) -- (0,\destinazione) -- (0.42,\origine);
+      }
+    }
+    \foreach \posizione in {-0.36,0.36} {
+      \fill[schemaViola] (-0.42,\posizione) circle (0.065);
+      \fill[schemaViola] (0.42,\posizione) circle (0.065);
+    }
+    \foreach \posizione in {-0.42,0,0.42} {\fill[schemaViola] (0,\posizione) circle (0.065);}
+  }},
+  pics/persona/.style={code={
+    \draw[schema icona,fill=schemaCartaGialla] (-0.4,0.65) circle (0.24);
+    \draw[schema icona] (-0.65,-0.1) .. controls (-0.7,0.44) and (-0.08,0.45) .. (-0.06,-0.1);
+    \draw[schema icona] (-0.17,0.13) -- (0.16,-0.1);
+    \path[schema icona,fill=schemaCartaBlu] (0.02,-0.02) -- (0.2,0.53) -- (0.95,0.53) -- (0.76,-0.02) -- cycle;
+    \draw[schema icona] (-0.9,-0.15) -- (1.1,-0.15);
+    \draw[schema icona] (-0.7,-0.15) -- (-0.7,-0.65);
+    \draw[schema icona] (0.9,-0.15) -- (0.9,-0.65);
+  }},
+  pics/cronometro/.style={code={
+    \draw[schema icona,fill=schemaCartaBlu] (0,0) circle (0.5);
+    \draw[schema icona] (0,0.5) -- (0,0.72) (-0.16,0.72) -- (0.16,0.72);
+    \draw[schema icona] (0,0.32) -- (0,0) -- (0.25,-0.1);
+  }},
+  pics/checklist/.style={code={
+    \path[schema icona,fill=white] (-0.6,-0.7) rectangle (0.6,0.7);
+    \foreach \riga in {-0.4,0,0.4} {
+      \draw[schemaVerde] (-0.44,\riga) -- ++(0.09,-0.1) -- ++(0.17,0.2);
+      \draw[schemaGrigio] (-0.02,\riga) -- (0.43,\riga);
+    }
+  }},
+  pics/cartella/.style={code={
+    \path[schema icona,fill=schemaCartaGialla] (-0.8,-0.5) -- (-0.8,0.65) -- (-0.15,0.65) -- (0.03,0.43) -- (0.8,0.43) -- (0.8,-0.5) -- cycle;
+    \path[schema icona,fill=schemaCartaGialla!55] (-0.8,-0.5) -- (-0.67,0.27) -- (0.94,0.27) -- (0.8,-0.5) -- cycle;
+  }},
+  pics/albero/.style={code={
+    \draw[schemaVerde] (0,0.62) -- (0,0.28) (-0.65,-0.08) -- (-0.65,0.28) -- (0.65,0.28) -- (0.65,-0.08);
+    \draw[schemaVerde] (-0.65,-0.08) -- (-0.65,-0.43) -- (-0.2,-0.43);
+    \draw[schemaVerde] (0.65,-0.08) -- (0.65,-0.43) -- (0.2,-0.43);
+    \foreach \centro in {(0,0.62),(-0.65,-0.08),(0.65,-0.08),(-0.2,-0.43),(0.2,-0.43)} {
+      \path[draw=schemaVerde,fill=schemaCartaVerde] \centro circle (0.11);
+    }
+  }}
+}
+\tikzset{
+  schema oggetto/.style={inner sep=0pt, minimum width=2.5cm, minimum height=1.9cm},
+  pics/manuale-tecnico/.style={code={
+    \path[schema icona,fill=schemaCartaBlu] (-0.6,-0.8) rectangle (0.82,1.02);
+    \path[schema icona,fill=white] (-0.72,-0.91) rectangle (0.7,0.91);
+    \node[inner sep=0pt] at (-0.01,0) {\includegraphics[height=1.65cm]{figure/asset/copertina-manuale-fanuc.png}};
+    \draw[schemaBlu,line width=1.7pt] (-0.69,-0.86) -- (-0.69,0.86);
+  }},
+  pics/documento-strutturato/.style={code={
+    \path[schema icona,fill=white] (-1.1,-0.9) -- (0.15,-0.9) -- (0.15,0.65) -- (-0.1,0.9) -- (-1.1,0.9) -- cycle;
+    \draw[schema icona] (-0.1,0.9) -- (-0.1,0.65) -- (0.15,0.65);
+    \foreach \riga in {0.48,0.24,0,-0.24,-0.48} {\draw[schemaGrigio!65] (-0.9,\riga) -- (-0.05,\riga);}
+    \draw[schemaVerde,line cap=round] (0.38,0.62) -- (0.38,-0.6);
+    \foreach \riga/\colore in {0.45/schemaBlu,0/schemaVerde,-0.45/schemaOcra} {
+      \draw[schemaVerde] (0.38,\riga) -- (0.75,\riga);
+      \path[draw=\colore,fill=\colore!15] (0.75,\riga-0.13) rectangle (1.18,\riga+0.13);
+    }
+    \path[fill=schemaCartaVerde,draw=schemaVerde] (0.17,0.58) rectangle (0.59,0.84);
+  }},
+  pics/scansione/.style={code={
+    \path[schema icona,fill=white] (-0.78,-0.92) rectangle (0.78,0.92);
+    \foreach \riga in {0.58,0.35,0.12,-0.11} {
+      \draw[schemaGrigio!35,line width=2pt] (-0.56,\riga) -- (0.54,\riga);
+    }
+    \foreach \riga in {0.58,0.12} {
+      \path[draw=schemaBlu,densely dashed] (-0.63,\riga-0.1) rectangle (0.61,\riga+0.1);
+    }
+    \draw[schemaVerde,line width=1.2pt] (-1,0.62) -- (-1,1.08) -- (-0.57,1.08);
+    \draw[schemaVerde,line width=1.2pt] (1,-0.62) -- (1,-1.08) -- (0.57,-1.08);
+    \node[font=\ttfamily\tiny,text=schemaBlu] at (0,-0.57) {abc};
+  }},
+  pics/frammenti/.style={code={
+    \foreach \centro/\colore in {0.63/schemaBlu,0/schemaVerde,-0.63/schemaOcra} {
+      \path[schema icona,fill=\colore!12] (-1.04,\centro-0.23) rectangle (1.04,\centro+0.23);
+      \draw[\colore,line width=1.5pt] (-0.84,\centro) -- (-0.58,\centro);
+      \draw[schemaGrigio!70] (-0.4,\centro) -- (0.81,\centro);
+    }
+  }},
+  pics/spazio-vettoriale/.style={code={
+    \draw[schemaGrigio!55,line cap=round] (-1.05,0.88) -- (-1.05,-0.85) -- (1.1,-0.85);
+    \path[fill=schemaCartaBlu] (-0.38,0.3) ellipse (0.64 and 0.48);
+    \path[fill=schemaCartaVerde] (0.58,-0.38) ellipse (0.49 and 0.3);
+    \foreach \ascissa/\ordinata in {-0.75/0.42,-0.4/0.6,-0.15/0.18,-0.58/0.06,0.05/0.44} {
+      \fill[schemaBlu] (\ascissa,\ordinata) circle (0.065);
+    }
+    \foreach \ascissa/\ordinata in {0.3/-0.4,0.58/-0.22,0.78/-0.52,0.92/-0.3} {
+      \fill[schemaVerde] (\ascissa,\ordinata) circle (0.065);
+    }
+    \draw[schemaViola,densely dashed] (-0.15,0.18) -- (0.27,0.55) -- (0.05,0.44);
+    \path[draw=schemaViola,fill=schemaCartaViola] (0.27,0.55) circle (0.095);
+  }},
+  pics/ricerca/.style={code={
+    \pic[scale=0.76] at (-0.17,0.06) {frammenti};
+    \draw[draw=schemaBlu,fill=schemaCartaBlu,fill opacity=0.35,line width=1.2pt] (0.36,0.14) circle (0.52);
+    \draw[schema icona,line width=2.4pt] (0.74,-0.25) -- (1.13,-0.73);
+    \draw[schemaVerde,line width=1.2pt] (0.1,0.11) -- (0.28,-0.05) -- (0.63,0.32);
+  }},
+  pics/fascicolo/.style={code={
+    \path[schema icona,fill=schemaCartaGialla] (-1.14,-0.78) -- (-1.14,0.67) -- (-0.46,0.67) -- (-0.22,0.44) -- (1.1,0.44) -- (1.1,-0.78) -- cycle;
+    \foreach \ascissa/\colore in {-0.73/schemaBlu,-0.18/schemaVerde,0.37/schemaViola} {
+      \path[schema icona,fill=white] (\ascissa,-0.25) rectangle +(0.61,1.2);
+      \draw[\colore,line width=2.4pt] (\ascissa+0.12,0.72) -- (\ascissa+0.48,0.72);
+      \foreach \riga in {0.48,0.26,0.04} {\draw[schemaGrigio!65] (\ascissa+0.12,\riga) -- (\ascissa+0.48,\riga);}
+    }
+    \path[schema icona,fill=schemaCartaGialla] (-1.14,-0.78) -- (-0.93,0.08) -- (1.28,0.08) -- (1.1,-0.78) -- cycle;
+    \draw[schemaOcra,line width=1.4pt] (-0.3,-0.34) -- (0.46,-0.34);
+  }},
+  pics/dialogo/.style={code={
+    \path[schema icona,fill=schemaCartaBlu] (-1.05,0.78) -- (1.05,0.78) -- (1.05,-0.38) -- (0.08,-0.38) -- (-0.47,-0.81) -- (-0.37,-0.38) -- (-1.05,-0.38) -- cycle;
+    \foreach \riga in {0.48,0.2,-0.08} {\draw[schemaBlu] (-0.77,\riga) -- (0.68,\riga);}
+  }},
+  pics/domanda/.style={code={
+    \path[schema icona,fill=schemaCartaGialla] (-0.96,0.73) -- (0.96,0.73) -- (0.96,-0.38) -- (0.05,-0.38) -- (-0.45,-0.79) -- (-0.32,-0.38) -- (-0.96,-0.38) -- cycle;
+    \node[font=\schemafont\Large,text=schemaOcra] at (0,0.17) {?};
+  }},
+  pics/distribuzione-token/.style={code={
+    \draw[schemaGrigio!55] (-1.02,-0.68) -- (1.06,-0.68);
+    \foreach \ascissa/\altezza/\colore in {-0.83/0.48/schemaBlu,-0.2/1.4/schemaVerde,0.43/0.83/schemaBlu} {
+      \path[schema icona,draw=\colore,fill=\colore!20] (\ascissa,-0.68) rectangle +(0.4,\altezza);
+    }
+    \draw[schemaVerde,line width=1.3pt] (-0.19,0.97) -- (-0.03,0.82) -- (0.29,1.16);
+  }},
+  pics/controllo-fonte/.style={code={
+    \pic[scale=0.9] at (-0.4,0.08) {pagina};
+    \pic[scale=0.9] at (0.65,-0.12) {checklist};
+  }}
+}

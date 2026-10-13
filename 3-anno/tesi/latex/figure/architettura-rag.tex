@@ -1,0 +1,60 @@
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}[schema base]
+\path[schema pannello,draw=schemaVerde,fill=schemaCartaVerde!25] (0,0.7) rectangle (15,-3.15);
+\node[schema titolo,text=schemaVerde] at (0.35,0.25) {1\quad Ingestion: il contributo della tesi};
+\pic[scale=0.72] at (1.45,-1.25) {pagina};
+\pic[scale=0.72] at (1.7,-1.4) {pagina};
+\node[schema etichetta] at (1.6,-2.6) {PDF eterogenei};
+\node[schema tesi,text width=3.8cm,minimum height=1.8cm] (ingestion) at (5.55,-1.4)
+  {Detection e acquisizione\\Gerarchia, asset, enrichment\\Provenance e controlli};
+\draw[schema freccia] (2.35,-1.4) -- (ingestion.west);
+\draw[schema freccia] (ingestion.east) -- (8.3,-1.4);
+\pic[scale=0.9] at (9.1,-1.4) {albero};
+\pic[scale=0.72] at (11.3,-1.4) {immagine};
+\pic[scale=0.72] at (13.5,-1.4) {tabella};
+\node[schema etichetta,text width=6.3cm] at (11.3,-2.6) {Run bundle: struttura, asset e metadati};
+\draw[schema legame] (13.5,-3.15) -- (13.5,-3.7) -- (-0.2,-3.7) -- (-0.2,-5.85) -- (0.7,-5.85);
+\node[schema titolo,fill=white,inner sep=3pt] at (0.35,-4.4) {2\quad Indicizzazione RAG, a valle della pipeline};
+\pic[scale=0.6] at (1.2,-5.7) {testo};
+\pic[scale=0.6] at (1.65,-5.85) {testo};
+\pic[scale=0.6] at (2.1,-6) {testo};
+\foreach \riga in {0,1,2} {\pic at (7.5,{-5.55-0.4*\riga}) {vettore};}
+\pic at (13.25,-5.85) {archivio};
+\draw[schema freccia] (2.65,-5.85) -- (6.65,-5.85);
+\draw[schema freccia] (8.35,-5.85) -- (12.25,-5.85);
+\node[schema etichetta] at (1.65,-7.05) {Chunk};
+\node[schema etichetta] at (7.5,-7.05) {Embedding testuali};
+\node[schema etichetta] at (13.25,-7.05) {Indice vettoriale};
+\node[schema titolo] at (0.35,-8.05) {3\quad Recupero delle evidenze e generazione};
+\node[schema blocco,text width=2.7cm,minimum height=1.2cm] (domanda) at (1.65,-9.45)
+  {\textbf{Domanda}\\Dove si trova\\il comando?};
+\pic[scale=0.9] at (6.55,-9.45) {vettore};
+\draw[schema icona,line width=1.25pt] (12.95,-9.3) circle (0.55);
+\draw[schema icona,line width=1.8pt] (13.36,-9.7) -- (13.75,-10.08);
+\draw[schema freccia] (domanda.east) -- (5.75,-9.45);
+\draw[schema freccia] (7.35,-9.45) -- (12.22,-9.45);
+\draw[schema freccia] (13.25,-6.75) -- (14.6,-6.75) -- (14.6,-8.35) -- (12.95,-8.35) -- (12.95,-8.67);
+\node[schema etichetta] at (6.55,-10.35) {Embedding della query};
+\node[schema etichetta] at (12.95,-10.55) {Retrieval};
+\pic[scale=0.5] at (13.95,-11.3) {testo};
+\pic[scale=0.5] at (14.35,-11.45) {testo};
+\node[schema nota,anchor=east] at (13.5,-11.1) {Evidenze selezionate};
+\draw[schema freccia] (13.75,-10.08) -- (14.35,-10.08) -- (14.35,-10.85);
+\node[schema blocco,fill=white,text width=3.4cm,minimum height=1.65cm] (prompt) at (12.95,-13.3)
+  {\textbf{Prompt aumentato}\\Istruzioni, domanda\\ed evidenze};
+\draw[schema freccia] (14.35,-11.9) -- (14.35,-12.15) -| (prompt.north);
+\pic[scale=0.8] at (7.5,-13.3) {modello};
+\node[schema etichetta] at (7.5,-14.5) {LLM generatore};
+\node[schema blocco,fill=schemaCartaViola!65,text width=3.5cm,minimum height=1.65cm] (risposta) at (2.05,-13.3)
+  {\textbf{Risposta all'utente}\\Generata dal\\contesto recuperato};
+\draw[schema freccia] (prompt.west) -- (8.45,-13.3);
+\draw[schema freccia] (6.55,-13.3) -- (risposta.east);
+\draw[schema legame] (domanda.south) -- (1.65,-11.6) -- (11.5,-11.6) -- (11.5,-12.15) -- (11.95,-12.15) -- ([xshift=-1cm]prompt.north);
+\node[schema nota,fill=white,inner sep=3pt] at (6.55,-11.6) {Testo della domanda};
+\node[schema nota,text width=14.5cm] at (7.5,-15.35)
+  {L'indice RAG è distinto dalle informazioni di indice del bundle.\\Le immagini originali restano negli asset: un sistema multimodale a valle\\può recuperarle e fornirle al generatore insieme al contesto.};
+\end{tikzpicture}
+\caption[Architettura RAG: artefatti e flussi]{Schema originale ispirato alla separazione retrieval/generazione di \textcite{lewis2020rag} e ai flussi testo/immagini della Figura~1 di \textcite{riedler2024beyond}. Qui è illustrato il percorso con rappresentazioni testuali: non una replica delle architetture dei paper né dell'assistente sperimentale. Solo la fascia verde appartiene al contributo implementato e validato della tesi.}
+\label{fig:architettura-rag}
+\end{figure}

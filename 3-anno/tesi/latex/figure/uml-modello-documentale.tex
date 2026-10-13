@@ -1,0 +1,83 @@
+\begin{figure}[p]
+\centering
+\begin{tikzpicture}[schema base,
+  classe/.style={draw=schemaInchiostro,fill=white,line width=0.85pt,inner sep=6pt,align=left,font=\ttfamily\footnotesize},
+  composizione/.style={{Diamond[fill=schemaInchiostro,length=2.8mm,width=1.9mm]}-,draw=schemaInchiostro,line width=0.85pt,line join=round},
+  cardinalita/.style={font=\schemafont\footnotesize,fill=white,inner sep=1.5pt}]
+\node[schema titolo] at (0,0.5) {Contratto documentale: contenimento, ricorsione e provenienza};
+\node[classe,fill=schemaCartaVerde!55,text width=6.2cm] (manuale) at (7.5,-1.05)
+  {\textbf{ManualDocument}\\[-2pt]\rule{6.2cm}{0.4pt}\\
+  schema\_version = "1.1"\\
+  id, title, source\_file: str\\
+  metadata: ManualMetadata\\
+  content: list[Chapter | ManualElement]};
+\node[classe,fill=schemaCartaBlu!40,text width=4.9cm] (capitolo) at (3.1,-4.8)
+  {\textbf{Chapter}\\[-2pt]\rule{4.9cm}{0.4pt}\\
+  id, title: str\\
+  level, page: int\\
+  content: list[Chapter |\\\hspace*{1.5em}ManualElement]};
+\node[classe,fill=schemaCartaBlu!40,text width=5.9cm] (elemento) at (11.7,-5.5)
+  {\textbf{ManualElement}\\[-2pt]\rule{5.9cm}{0.4pt}\\
+  id: str; page: int\\
+  type: ElementType\\
+  text: str [0..1]\\
+  image\_path: str [0..1]\\
+  table\_image\_path: str [0..1]\\
+  table\_markdown: str [0..1]\\
+  caption\_original: str [0..1]\\
+  caption\_generated: str [0..1]\\
+  table\_serialization:\\\hspace*{1em}TableSerialization [0..1]};
+\draw[composizione] ([xshift=1.1cm]manuale.south west) -- (5.3,-2.75) -| (capitolo.north);
+\node[cardinalita] at (4.8,-2.45) {0..1};
+\node[cardinalita] at (3.65,-3.25) {0..*};
+\node[schema nota] at (3.1,-2.45) {capitoli alla radice};
+\draw[composizione] ([xshift=-1.1cm]manuale.south east) -- (9.7,-2.75) -| (elemento.north);
+\node[cardinalita] at (10.15,-2.4) {0..1};
+\node[cardinalita] at (12.15,-2.85) {0..*};
+\draw[composizione] (capitolo.east) -- (elemento.west |- capitolo.east);
+\node[cardinalita] at (6.05,-4.5) {0..1};
+\node[cardinalita] at (8.05,-4.5) {0..*};
+\node[schema nota,text width=2.6cm] at (7.15,-5.35) {elementi\\del capitolo};
+\draw[composizione] (capitolo.west) -- (0.2,-4.8) -- (0.2,-7.15) -- (3.1,-7.15) -- (capitolo.south);
+\node[cardinalita,anchor=east] at (0.05,-5.25) {0..1};
+\node[cardinalita] at (3.65,-6.75) {0..*};
+\node[schema nota] at (1.6,-7.6) {sottocapitoli};
+\node[classe,text width=4.3cm,minimum height=2.8cm] (fonte) at (2.5,-11.15)
+  {\textbf{SourceReference}\\[-2pt]\rule{4.3cm}{0.4pt}\\
+  page: int\\
+  page\_size:\\\hspace*{1em}PageSize [0..1]\\
+  bbox: BoundingBox [0..1]\\
+  rotation: float};
+\node[classe,text width=4.3cm,minimum height=2.8cm] (traccia) at (7.5,-11.15)
+  {\textbf{TraceMetadata}\\[-2pt]\rule{4.3cm}{0.4pt}\\
+  reading\_order: int [0..1]\\
+  parent\_chapter\_id:\\\hspace*{1em}str [0..1]\\
+  include\_in\_rag: bool\\
+  exclusion\_reason:\\\hspace*{1em}str [0..1]};
+\node[classe,text width=4.3cm,minimum height=2.8cm] (provenienza) at (12.5,-11.15)
+  {\textbf{CaptionProvenance}\\[-2pt]\rule{4.3cm}{0.4pt}\\
+  provider, model: str\\
+  prompt\_version: str\\
+  params: dict\\
+  input\_sha256: str\\
+  runtime\_version:\\\hspace*{1em}str [0..1]};
+\draw[composizione] ([xshift=-1.1cm]elemento.south) -- (10.6,-8.15) -- (2.5,-8.15) -- (fonte.north);
+\draw[composizione] (elemento.south) -- (11.7,-8.65) -- (7.5,-8.65) -- (traccia.north);
+\draw[composizione] ([xshift=1.1cm]elemento.south) -- (12.8,-9.05) -| (provenienza.north);
+\node[cardinalita,anchor=south west] at ([xshift=0.15cm,yshift=0.08cm]fonte.north) {1};
+\node[cardinalita,anchor=south west] at ([xshift=0.15cm,yshift=0.08cm]traccia.north) {1};
+\node[cardinalita,anchor=south west] at ([xshift=0.15cm,yshift=0.08cm]provenienza.north) {0..1};
+\path[schema pannello,fill=schemaCartaGialla!35] (0,-13.25) rectangle (15,-15.85);
+\node[schema etichetta,text width=14cm] at (7.5,-14.5)
+  {\textbf{Vincoli che completano il disegno}\\[4pt]
+  Un contenuto serializzato appartiene alla radice oppure a un capitolo, non a entrambi.\\
+  \texttt{ElementType}: \texttt{title}, \texttt{text}, \texttt{image}, \texttt{table}.\\
+  La provenienza di una caption richiede una descrizione generata;\\
+  i riferimenti agli asset sono percorsi, non file incorporati nel JSON.};
+\draw[composizione] (0.4,-16.5) -- (1.4,-16.5);
+\node[schema nota,anchor=west] at (1.6,-16.5) {rombo pieno: composizione};
+\node[schema nota,anchor=east] at (14.8,-16.5) {1: obbligatorio\quad 0..1: opzionale\quad 0..*: zero o più};
+\end{tikzpicture}
+\caption{Diagramma UML semplificato delle classi del modello canonico, ricavato da \texttt{models.py}. Le composizioni descrivono il contenimento nella rappresentazione serializzata, non la gestione degli oggetti in memoria. Sono omessi metodi, ereditarietà da Pydantic e alcuni attributi e classi accessorie. Le molteplicità rendono espliciti contenuti ricorsivi e informazioni opzionali; non certificano la correttezza semantica delle associazioni.}
+\label{fig:uml-modello-documentale}
+\end{figure}

@@ -1,0 +1,38 @@
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}[schema base]
+\node[schema esterno,text width=13.7cm] at (7.5,0)
+  {\textbf{Proposta di confronto: non eseguita nella tesi}\\Stessi corpus, domande, chunking, embedding, retrieval e generatore};
+\node[schema etichetta] at (3.3,-1.35) {\textbf{A. Baseline}};
+\node[schema etichetta] at (11.7,-1.35) {\textbf{B. Variante arricchita}};
+\node[schema oggetto,minimum width=6cm,minimum height=3.1cm] (baseline) at (3.3,-2.7) {};
+\node[schema oggetto,minimum width=6cm,minimum height=3.1cm] (variante) at (11.7,-2.7) {};
+\pic[scale=0.72] at (2.1,-2.55) {documento-strutturato};
+\pic[scale=0.72] at (10.5,-2.55) {documento-strutturato};
+\pic[scale=0.62] at (4.9,-2.55) {dialogo};
+\draw[schemaGrigio,line width=1.5pt,line cap=round] (4.18,-3.1) -- (5.62,-2);
+\pic[scale=0.62] at (13.3,-2.55) {dialogo};
+\node[font=\schemafont\Large,text=schemaViola] at (11.95,-2.55) {$+$};
+\node[schema etichetta,text width=6cm] at (3.3,-3.8)
+  {Testo acquisito e collegamenti\\\textbf{senza caption generate}};
+\node[schema etichetta,text width=6cm] at (11.7,-3.8)
+  {Stessa base documentale\\\textbf{con caption generate}};
+\node[schema oggetto,minimum width=13cm,minimum height=1.5cm] (confronto) at (7.5,-5.75) {};
+\pic[scale=0.68] at (2.1,-5.75) {domanda};
+\node[schema etichetta,text width=10.5cm,text=schemaVerde] at (8.7,-5.75)
+  {\textbf{Confronto sulle stesse domande}\\Inclusi quesiti che richiedono informazione visuale};
+\draw[schema freccia] (baseline.south) -- (3.3,-4.45) -| ([xshift=-2cm]confronto.north);
+\draw[schema freccia] (variante.south) -- (11.7,-4.45) -| ([xshift=2cm]confronto.north);
+\node[schema oggetto,minimum height=1.4cm] (evidenze) at (3.3,-7.8) {};
+\pic[scale=0.68] at (3.3,-7.8) {ricerca};
+\node[schema oggetto,minimum height=1.4cm] (risposte) at (11.7,-7.8) {};
+\pic[scale=0.68] at (11.7,-7.8) {dialogo};
+\draw[schema freccia] (confronto.south) -- (7.5,-6.7) -| (evidenze.north);
+\draw[schema freccia] (7.5,-6.7) -| (risposte.north);
+\node[schema nota,text width=2.8cm] at (7.5,-7.8) {Valutazioni\\separate};
+\node[schema etichetta,text width=5.5cm] at (3.3,-8.9) {\textbf{Evidenze recuperate}};
+\node[schema etichetta,text width=5.5cm] at (11.7,-8.9) {\textbf{Risposte generate}};
+\end{tikzpicture}
+\caption{Disegno futuro per isolare il contributo delle caption al sistema RAG. Le due pagine rappresentano la stessa base documentale; il fumetto barrato indica l'assenza di caption generate nella baseline, non l'assenza di risposte del sistema. Le condizioni differiscono soltanto per l'arricchimento documentale e richiedono valutazioni separate di evidenze e risposte. Non sono mostrati risultati né effetti sulle prestazioni degli operatori.}
+\label{fig:confronto-rag-futuro}
+\end{figure}

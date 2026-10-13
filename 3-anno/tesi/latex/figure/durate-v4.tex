@@ -1,0 +1,25 @@
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}[schema base]
+\foreach \secondi in {0,100,200,300,400,500} {
+  \draw[draw=schemaGrigio!20,line width=0.4pt] ({3.4+0.021*\secondi},0) -- ({3.4+0.021*\secondi},-3.8);
+  \node[schema nota] at ({3.4+0.021*\secondi},-4.15) {\secondi};
+}
+\node[schema etichetta,text width=2.8cm] at (1.55,-0.85) {\textbf{Digitale}\newline 6 pagine\newline 9 richieste};
+\node[schema etichetta,text width=2.8cm] at (1.55,-2.8) {\textbf{Scansione}\newline 4 pagine\newline 8 richieste};
+\path[draw=schemaBlu,fill=schemaCartaBlu] (3.4,-1.19) rectangle (4.760505,-0.51);
+\path[draw=schemaGrigio,fill=schemaGrigio!18] (4.760505,-1.19) rectangle (5.027090,-0.51);
+\node[schema nota,anchor=west] at (5.3,-0.85) {77,48 s};
+\path[draw=schemaBlu,fill=schemaCartaBlu] (3.4,-3.14) rectangle (4.633537,-2.46);
+\path[draw=schemaGrigio,fill=schemaGrigio!18] (4.633537,-3.14) rectangle (13.489805,-2.46);
+\node[schema nota,anchor=south east] at (13.489805,-2.35) {480,47 s};
+\draw[draw=schemaGrigio,line width=0.7pt] (3.4,-3.8) -- (13.9,-3.8);
+\node[schema etichetta] at (8.65,-4.75) {Durata CLI (secondi)};
+\path[draw=schemaBlu,fill=schemaCartaBlu] (0.3,-5.6) rectangle +(0.4,0.3);
+\node[schema nota,anchor=west] at (0.85,-5.45) {Enrichment: 64,79 / 58,74 s};
+\path[draw=schemaGrigio,fill=schemaGrigio!18] (7.6,-5.6) rectangle +(0.4,0.3);
+\node[schema nota,anchor=west] at (8.15,-5.45) {Resto: 12,69 / 421,73 s};
+\end{tikzpicture}
+\caption{Durate delle due run V4, da \texttt{outcome.json} e dal \texttt{call.json} dell'enrichment. In legenda: digitale / scansione. Il resto è calcolato per differenza e non misura il solo OCR. Documenti e carichi diversi, senza repliche: il grafico non confronta la velocità dei parser.}
+\label{fig:durate-v4}
+\end{figure}

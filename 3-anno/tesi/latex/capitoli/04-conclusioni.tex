@@ -1,0 +1,62 @@
+\chapter{Conclusioni}
+\label{cap:conclusioni}
+
+\section{Sintesi del contributo}
+
+La tesi affronta la preparazione dei manuali tecnici prima del retrieval, distinguendo tale problema dalla costruzione dell'assistente industriale completo. Il contributo è una pipeline integrata che seleziona automaticamente una strategia di acquisizione, organizza i contenuti in una rappresentazione gerarchica comune e conserva elementi, asset e provenienza in un bundle verificabile. La CLI ne costituisce l'interfaccia operativa; i contratti, la diagnostica e la pubblicazione atomica ne rendono espliciti gli esiti.
+
+Le evidenze combinano prove storiche documentate per tre profili e due esecuzioni selettive finali direttamente ispezionabili. I tre file di ingresso corrispondono a due manuali di base: una coppia digitale con e senza outline e un manuale scansionato distinto. Il ciclo V4 mostra l'elaborazione di 17 immagini mediante il modello locale, mantenendo separata la serializzazione deterministica delle tabelle. I bundle vengono pubblicati come sperimentali e conservano sia i risultati utilizzabili secondo la politica sia le motivazioni delle esclusioni.
+
+La valutazione ha messo in luce limiti semantici anche in una rappresentazione formalmente coerente: un'associazione gerarchica OCR non pertinente, una caption accettata con un conteggio errato e un ritaglio informativo escluso per dimensione. Allo stesso tempo, la separazione fra fonte, descrizione e decisione rende questi limiti ricostruibili. Il contributo sostenuto dalle evidenze è quindi l'integrazione di una preparazione documentale ispezionabile, non una garanzia di accuratezza automatica né un miglioramento dimostrato del sistema RAG downstream.
+
+\section{Risposte alle domande di ricerca}
+
+\subsection{RQ1 --- Ingestion integrata}
+
+\emph{Come ricondurre manuali PDF eterogenei, attraverso strategie di acquisizione differenti, a una rappresentazione gerarchica comune, e quali limiti emergono nella conservazione dei contenuti e dei loro collegamenti?}
+
+La soluzione sviluppata separa il recupero dei contenuti e della struttura dalle trasformazioni condivise. L'outline incorporato, la ricostruzione dall'indice stampato e l'acquisizione OCR alimentano lo stesso assemblatore e lo stesso contratto \texttt{ManualDocument}. Le prove storiche riportate nella Sezione~\ref{sec:risultati-struttura} documentano la copertura dei tre profili, mentre i bundle V4 rendono direttamente osservabile la convergenza di due percorsi su artefatti omogenei.
+
+Il limite principale emerso è la differenza fra coerenza delle relazioni e correttezza della loro interpretazione. Nella selezione OCR più figure rimangono associate all'ultima sezione della pagina, anche quando il contesto della richiesta viene ricondotto alla figura corretta. La conservazione degli asset permette di verificarlo, ma non lo risolve. La risposta a RQ1 è pertanto positiva quanto alla realizzazione del contratto comune e circoscritta quanto alla fedeltà: non è dimostrata la conservazione completa di ogni contenuto o relazione su famiglie di manuali diverse da quelle studiate.
+
+\subsection{RQ2 --- Arricchimento}
+
+\emph{Quali informazioni aggiuntive, omissioni ed errori introduce l'arricchimento multimodale locale rispetto ai contenuti già disponibili dall'estrazione?}
+
+Il captioning può rendere esplicite etichette visuali, disposizioni e riferimenti altrimenti confinati nel ritaglio. L'esempio delle fasi e della terra di protezione mostra aggiunte supportate, mentre altri passaggi delle descrizioni ripetono informazioni già presenti nel contesto. Nel ciclo finale coesistono inoltre errori di conteggio, qualificazioni non supportate e sintesi che non preservano tutte le relazioni delle tavole tecniche, come documentato nella Sezione~\ref{sec:risultati-enrichment}.
+
+Otto delle 17 richieste ricevono lo stato \texttt{enriched}, cinque richiedono revisione e quattro falliscono il contratto di lunghezza. Questi sono esiti tecnici, non punteggi di accuratezza: la caption che indica dieci pulsanti anziché dodici rientra fra quelle accettate. Per le tabelle il workflow finale evita la generazione e conserva una serializzazione delle informazioni acquisite; i due campioni V4 non ne misurano nuovamente la qualità.
+
+Non è quindi dimostrato un beneficio netto dell'enrichment. È invece documentata la necessità di distinguere aggiunte reali, riformulazioni della baseline, omissioni ed errori, includendo nella valutazione le risposte escluse. Una maggiore quantità di testo non può essere assunta come miglioramento della rappresentazione o della consultazione del manuale.
+
+\subsection{RQ3 --- Verificabilità}
+
+\emph{In che modo provenienza e controlli consentono di verificare gli esiti della pipeline e di distinguerne la conformità tecnica dalla correttezza semantica?}
+
+Manifest, hash degli ingressi, snapshot, registrazioni delle richieste e diagnostica consentono di ricostruire quale asset è stato elaborato, con quale contesto, quale risposta è stata prodotta e perché essa sia stata inclusa, esclusa o destinata a revisione. La Sezione~\ref{sec:errori} mostra che un report con controlli superati può accompagnare correttamente un bundle sperimentale: la conformità riguarda anche la dichiarazione veritiera dei limiti, non soltanto il successo del percorso ordinario.
+
+La verifica delle fingerprint e delle richieste sostiene l'integrità dei materiali conservati. Il confronto con il contenuto visuale resta però necessario per accertare le affermazioni delle caption e la pertinenza dei collegamenti documentali. Inoltre, la mancata corrispondenza di due sorgenti agli hash registrati e l'assenza di parte dei materiali limitano la riproduzione esatta. La risposta a RQ3 è dunque che la provenienza rende gli esiti controllabili e le anomalie localizzabili, ma non sostituisce né la verifica semantica né la disponibilità completa dell'ambiente sperimentale.
+
+\section{Sviluppi futuri}
+
+\subsection{Consolidamento della pipeline documentale}
+
+La prima priorità è completare il pacchetto di riproducibilità: PDF identificati dagli hash, revisione esatta dei sorgenti, script di strumentazione, protocollo e schede qualitative. La conservazione delle dipendenze e delle caratteristiche del runtime dovrebbe permettere di ripetere le esecuzioni nelle condizioni documentate, andando oltre la verifica d'integrità dei bundle conservati. Questa attività precede l'estensione del corpus, perché rende confrontabili le prove successive.
+
+Sul piano strutturale, il caso OCR suggerisce di collegare le figure alle sezioni che le richiamano anche nel documento canonico, non soltanto nel prompt. La correzione dovrebbe gestire riferimenti multipli e ambigui senza imporre sempre un unico padre semantico. È inoltre necessario verificare esplicitamente i documenti parziali e i confini fra sezioni sulla stessa pagina, evitando che un titolo locale venga esteso a tavole successive prive di intestazione.
+
+Per gli asset e l'enrichment, le priorità derivano dai fallimenti osservati: riesaminare il filtro geometrico su figure piccole ma informative; distinguere meglio testo assente e testo illeggibile; verificare numeri e sigle contro la fonte; valutare controlli di revisione meno dipendenti da sole parole chiave. Le soglie di lunghezza e il limite di otto elementi richiedono una valutazione su materiali separati da quelli usati per modificarli. Allungare il prompt o ammettere tutte le caption non costituirebbe, di per sé, una soluzione ai problemi semantici.
+
+La verifica dovrebbe estendersi a nuovi manuali, con criteri di annotazione espliciti, revisione indipendente e conservazione dei disaccordi. Repliche delle generazioni permetterebbero di distinguere errori ricorrenti e variabilità delle singole risposte. Per le tabelle occorre affiancare ai test della serializzazione il confronto tra celle, intestazioni e fonte, separando gli errori del parser da quelli introdotti dalle trasformazioni successive.
+
+\subsection{Integrazione e valutazione downstream}
+
+L'integrazione con il sistema RAG del progetto quadro costituisce una fase distinta. Un confronto controllato dovrebbe mantenere uguali corpus, chunking, modello di embedding e procedura di retrieval, variando il contributo delle caption o della rappresentazione tabellare. Le domande di prova dovrebbero includere richieste per cui figura, posizione di un comando o relazione fra celle siano effettivamente necessarie, senza limitarsi a quesiti già risolvibili dal testo circostante.
+
+Solo dopo aver verificato il recupero e le risposte dell'assistente sarebbe possibile valutare l'effetto sull'attività degli operatori. Uno studio human-in-the-loop richiederebbe un protocollo specifico, compiti comparabili e misure di prestazione ed esperienza d'uso; non sarebbe sostituibile con i conteggi dei bundle o delle caption. Le misure del progetto quadro richiamate nell'Introduzione non sono risultati della pipeline qui studiata.
+
+La Figura~\ref{fig:confronto-rag-futuro} traduce questa direzione in uno schema di confronto: la variazione documentale viene isolata prima di estendere la valutazione al lavoro degli operatori.
+
+\input{figure/confronto-rag-futuro}
+
+In conclusione, il lavoro fornisce una base documentale comune e strumenti per controllarne le trasformazioni. Il passo successivo non è assumere che l'informazione generata sia affidabile, ma verificare dove essa aggiunga contenuto corretto e dove introduca errori. È questa distinzione fra disponibilità, tracciabilità e fedeltà a delimitare il contributo della tesi e a orientarne gli sviluppi.

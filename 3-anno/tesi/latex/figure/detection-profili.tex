@@ -1,0 +1,74 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  schema base,
+  schema passo/.style={circle,fill=schemaBlu,text=white,font=\schemafont\footnotesize\bfseries,minimum size=6mm,inner sep=0pt},
+  schema ramo/.style={schema nota,fill=white,text=schemaInchiostro,font=\schemafont\footnotesize\bfseries,inner sep=2pt}
+]
+\node[schema titolo] at (0,0.35) {Dai segnali del PDF al profilo di acquisizione};
+
+% 1. Campionamento e segnali osservati.
+\node[schema pannello,minimum width=15cm,minimum height=2.55cm] (campione) at (7.5,-1.25) {};
+\node[schema passo] at (0.55,-0.45) {1};
+\node[schema titolo] at (0.95,-0.45) {Campionamento deterministico};
+\foreach \posizione/\etichetta in {0.95/{p_0},2.05/{p_1},4.35/{p_{m-1}}} {
+  \pic[scale=0.43] at (\posizione,-1.35) {testo};
+  \node[schema nota] at (\posizione,-2.05) {$\etichetta$};
+}
+\node[schema etichetta] at (3.2,-1.35) {$\cdots$};
+\draw[schema tratto,draw=schemaGrigio!35] (5.25,-0.35) -- (5.25,-2.25);
+\node[schema etichetta,text width=8.7cm,anchor=west,align=left] at (5.75,-1.28) {%
+  $m=\min(N,7)$ pagine distribuite sull'intero documento.\\[3pt]
+  \textbf{Pagina testuale:} almeno 40 caratteri non bianchi.\\[3pt]
+  $k$ = numero di pagine testuali nel campione.};
+
+% 2. La disponibilita del testo ha precedenza sulla struttura.
+\node[schema blocco,draw=schemaBlu,fill=schemaCartaBlu,minimum width=6.4cm,minimum height=1.55cm] (testo) at (7.5,-3.65) {};
+\node[schema passo] at (4.75,-3.65) {2};
+\node[schema etichetta,text width=5.1cm] at (7.8,-3.65) {%
+  \textbf{Copertura testuale sufficiente?}\\[3pt]
+  $k\geq\lceil0{,}75m\rceil$};
+
+% 3. L'outline viene controllato solo nel percorso digitale.
+\node[schema blocco,draw=schemaBlu,fill=schemaCartaBlu,minimum width=6.4cm,minimum height=1.55cm] (outline) at (7.5,-6.05) {};
+\node[schema passo] at (4.75,-6.05) {3};
+\node[schema etichetta,text width=5.1cm] at (7.8,-6.05) {%
+  \textbf{Outline disponibile?}\\[3pt]
+  Almeno una voce};
+
+% Profili selezionati.
+\node[schema tesi,minimum width=4.6cm,minimum height=2.3cm] (digitale) at (2.5,-8.9) {};
+\pic[scale=0.52] at (1.2,-8.9) {documento-strutturato};
+\node[schema etichetta,text width=2.45cm] at (3.15,-8.9) {%
+  \textbf{Digitale con outline}\\[2pt]
+  {\ttfamily\scriptsize digital\_outline}\\[2pt]
+  Struttura dai segnalibri};
+
+\node[schema blocco,minimum width=4.8cm,minimum height=2.3cm] (ricostruito) at (7.55,-8.9) {};
+\pic[scale=0.58] at (6.3,-8.9) {albero};
+\node[schema etichetta,text width=2.75cm] at (8.25,-8.9) {%
+  \textbf{Digitale senza outline}\\[2pt]
+  \resizebox{2.55cm}{!}{\texttt{digital\_reconstructed}}\\[2pt]
+  Indice ricostruito};
+
+\node[schema esterno,minimum width=4.35cm,minimum height=2.3cm] (ocr) at (12.75,-8.9) {};
+\pic[scale=0.55] at (11.65,-8.9) {scansione};
+\node[schema etichetta,text width=2.25cm] at (13.25,-8.9) {%
+  \textbf{Scansione + OCR}\\[2pt]
+  {\ttfamily\scriptsize scanned\_ocr}\\[2pt]
+  Recupero del testo};
+
+% Diramazioni: il ramo OCR salta deliberatamente il controllo dell'outline.
+\draw[schema freccia] (campione.south) -- (testo.north);
+\draw[schema freccia] (testo.south) -- node[right,schema ramo] {Sì} (outline.north);
+\draw[schema freccia] (testo.east) -- node[above,schema ramo] {No} (12.75,-3.65) -- (ocr.north);
+\draw[schema freccia] (outline.south west) -- ++(0,-0.55) -| node[pos=0.25,above,schema ramo] {Sì} (digitale.north);
+\draw[schema freccia] (outline.south east) -- ++(0,-0.55) -| node[pos=0.25,above,schema ramo] {No} (ricostruito.north);
+
+\node[schema pannello,fill=schemaGrigio!3,minimum width=15cm,minimum height=0.85cm] at (7.5,-10.75) {};
+\node[schema nota,text width=14.2cm] at (7.5,-10.75) {%
+  \textbf{Limite del segnale:} il campione orienta il parsing, ma non certifica la completezza dell'intero PDF.};
+\end{tikzpicture}
+\caption{Regole di selezione del profilo dopo i controlli preliminari sul file. La copertura testuale viene valutata prima dell'outline: se è insufficiente, viene scelto il percorso OCR indipendentemente dalla presenza di segnalibri.}
+\label{fig:detection-profili}
+\end{figure}

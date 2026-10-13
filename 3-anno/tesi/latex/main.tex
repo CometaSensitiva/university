@@ -1,0 +1,32 @@
+\documentclass[11pt,a4paper,oneside]{report}
+\input{config/preambolo}
+
+\newif\ifringraziamenti
+\ringraziamentifalse
+
+\title{Progettazione e validazione di una pipeline multimodale per l’elaborazione di manuali tecnici industriali a supporto di sistemi RAG}
+\author{Nome e cognome da inserire}
+\date{Anno accademico da confermare}
+
+\begin{document}
+\hypersetup{pageanchor=false}
+\input{capitoli/00-frontespizio}
+\input{capitoli/00-dedica}
+\pagenumbering{roman}
+\hypersetup{pageanchor=true}
+\input{capitoli/00-abstract}
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+\input{capitoli/01-introduzione}
+\input{capitoli/02-materiali-metodi}
+\input{capitoli/03-risultati-discussione}
+\input{capitoli/04-conclusioni}
+\input{capitoli/05-nota-modelli-linguaggio}
+\input{capitoli/06-codice-sorgente}
+
+\printbibliography[heading=bibintoc,title={Bibliografia}]
+\ifringraziamenti
+\input{capitoli/07-ringraziamenti}
+\fi
+\end{document}

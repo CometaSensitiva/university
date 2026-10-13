@@ -75,7 +75,7 @@ Gli appunti di economia sono cresciuti in due corsi: il formulario e i riassunti
 | --- | --- | --- |
 | Laboratorio di Strumenti di Ottimizzazione | [Notebook Python/Pyomo](3-anno/laboratorio-strumenti-ottimizzazione/modulo-1-python/) e [modelli Arena](3-anno/laboratorio-strumenti-ottimizzazione/modulo-2-arena/) | complete |
 | Sistemi Informativi | [Database di una palestra: schema SQL e query](3-anno/sistemi-informativi/) | complete |
-| Prova finale | [Tesi in PDF](3-anno/tesi/Tesi%20Michele%20Mazza.pdf) · [software](https://github.com/CometaSensitiva/industrial-manual-ingestion) | complete |
+| Prova finale | [Tesi in PDF](3-anno/tesi/Tesi%20Michele%20Mazza.pdf) · [sorgente LaTeX](3-anno/tesi/latex/) · [software](https://github.com/CometaSensitiva/industrial-manual-ingestion) | complete |
 
 </details>
 

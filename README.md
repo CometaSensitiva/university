@@ -75,7 +75,7 @@ The business economics notes grew across two courses: the first-year formula she
 | --- | --- | --- |
 | Laboratorio di Strumenti di Ottimizzazione | [Python/Pyomo notebooks](3-anno/laboratorio-strumenti-ottimizzazione/modulo-1-python/) and [Arena models](3-anno/laboratorio-strumenti-ottimizzazione/modulo-2-arena/) | complete |
 | Sistemi Informativi | [Gym database: SQL schema and queries](3-anno/sistemi-informativi/) | complete |
-| Prova finale | [Thesis (PDF)](3-anno/tesi/Tesi%20Michele%20Mazza.pdf) · [software](https://github.com/CometaSensitiva/industrial-manual-ingestion) | complete |
+| Prova finale | [Thesis (PDF)](3-anno/tesi/Tesi%20Michele%20Mazza.pdf) · [LaTeX source](3-anno/tesi/latex/) · [software](https://github.com/CometaSensitiva/industrial-manual-ingestion) | complete |
 
 </details>
 

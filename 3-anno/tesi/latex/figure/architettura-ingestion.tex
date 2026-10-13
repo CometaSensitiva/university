@@ -1,0 +1,51 @@
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}[schema base]
+\node[schema nota] at (7.5,1.1) {La CLI invoca il backend; l'orchestratore coordina il workflow};
+\node[schema oggetto,minimum width=7cm,minimum height=1.5cm] (detection) at (7.5,0) {};
+\pic[scale=0.63] at (4.6,0) {ricerca};
+\node[schema etichetta,text width=5.4cm] at (8.2,0) {\textbf{PDF $\rightarrow$ detection}\\Scelta del profilo di acquisizione};
+\foreach \ascissa/\nome in {2.4/outline,7.5/ricostruito,12.6/ocr} {
+  \node[schema oggetto,minimum width=4.4cm,minimum height=3.3cm] (\nome) at (\ascissa,-3.15) {};
+}
+\pic[scale=0.8] at (2.4,-2.45) {documento-strutturato};
+\pic[scale=0.72] at (7,-2.45) {pagina};
+\pic[scale=0.65] at (8.2,-2.5) {albero};
+\draw[schemaGrigio,densely dashed] (7.45,-2.05) -- (7.8,-2.05);
+\pic[scale=0.74] at (12.6,-2.45) {scansione};
+\node[schema etichetta,text width=4.4cm] at (2.4,-3.95)
+  {\textbf{Digitale con outline}\\Contenuti digitali\\+ struttura dai segnalibri};
+\node[schema etichetta,text width=4.4cm] at (7.5,-3.95)
+  {\textbf{Digitale senza outline}\\Contenuti digitali\\+ indice ricostruito};
+\node[schema etichetta,text width=4.4cm] at (12.6,-3.95)
+  {\textbf{Scansione}\\Contenuti OCR\\+ outline o struttura ricostruita};
+\draw[schema freccia] (detection.south) -- (7.5,-1.1) -| (outline.north);
+\draw[schema freccia] (7.5,-1.1) -- (ricostruito.north);
+\draw[schema freccia] (7.5,-1.1) -| (ocr.north);
+\node[schema oggetto,minimum width=13.2cm,minimum height=1.65cm] (comune) at (7.5,-6.05) {};
+\pic[scale=0.72] at (2,-6.05) {documento-strutturato};
+\node[schema etichetta,text width=10.5cm,text=schemaVerde] at (8.6,-6.05)
+  {\textbf{Assemblaggio comune $\rightarrow$ ManualDocument}\\Gerarchia, contenuti e riferimenti agli asset già acquisiti};
+\draw[schema freccia] (outline.south) -- (2.4,-5) -| (comune.north);
+\draw[schema freccia] (ricostruito.south) -- (comune.north);
+\draw[schema freccia] (ocr.south) -- (12.6,-5) -| (comune.north);
+\node[schema oggetto] (enrichment) at (2.4,-8.55) {};
+\pic[scale=0.68] at (1.8,-8.55) {immagine};
+\pic[scale=0.65] at (2.95,-8.5) {dialogo};
+\node[schema oggetto] (controlli) at (7.5,-8.55) {};
+\pic[scale=0.78] at (7.5,-8.55) {controllo-fonte};
+\node[schema oggetto] (bundle) at (12.6,-8.55) {};
+\pic[scale=0.85] at (12.6,-8.55) {fascicolo};
+\node[schema etichetta,text width=4.5cm] at (2.4,-10.15)
+  {\textbf{Arricchimento}\\Filtro degli asset, caption\\e serializzazione delle tabelle};
+\node[schema etichetta,text width=4.4cm] at (7.5,-10.15)
+  {\textbf{Controlli e promozione}\\Provenienza e\\serializzazione dell'output};
+\node[schema etichetta,text width=4.4cm] at (12.6,-10.15)
+  {\textbf{Run bundle}\\Documento, asset,\\metadati e diagnostica};
+\draw[schema freccia] (comune.south) -- (7.5,-7.15) -| (enrichment.north);
+\draw[schema freccia] (enrichment) -- (controlli);
+\draw[schema freccia] (controlli) -- (bundle);
+\end{tikzpicture}
+\caption{Tre percorsi di acquisizione convergono sullo stesso contratto documentale e sulle stesse lavorazioni successive. Pagine, gerarchie e fascicolo rappresentano i diversi artefatti. Vista logica di \texttt{manual\_ingestion}, non grafo delle chiamate: l'OCR acquisisce contenuti, non determina da solo la gerarchia.}
+\label{fig:architettura-ingestion}
+\end{figure}

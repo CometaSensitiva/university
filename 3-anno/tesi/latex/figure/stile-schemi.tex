@@ -1,0 +1,22 @@
+\definecolor{schemaInchiostro}{HTML}{1E1E1E}
+\definecolor{schemaBlu}{HTML}{1971C2}
+\definecolor{schemaVerde}{HTML}{2B8A3E}
+\definecolor{schemaOcra}{HTML}{E67700}
+\definecolor{schemaGrigio}{HTML}{495057}
+\definecolor{schemaCartaBlu}{HTML}{E7F5FF}
+\definecolor{schemaCartaVerde}{HTML}{D3F9D8}
+\definecolor{schemaCartaGialla}{HTML}{FFF3BF}
+\usepackage[type1,nosfdefault]{comicneue}
+\newcommand{\schemafont}{\comicneueangular}
+\tikzset{
+  schema tratto/.style={decorate, decoration={random steps, segment length=9pt, amplitude=0.35pt}, line cap=round, line join=round},
+  schema base/.style={font=\schemafont\small, text=schemaInchiostro, line width=0.95pt, execute at begin picture={\pgfmathsetseed{2718}}, every node/.append style={execute at begin node={\hyphenpenalty=10000\relax\exhyphenpenalty=10000\relax}}},
+  schema blocco/.style={schema tratto, draw=schemaInchiostro, fill=schemaCartaBlu, sharp corners, align=center, inner sep=7pt, minimum height=1cm},
+  schema tesi/.style={schema blocco, draw=schemaVerde, fill=schemaCartaVerde, line width=1.05pt},
+  schema esterno/.style={schema blocco, draw=schemaGrigio, fill=schemaCartaGialla!55},
+  schema nota/.style={font=\schemafont\footnotesize, text=schemaGrigio, align=center},
+  schema freccia/.style={-{Straight Barb[length=2.6mm,width=2.4mm]}, draw=schemaInchiostro, rounded corners=4pt, line cap=round, line join=round},
+  schema legame/.style={schema freccia, dash pattern=on 5pt off 3pt, draw=schemaGrigio},
+  schema separatore/.style={schema tratto, draw=schemaVerde, dash pattern=on 5pt off 4pt},
+  schema titolo/.style={font=\schemafont\small\bfseries, anchor=west, text=schemaInchiostro}
+}
